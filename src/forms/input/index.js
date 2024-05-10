@@ -1,0 +1,70 @@
+// Custom input component
+
+// MUI Components
+import { TextField } from "@mui/material";
+import InputAdornment from "@mui/material/InputAdornment";
+import IconButton from "@mui/material/IconButton";
+
+// MUI styles
+import { makeStyles } from "@mui/styles";
+
+// Utils
+import { TEXT_FIELD } from "../../utils/Color";
+
+const useStyles = makeStyles(() => ({
+  root: {
+    "& .MuiInputLabel-root": {
+      color: TEXT_FIELD.labelColor,
+    },
+    "& .MuiInputLabel-root.Mui-focused": {
+      color: TEXT_FIELD.labelFocusedColor,
+    },
+    "& .MuiOutlinedInput-root": {
+      "& fieldset": {
+        borderColor: TEXT_FIELD.borderColor,
+      },
+      "&.Mui-focused fieldset": {
+        borderColor: TEXT_FIELD.borderFocusedColor,
+      },
+    },
+  },
+}));
+
+const CustomInput = ({
+  type = "text",
+  name,
+  label,
+  value,
+  onChange,
+  formik,
+  icon,
+  onIconClick,
+  iconPosition = "end",
+}) => {
+  const classes = useStyles();
+  const error = formik?.errors?.[name] && formik?.touched?.[name];
+  return (
+    <TextField
+      fullWidth
+      name={name}
+      label={label}
+      type={type}
+      value={value}
+      error={error}
+      helperText={formik?.errors?.[name]}
+      onChange={onChange}
+      InputProps={{
+        [`${iconPosition}Adornment`]: icon ? (
+          <InputAdornment position={iconPosition}>
+            <IconButton onClick={onIconClick} edge={iconPosition}>
+              {icon}
+            </IconButton>
+          </InputAdornment>
+        ) : null,
+      }}
+      className={classes.root}
+    />
+  );
+};
+
+export default CustomInput;
