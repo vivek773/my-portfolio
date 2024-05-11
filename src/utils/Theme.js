@@ -2,11 +2,7 @@
 import { createTheme } from "@mui/material/styles";
 
 // Utils
-import { FONT_PRIMARY, FONT_COLOR, TEXT_FIELD } from "./Color";
-
-export function remToPx(value) {
-  return Math.round(parseFloat(value) * 16);
-}
+import { FONT_PRIMARY, FONT_COLOR } from "./Color";
 
 export function pxToRem(value) {
   return `${value / 16}rem`;
@@ -98,34 +94,7 @@ const theme = createTheme({
     },
   },
 
-  components: {
-    // MuiTextField: {
-    //   styleOverrides: {
-    //     root: {
-    //       '&.MuiOutlinedInput-root.Mui-error .MuiOutlinedInput-notchedOutline': {
-    //         borderColor: "red",
-    //       },
-    //       "& label": {
-    //         color: TEXT_FIELD.labelColor,
-    //       },
-    //       '& label.Mui-focused': {
-    //         color: TEXT_FIELD.labelFocusedColor,
-    //       },
-    //       "& .MuiOutlinedInput-root": {
-    //         '& fieldset': {
-    //           borderColor: TEXT_FIELD.borderColor,
-    //         },
-    //         '&:hover fieldset': {
-    //           borderColor: TEXT_FIELD.borderHoverColor,
-    //         },
-    //         '&.Mui-focused fieldset': {
-    //           borderColor: TEXT_FIELD.borderFocusedColor,
-    //         },
-    //       },
-    //     },
-    //   },
-    // },
-  },
+  components: {},
 });
 
 export default theme;

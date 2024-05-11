@@ -10,6 +10,7 @@ const CustomButton = ({
   isLoading,
   variant = "contained",
   size,
+  width,
   bgColor,
   hoverBgColor,
 }) => {
@@ -24,6 +25,7 @@ const CustomButton = ({
       sx={{
         backgroundColor: bgColor,
         textTransform: "none",
+        width: width,
         "&:hover": {
           backgroundColor: hoverBgColor,
         },

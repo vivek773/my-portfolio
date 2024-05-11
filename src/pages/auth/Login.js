@@ -23,10 +23,10 @@ import CustomIcon from "../../components/icon";
 import CustomButton from "../../forms/button";
 
 // Utils
-import { LOGIN_HELMET } from "../../utils/HelmetTitle";
+import { LOGIN_HELMET, SIGNUP } from "../../utils/Constants";
 
 // Assets
-import LOGO from "../../assets/logo-1024.png";
+import LOGO from "../../assets/images/logo-1024.png";
 
 const StyledContent = styled("div")(({ theme }) => ({
   margin: "auto",
@@ -35,6 +35,7 @@ const StyledContent = styled("div")(({ theme }) => ({
   justifyContent: "center",
   flexDirection: "column",
   maxWidth: 480,
+  padding: theme.spacing(8, 0),
 }));
 
 const Login = () => {
@@ -42,9 +43,9 @@ const Login = () => {
 
   const validationSchema = Yup.object({
     email: Yup.string()
-      .required("Please enter a  email address.")
-      .email("Enter valid email address."),
-    password: Yup.string().required("Please enter a password."),
+      .required("Email is required.")
+      .email("Enter valid email."),
+    password: Yup.string().required("Password in required."),
   });
 
   const formik = useFormik({
@@ -84,7 +85,7 @@ const Login = () => {
 
         <Typography variant="body2" sx={{ mb: 5 }}>
           Don’t have an account? {""}
-          <Link href="/register" variant="subtitle2">
+          <Link href={SIGNUP} variant="subtitle2">
             Get started
           </Link>
         </Typography>

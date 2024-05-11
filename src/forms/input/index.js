@@ -1,7 +1,7 @@
 // Custom input component
 
 // MUI Components
-import { TextField } from "@mui/material";
+import TextField from "@mui/material/TextField";
 import InputAdornment from "@mui/material/InputAdornment";
 import IconButton from "@mui/material/IconButton";
 
@@ -40,6 +40,7 @@ const CustomInput = ({
   icon,
   onIconClick,
   iconPosition = "end",
+  helperText=""
 }) => {
   const classes = useStyles();
   const error = formik?.errors?.[name] && formik?.touched?.[name];
@@ -51,7 +52,7 @@ const CustomInput = ({
       type={type}
       value={value}
       error={error}
-      helperText={formik?.errors?.[name]}
+      helperText={(error && formik?.errors?.[name]) ?? helperText}
       onChange={onChange}
       InputProps={{
         [`${iconPosition}Adornment`]: icon ? (

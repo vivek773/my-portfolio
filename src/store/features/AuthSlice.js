@@ -5,11 +5,11 @@ const initialState = {
   auth: {},
 };
 
-const user = createSlice({
-  name: "user",
+const auth = createSlice({
+  name: "auth",
   initialState,
   reducers: { },
 });
 
-// export const {  } = user.actions;
-export default user.reducer;
+// export const {  } = auth.actions;
+export default auth.reducer;
