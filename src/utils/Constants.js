@@ -7,11 +7,21 @@ export const WEB_PORTAL_URL = process.env.REACT_APP_WEB_PORTAL_URL;
 // All routes 
 export const LOGIN = "login";
 export const SIGNUP = "register";
+export const DASHBOARD = "dashboard";
+export const SCHEDULE = "schedule";
+export const STATS = "stats";
+export const FLIGHT_LOGS = "flight-logs";
+export const VOR_CHECKS = "vor-checks";
+export const MAINTENANCE_LOGS = "maintenance-logs";
+export const USERS = "users";
+export const PAYMENTS = "payments";
+export const BUSINESS_SETTINGS = "business-settings";
+export const PROFILE = "profile";
 
 // Helmet title
 export const LOGIN_HELMET = "eDispatched | Login";
 export const SIGNUP_HELMET = "eDispatched | Register";
-export const PAGE404_HELMET = "eDispatched | 404 Page Not Found"
+export const PAGE404_HELMET = "eDispatched | 404 Page Not Found";
 
 // US States
 export const US_STATES = [

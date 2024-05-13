@@ -1,7 +1,7 @@
 
 import axios from "axios";
 import { BASE_API_URL } from "./Constants";
-import store from "../store/index";
+import { store } from "../store/index"
 
 const getStoreData = () => {
   const { accessToken } = store.getState().auth;
@@ -18,7 +18,9 @@ const handleRequest = async (method, URL, body) => {
     headers['Content-Type'] = 'application/json';
     const response = await method(BASE_API_URL + URL, body, { headers });
     return response.data
-  } catch (error) {}
+  } catch (error) {
+    return error
+  }
 };
 
 export const fetchPOSTRequest = async (URL, body = {}) => {

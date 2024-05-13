@@ -10,12 +10,13 @@ import { GlobalStyles } from "@mui/material";
 
 // Utils
 import theme from "./utils/Theme";
-import { LOGIN, SIGNUP } from "./utils/Constants";
+import { LOGIN, SIGNUP, DASHBOARD } from "./utils/Constants";
 
 // Pages
 import Login from "./pages/auth/Login";
 import Signup from "./pages/auth/Signup";
 import Page404 from "./pages/404";
+import DashboardLayout from "./layout/index";
 
 // Custom
 import ToastAlert from "./components/toast";
@@ -40,6 +41,7 @@ function App() {
             <Route path={SIGNUP} element={<Signup />} />
             <Route path={LOGIN} element={<Login />} />
             <Route path={"*"} element={<Page404 />} />
+            <Route path={DASHBOARD} element={<DashboardLayout />} />
           </Routes>
         </Router>
       </ThemeProvider>

@@ -25,9 +25,14 @@ import CustomSelect from "../../forms/select";
 
 // Utils
 import { SIGNUP_HELMET, LOGIN, US_STATES } from "../../utils/Constants";
+import { fetchPOSTRequest } from "../../utils/services";
 
 // Assets
 import LOGO from "../../assets/images/logo-1024.png";
+
+// Context
+import { useLoader } from "../../context/LoaderContext";
+import { useToast } from "../../context/ToastContext";
 
 const StyledContent = styled("div")(({ theme }) => ({
   margin: "auto",
@@ -41,40 +46,63 @@ const StyledContent = styled("div")(({ theme }) => ({
 
 const Signup = () => {
   const [showPassword, setShowPassword] = useState(false);
+  const { setToast } = useToast();
+  const { isLoading, startLoading, stopLoading } = useLoader();
 
   const validationSchema = Yup.object({
-    firstName: Yup.string().required("First name is required."),
-    lastName: Yup.string().required("Last name is required."),
-    email: Yup.string().required("Email is required.").email("Enter valid email."),
+    first_name: Yup.string().required("First name is required."),
+    last_name: Yup.string().required("Last name is required."),
+    email: Yup.string()
+      .required("Email is required.")
+      .email("Enter valid email."),
     password: Yup.string().required("Password in required."),
-    confirmPassword: Yup.string().required("Confirm password in required.").oneOf([Yup.ref('password'), null], 'Passwords must match'),
-    businessName: Yup.string().required("Business name in required."),
-    phoneNumber: Yup.string().required("Phone number in required."),
-    businessStreet: Yup.string().required("Business street in required."),
-    businessUnit: Yup.string().required("Business Unit in required."),
-    businessCity: Yup.string().required("Business City in required."),
-    businessState: Yup.string().required("Business State in required."),
-    businessZipCode: Yup.string().required("Business zip code in required.")
+    confirm_password: Yup.string()
+      .required("Confirm password in required.")
+      .oneOf([Yup.ref("password"), null], "Passwords must match"),
+    business_name: Yup.string().required("Business name in required."),
+    phone_number: Yup.string().required("Phone number in required."),
+    business_street: Yup.string().required("Business street in required."),
+    business_unit: Yup.string().required("Business Unit in required."),
+    business_city: Yup.string().required("Business City in required."),
+    business_state: Yup.string().required("Business State in required."),
+    business_zip_code: Yup.string().required("Business zip code in required."),
   });
 
   const formik = useFormik({
     initialValues: {
-      firstName: "",
-      lastName: "",
+      first_name: "",
+      last_name: "",
       email: "",
       password: "",
-      confirmPassword: "",
-      businessName: "",
-      phoneNumber: "",
-      businessStreet: "",
-      businessUnit: "",
-      businessCity: "",
-      businessState: "",
-      businessZipCode: ""
+      confirm_password: "",
+      business_name: "",
+      phone_number: "",
+      business_street: "",
+      business_unit: "",
+      business_city: "",
+      business_state: "",
+      business_zip_code: "",
     },
     validationSchema: validationSchema,
     onSubmit: async (values) => {
-      console.log(values, "values");
+      startLoading();
+      const response = await fetchPOSTRequest(`/auth/owner/sign-up`, values);
+      console.log(response, "1111111111111111");
+      if (response?.statusCode === 200 && response) {
+        setToast({
+          open: true,
+          message: response?.message,
+          severity: "success",
+        });
+        stopLoading();
+      } else {
+        setToast({
+          open: true,
+          message: response?.message,
+          severity: "error",
+        });
+        stopLoading();
+      }
     },
   });
 
@@ -103,27 +131,25 @@ const Signup = () => {
           </Typography>
 
           <Box display={"flex"} flexDirection={"column"} gap={4}>
-            <Typography variant="h5">
-              Customer Information
-            </Typography>
+            <Typography variant="h5">Customer Information</Typography>
             <CustomInput
-              name="firstName"
+              name="first_name"
               label="First Name"
-              value={formik.values.firstName}
+              value={formik.values.first_name}
               onChange={formik.handleChange}
               formik={formik}
             />
             <CustomInput
-              name="lastName"
+              name="last_name"
               label="Last Name"
-              value={formik.values.lastName}
+              value={formik.values.last_name}
               onChange={formik.handleChange}
               formik={formik}
             />
             <CustomInput
               name="email"
               label="Email"
-              value={formik.values.firstName}
+              value={formik.values.email}
               onChange={formik.handleChange}
               formik={formik}
             />
@@ -143,67 +169,67 @@ const Signup = () => {
             />
 
             <CustomInput
-              name="confirmPassword"
+              name="confirm_password"
               label="Confirm Password"
               type="password"
-              value={formik.values.confirmPassword}
+              value={formik.values.confirm_password}
               onChange={formik.handleChange}
               formik={formik}
             />
           </Box>
 
           <Box display={"flex"} flexDirection={"column"} gap={4} mt={5}>
-            <Typography variant="h5">
-              Business Information
-            </Typography>
+            <Typography variant="h5">Business Information</Typography>
             <CustomInput
-              name="businessName"
+              name="business_name"
               label="Business Name"
-              value={formik.values.businessName}
+              value={formik.values.business_name}
               onChange={formik.handleChange}
               formik={formik}
             />
             <CustomInput
-              name="phoneNumber"
+              name="phone_number"
               label="Phone Number"
-              value={formik.values.phoneNumber}
+              value={formik.values.phone_number}
               onChange={formik.handleChange}
               formik={formik}
               helperText="123-456-7890"
             />
             <CustomInput
-              name="businessStreet"
+              name="business_street"
               label="Business Street"
-              value={formik.values.businessStreet}
+              value={formik.values.business_street}
               onChange={formik.handleChange}
               formik={formik}
             />
             <CustomInput
-              name="businessUnit"
+              name="business_unit"
               label="Business Unit"
-              value={formik.values.businessUnit}
+              value={formik.values.business_unit}
               onChange={formik.handleChange}
               formik={formik}
             />
             <CustomInput
-              name="businessCity"
+              name="business_city"
               label="Business City"
-              value={formik.values.businessCity}
+              value={formik.values.business_city}
               onChange={formik.handleChange}
               formik={formik}
             />
-            <CustomSelect 
-              name="businessState"
+            <CustomSelect
+              name="business_state"
               label="Business State"
-              value={formik.values.businessState}
-              onChange={formik.handleChange}
+              onChange={(_, newValue) => {
+                formik.setFieldValue("business_state", newValue);
+              }}
               options={US_STATES}
               formik={formik}
+              value={formik.values.business_state}
             />
             <CustomInput
-              name="businessZipCode"
+              name="business_zip_code"
               label="Business Zip Code"
-              value={formik.values.businessZipCode}
+              value={formik.values.business_zip_code}
               onChange={formik.handleChange}
               formik={formik}
             />
@@ -216,6 +242,7 @@ const Signup = () => {
               onClick={formik.handleSubmit}
               disabled={false}
               bgColor={"#479DE1"}
+              isLoading={isLoading}
             />
           </Box>
 
@@ -225,7 +252,6 @@ const Signup = () => {
               Login
             </Link>
           </Typography>
-
         </StyledContent>
       </Container>
     </>

@@ -43,7 +43,7 @@ const CustomSelect = ({ name, label, options, value, onChange, formik }) => {
           {...params}
           label={label}
           error={error}
-          helperText={formik?.errors?.[name]}
+          helperText={error && formik?.errors?.[name]}
           className={classes.root}
         />
       )}

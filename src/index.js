@@ -15,15 +15,18 @@ import { PersistGate } from "redux-persist/es/integration/react";
 
 // Context
 import { ToastProvider } from "./context/ToastContext";
+import { LoaderProvider } from "./context/LoaderContext";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 
 root.render(
   <Provider store={store}>
     <PersistGate loading={null} persistor={persistor}>
-      <ToastProvider>
-        <App />
-      </ToastProvider>
+      <LoaderProvider>
+        <ToastProvider>
+          <App />
+        </ToastProvider>
+      </LoaderProvider>
     </PersistGate>
   </Provider>
 );
