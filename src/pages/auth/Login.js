@@ -2,7 +2,6 @@
 
 // Default
 import { useState } from "react";
-import { Helmet } from "react-helmet-async";
 
 // Formik
 import { useFormik } from "formik";
@@ -21,6 +20,7 @@ import { styled } from "@mui/material/styles";
 import CustomInput from "../../forms/input";
 import CustomIcon from "../../components/icon";
 import CustomButton from "../../forms/button";
+import MainHelmet from "../../components/helmet";
 
 // Utils
 import { LOGIN_HELMET, SIGNUP } from "../../utils/Constants";
@@ -84,10 +84,8 @@ const Login = () => {
 
   return (
     <>
-      <Helmet>
-        <title>{LOGIN_HELMET}</title>
-      </Helmet>
-
+      <MainHelmet title={LOGIN_HELMET} />
+        
       <Container maxWidth="sm">
         <StyledContent>
           <Box display={"flex"} justifyContent={"center"} alignItems={"center"}>

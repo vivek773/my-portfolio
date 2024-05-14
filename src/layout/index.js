@@ -1,6 +1,7 @@
 // Main Layout
 
 // Default
+import { useState } from 'react';
 import { Outlet } from 'react-router-dom';
 
 // MUI styles
@@ -8,6 +9,7 @@ import { styled } from '@mui/material/styles';
 
 // Custom
 import Sidebar from '../components/sidebar';
+import Header from '../components/header';
 
 const APP_BAR_MOBILE = 64;
 const APP_BAR_DESKTOP = 92;
@@ -33,13 +35,12 @@ const Main = styled('div')(({ theme }) => ({
 
 
 const DashboardLayout = () => {
-
+  const [open, setOpen] = useState(false);
   return (
     <StyledRoot>
-      {/* <Header onOpenNav={() => setOpen(true)} /> */}
-      <div>Hello World</div>
+      <Header onOpenNav={() => setOpen(true)} />
 
-      <Sidebar />
+      <Sidebar openNav={open} onCloseNav={() => setOpen(false)}/>
 
       <Main>
         <Outlet />

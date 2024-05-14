@@ -7,17 +7,17 @@ import GroupIcon from "@mui/icons-material/Group";
 import AirplanemodeActiveIcon from "@mui/icons-material/AirplanemodeActive";
 import AssessmentIcon from "@mui/icons-material/Assessment";
 import ScheduleIcon from "@mui/icons-material/Schedule";
-import RadioButtonCheckedIcon from "@mui/icons-material/RadioButtonChecked";
+import CalendarTodayIcon from '@mui/icons-material/CalendarToday';
 import BuildIcon from "@mui/icons-material/Build";
 import SettingsIcon from "@mui/icons-material/Settings";
 
 // Utils
 import {
   DASHBOARD,
-  SCHEDULE,
+  BOOKINGS,
   STATS,
   FLIGHT_LOGS,
-  VOR_CHECKS,
+  CALENDAR,
   MAINTENANCE_LOGS,
   USERS,
   PAYMENTS,
@@ -32,9 +32,14 @@ export const ADMIN_CONFIG = [
     icon: <AirplanemodeActiveIcon />,
   },
   {
-    title: "Schedule",
-    path: SCHEDULE,
+    title: "Bookings",
+    path: BOOKINGS,
     icon: <ScheduleIcon />,
+  },
+  {
+    title: "Calendar",
+    path: CALENDAR,
+    icon: <CalendarTodayIcon />,
   },
   {
     title: "Statistics",
@@ -45,11 +50,6 @@ export const ADMIN_CONFIG = [
     title: "Flight Logs",
     path: FLIGHT_LOGS,
     icon: <MenuBookIcon />,
-  },
-  {
-    title: "VOR Checks",
-    path: VOR_CHECKS,
-    icon: <RadioButtonCheckedIcon />,
   },
   {
     title: "Maintenance Logs",

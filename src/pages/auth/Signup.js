@@ -2,7 +2,6 @@
 
 // Default
 import { useState } from "react";
-import { Helmet } from "react-helmet-async";
 
 // Formik
 import { useFormik } from "formik";
@@ -22,6 +21,7 @@ import CustomInput from "../../forms/input";
 import CustomIcon from "../../components/icon";
 import CustomButton from "../../forms/button";
 import CustomSelect from "../../forms/select";
+import MainHelmet from "../../components/helmet";
 
 // Utils
 import { SIGNUP_HELMET, LOGIN, US_STATES } from "../../utils/Constants";
@@ -55,18 +55,20 @@ const Signup = () => {
     email: Yup.string()
       .required("Email is required.")
       .email("Enter valid email."),
-    password: Yup.string().required("Password in required."),
-    confirm_password: Yup.string()
-      .required("Confirm password in required.")
-      .oneOf([Yup.ref("password"), null], "Passwords must match"),
-    business_name: Yup.string().required("Business name in required."),
-    phone_number: Yup.string().required("Phone number in required."),
-    business_street: Yup.string().required("Business street in required."),
-    business_unit: Yup.string().required("Business Unit in required."),
-    business_city: Yup.string().required("Business City in required."),
-    business_state: Yup.string().required("Business State in required."),
-    business_zip_code: Yup.string().required("Business zip code in required."),
+    password: Yup.string().required("Password is required."),
+    // confirm_password: Yup.string()
+    //   .required("Confirm password is required.")
+    //   .oneOf([Yup.ref("password"), null], "Passwords must match"),
+    business_name: Yup.string().required("Business name is required."),
+    business_phone: Yup.string().required("Phone number is required."),
+    street_address: Yup.string().required("Business street is required."),
+    // business_unit: Yup.string().required("Business Unit is required."),
+    business_city: Yup.string().required("Business City is required."),
+    business_state: Yup.string().required("Business State is required."),
+    business_zip: Yup.string().required("Business zip code is required."),
+    primary_airport_code: Yup.string().required("Airport code is required."),
   });
+
 
   const formik = useFormik({
     initialValues: {
@@ -74,20 +76,20 @@ const Signup = () => {
       last_name: "",
       email: "",
       password: "",
-      confirm_password: "",
+      // confirm_password: "",
       business_name: "",
-      phone_number: "",
-      business_street: "",
-      business_unit: "",
+      business_phone: "",
+      street_address: "",
+      // business_unit: "",
       business_city: "",
       business_state: "",
-      business_zip_code: "",
+      business_zip: "",
+      primary_airport_code: ""
     },
     validationSchema: validationSchema,
     onSubmit: async (values) => {
       startLoading();
       const response = await fetchPOSTRequest(`/auth/owner/sign-up`, values);
-      console.log(response, "1111111111111111");
       if (response?.statusCode === 200 && response) {
         setToast({
           open: true,
@@ -108,10 +110,8 @@ const Signup = () => {
 
   return (
     <>
-      <Helmet>
-        <title>{SIGNUP_HELMET}</title>
-      </Helmet>
-
+      <MainHelmet title={SIGNUP_HELMET} />
+ 
       <Container maxWidth="sm">
         <StyledContent>
           <Box display={"flex"} justifyContent={"center"} alignItems={"center"}>
@@ -168,14 +168,14 @@ const Signup = () => {
               formik={formik}
             />
 
-            <CustomInput
+            {/* <CustomInput
               name="confirm_password"
               label="Confirm Password"
               type="password"
               value={formik.values.confirm_password}
               onChange={formik.handleChange}
               formik={formik}
-            />
+            /> */}
           </Box>
 
           <Box display={"flex"} flexDirection={"column"} gap={4} mt={5}>
@@ -188,27 +188,27 @@ const Signup = () => {
               formik={formik}
             />
             <CustomInput
-              name="phone_number"
+              name="business_phone"
               label="Phone Number"
-              value={formik.values.phone_number}
+              value={formik.values.business_phone}
               onChange={formik.handleChange}
               formik={formik}
               helperText="123-456-7890"
             />
             <CustomInput
-              name="business_street"
+              name="street_address"
               label="Business Street"
-              value={formik.values.business_street}
+              value={formik.values.street_address}
               onChange={formik.handleChange}
               formik={formik}
             />
-            <CustomInput
+            {/* <CustomInput
               name="business_unit"
               label="Business Unit"
               value={formik.values.business_unit}
               onChange={formik.handleChange}
               formik={formik}
-            />
+            /> */}
             <CustomInput
               name="business_city"
               label="Business City"
@@ -227,12 +227,19 @@ const Signup = () => {
               value={formik.values.business_state}
             />
             <CustomInput
-              name="business_zip_code"
+              name="business_zip"
               label="Business Zip Code"
-              value={formik.values.business_zip_code}
+              value={formik.values.business_zip}
               onChange={formik.handleChange}
               formik={formik}
             />
+            <CustomInput
+              name="primary_airport_code"
+              label="Airport Code"
+              value={formik.values.primary_airport_code}
+              onChange={formik.handleChange}
+              formik={formik}
+            /> 
           </Box>
 
           <Box mt={5}>

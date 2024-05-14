@@ -1,7 +1,8 @@
 // Sidebar
 
 // Default
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useLocation, NavLink as RouterLink } from "react-router-dom";
 
 // MUI components
 import Box from "@mui/material/Box";
@@ -21,10 +22,22 @@ import Scrollbar from "../scrollbar";
 import { ADMIN_CONFIG } from "../../utils/config";
 import { NAV_LIST } from "../../utils/Color";
 
+// hooks
+import useResponsive from "../../hooks/useResponsive";
 
-const Sidebar = () => {
+
+const Sidebar = ({ openNav, onCloseNav }) => {
   const NAV_WIDTH = 280;
   const [isActive, setIsActive] = useState(0);
+  const { pathname } = useLocation();
+  const isDesktop = useResponsive("up", "lg");
+
+  useEffect(() => {
+    if (openNav) {
+      onCloseNav();
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [pathname]);
 
   const renderContent = (
     <Scrollbar
@@ -64,6 +77,8 @@ const Sidebar = () => {
                   borderRadius: "5px",
                 }}
                 onClick={() => setIsActive(index)}
+                component={RouterLink}
+                to={`/${config.path}`}
               >
                 <ListItemIcon
                   sx={{ justifyContent: "center", fontSize: "22px" }}
@@ -98,19 +113,34 @@ const Sidebar = () => {
         width: { lg: NAV_WIDTH },
       }}
     >
-      <Drawer
-        open
-        variant="permanent"
-        PaperProps={{
-          sx: {
-            width: NAV_WIDTH,
-            bgcolor: "background.default",
-            borderRightStyle: "dashed",
-          },
-        }}
-      >
-        {renderContent}
-      </Drawer>
+      {isDesktop ? (
+        <Drawer
+          open
+          variant="permanent"
+          PaperProps={{
+            sx: {
+              width: NAV_WIDTH,
+              bgcolor: "background.default",
+              borderRightStyle: "dashed",
+            },
+          }}
+        >
+          {renderContent}
+        </Drawer>
+      ) : (
+        <Drawer
+          open={openNav}
+          onClose={onCloseNav}
+          ModalProps={{
+            keepMounted: true,
+          }}
+          PaperProps={{
+            sx: { width: NAV_WIDTH },
+          }}
+        >
+          {renderContent}
+        </Drawer>
+      )}
     </Box>
   );
 };
