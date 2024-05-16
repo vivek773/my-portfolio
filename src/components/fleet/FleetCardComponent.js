@@ -84,7 +84,7 @@ const FleetCardComponent = ({
       <Box sx={{ mt: 5 }}>
         <CustomButton
           onClick={() => {
-            navigate(`/plane/${tail_number}`, {
+            navigate(`/fleet/${tail_number}`, {
               state: {
                 tail_number,
               },
