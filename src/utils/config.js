@@ -11,69 +11,55 @@ import CalendarTodayIcon from '@mui/icons-material/CalendarToday';
 import BuildIcon from "@mui/icons-material/Build";
 import SettingsIcon from "@mui/icons-material/Settings";
 
-// Utils
-import {
-  DASHBOARD,
-  BOOKINGS,
-  STATS,
-  FLIGHT_LOGS,
-  CALENDAR,
-  MAINTENANCE_LOGS,
-  USERS,
-  PAYMENTS,
-  BUSINESS_SETTINGS,
-  PROFILE,
-} from "./Constants";
-
 export const ADMIN_CONFIG = [
   {
     title: "Fleet",
-    path: DASHBOARD,
+    path: "fleet",
     icon: <AirplanemodeActiveIcon />,
   },
   {
     title: "Bookings",
-    path: BOOKINGS,
+    path: "bookings",
     icon: <ScheduleIcon />,
   },
   {
     title: "Calendar",
-    path: CALENDAR,
+    path: "calendar",
     icon: <CalendarTodayIcon />,
   },
   {
     title: "Statistics",
-    path: STATS,
+    path: "stats",
     icon: <AssessmentIcon />,
   },
   {
     title: "Flight Logs",
-    path: FLIGHT_LOGS,
+    path: "flight-logs",
     icon: <MenuBookIcon />,
   },
   {
     title: "Maintenance Logs",
-    path: MAINTENANCE_LOGS,
+    path: "maintenance-logs",
     icon: <BuildIcon />,
   },
   {
     title: "People",
-    path: USERS,
+    path: "users",
     icon: <GroupIcon />,
   },
   {
     title: "Payments",
-    path: PAYMENTS,
+    path: "payments",
     icon: <MonetizationOnIcon />,
   },
   {
     title: "Business Settings",
-    path: BUSINESS_SETTINGS,
+    path: "business-settings",
     icon: <SettingsIcon />,
   },
   {
     title: "Profile",
-    path: PROFILE,
+    path: "profile",
     icon: <AccountCircleIcon />,
   },
 ];

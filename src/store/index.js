@@ -1,32 +1,31 @@
-// All slice
+// Store
 
 import { combineReducers, configureStore } from "@reduxjs/toolkit";
-import { thunk } from "redux-thunk";
-import { persistReducer } from "redux-persist";
+import {thunk} from "redux-thunk";
+import { persistReducer, persistStore } from "redux-persist";
 import storage from "redux-persist/lib/storage";
-import persistStore from "redux-persist/es/persistStore";
 
 // Slices
-import authReducer from "./features/AuthSlice" 
+import authReducer from "./features/AuthSlice";
 
-
-const RootReducer = combineReducers({
-    auth: authReducer,
+const rootReducer = combineReducers({
+  auth: authReducer,
 });
 
 const persistConfig = {
   key: "root",
   storage,
-  whitelist: []
 };
 
-const persistedReducer = persistReducer(persistConfig, RootReducer);
+const persistedReducer = persistReducer(persistConfig, rootReducer);
 
 export const store = configureStore({
   reducer: persistedReducer,
   devTools: process.env.NODE_ENV !== "production",
-  middleware: () => [thunk],
+  middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware({
+      serializableCheck: false,
+    }).concat(thunk),
 });
 
-// Create a persistor
 export const persistor = persistStore(store);

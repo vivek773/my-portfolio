@@ -38,6 +38,7 @@ const CustomInput = ({
   onChange,
   formik,
   icon,
+  required = false,
   onIconClick,
   iconPosition = "end",
   helperText=""
@@ -52,6 +53,7 @@ const CustomInput = ({
       type={type}
       value={value}
       error={error}
+      required={required}
       helperText={(error && formik?.errors?.[name]) ?? helperText}
       onChange={onChange}
       InputProps={{

@@ -3,24 +3,23 @@
 // Default
 import { Routes, Route } from "react-router-dom";
 
-// Utils
-import { LOGIN, SIGNUP, DASHBOARD } from "./utils/Constants";
-
 // Pages
-import Login from "./pages/auth/Login";
-import Signup from "./pages/auth/Signup";
-import Page404 from "./pages/404";
-import DashboardLayout from "./layout/index";
-import Fleet from "./pages/fleet";
+import LoginPage from "./pages/auth/LoginPage";
+import SignupPage from "./pages/auth/SignupPage";
+import Page404 from "./pages/404/404Page";
+import DashboardLayout from "./layout/layout";
+import FleetPage from "./pages/fleet/FleetPage";
+import AddPlaneComponent from "./components/fleet/AddPlaneComponent";
 
 const MainRouter = () => {
   return (
     <Routes>
-      <Route path={SIGNUP} element={<Signup />} />
-      <Route path={LOGIN} element={<Login />} />
+      <Route path={"register"} element={<SignupPage />} />
+      <Route path={"login"} element={<LoginPage />} />
       <Route path={"*"} element={<Page404 />} />
       <Route path={"/"} element={<DashboardLayout />}>
-        <Route path={DASHBOARD} element={<Fleet />} />
+        <Route path={"fleet"} element={<FleetPage />} />
+        <Route path={"fleet/add-plane"} element={<AddPlaneComponent />} />
       </Route>
     </Routes>
   );

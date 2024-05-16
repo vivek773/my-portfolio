@@ -33,7 +33,7 @@ export const StyledScrollbar = styled(SimpleBar)(({ theme }) => ({
   },
 }));
 
-const Scrollbar = ({ children, sx, ...other }) => {
+const ScrollbarComponent = ({ children, sx, ...other }) => {
 
   return (
     <StyledRootScrollbar>
@@ -44,4 +44,4 @@ const Scrollbar = ({ children, sx, ...other }) => {
   );
 }
 
-export default Scrollbar
+export default ScrollbarComponent

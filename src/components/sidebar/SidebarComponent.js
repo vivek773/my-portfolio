@@ -16,17 +16,17 @@ import ListItemIcon from "@mui/material/ListItemIcon";
 import LOGO from "../../assets/images/logo-1024.png";
 
 // Custom
-import Scrollbar from "../scrollbar";
+import ScrollbarComponent from "../scrollbar/ScrollbarComponent";
 
 // Utils
-import { ADMIN_CONFIG } from "../../utils/config";
+import { ADMIN_CONFIG } from "../../utils/Config";
 import { NAV_LIST } from "../../utils/Color";
 
 // hooks
 import useResponsive from "../../hooks/useResponsive";
 
 
-const Sidebar = ({ openNav, onCloseNav }) => {
+const SidebarComponent = ({ openNav, onCloseNav }) => {
   const NAV_WIDTH = 280;
   const [isActive, setIsActive] = useState(0);
   const { pathname } = useLocation();
@@ -40,7 +40,7 @@ const Sidebar = ({ openNav, onCloseNav }) => {
   }, [pathname]);
 
   const renderContent = (
-    <Scrollbar
+    <ScrollbarComponent
       sx={{
         height: 1,
         "& .simplebar-content": {
@@ -102,7 +102,7 @@ const Sidebar = ({ openNav, onCloseNav }) => {
           );
         })}
       </Box>
-    </Scrollbar>
+    </ScrollbarComponent>
   );
 
   return (
@@ -145,4 +145,4 @@ const Sidebar = ({ openNav, onCloseNav }) => {
   );
 };
 
-export default Sidebar;
+export default SidebarComponent;

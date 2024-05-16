@@ -2,6 +2,7 @@
 
 // Default
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 // Formik
 import { useFormik } from "formik";
@@ -17,15 +18,15 @@ import Link from "@mui/material/Link";
 import { styled } from "@mui/material/styles";
 
 // Custom
-import CustomInput from "../../forms/input";
-import CustomIcon from "../../components/icon";
-import CustomButton from "../../forms/button";
-import CustomSelect from "../../forms/select";
-import MainHelmet from "../../components/helmet";
+import CustomInput from "../../forms/input/CustomInput";
+import CustomIconComponent from "../../components/icon/CustomIconComponent";
+import CustomButton from "../../forms/button/CustomButton";
+import CustomSelect from "../../forms/select/CustomSelect";
+import HelmetComponent from "../../components/helmet/HelmetComponent";
 
 // Utils
-import { SIGNUP_HELMET, LOGIN, US_STATES } from "../../utils/Constants";
-import { fetchPOSTRequest } from "../../utils/services";
+import { US_STATES, EDISPATCHED } from "../../utils/Constants";
+import { fetchPOSTRequest } from "../../utils/Services";
 
 // Assets
 import LOGO from "../../assets/images/logo-1024.png";
@@ -44,8 +45,9 @@ const StyledContent = styled("div")(({ theme }) => ({
   padding: theme.spacing(8, 0),
 }));
 
-const Signup = () => {
+const SignupPage = () => {
   const [showPassword, setShowPassword] = useState(false);
+  const navigate = useNavigate();
   const { setToast } = useToast();
   const { isLoading, startLoading, stopLoading } = useLoader();
 
@@ -69,7 +71,6 @@ const Signup = () => {
     primary_airport_code: Yup.string().required("Airport code is required."),
   });
 
-
   const formik = useFormik({
     initialValues: {
       first_name: "",
@@ -84,7 +85,7 @@ const Signup = () => {
       business_city: "",
       business_state: "",
       business_zip: "",
-      primary_airport_code: ""
+      primary_airport_code: "",
     },
     validationSchema: validationSchema,
     onSubmit: async (values) => {
@@ -96,7 +97,9 @@ const Signup = () => {
           message: response?.message,
           severity: "success",
         });
+        navigate(`/login`);
         stopLoading();
+        formik.resetForm();
       } else {
         setToast({
           open: true,
@@ -110,8 +113,8 @@ const Signup = () => {
 
   return (
     <>
-      <MainHelmet title={SIGNUP_HELMET} />
- 
+      <HelmetComponent title={`${EDISPATCHED} | Register`} />
+
       <Container maxWidth="sm">
         <StyledContent>
           <Box display={"flex"} justifyContent={"center"} alignItems={"center"}>
@@ -160,7 +163,7 @@ const Signup = () => {
               value={formik.values.password}
               onChange={formik.handleChange}
               icon={
-                <CustomIcon
+                <CustomIconComponent
                   icon={showPassword ? "eva:eye-fill" : "eva:eye-off-fill"}
                 />
               }
@@ -239,7 +242,7 @@ const Signup = () => {
               value={formik.values.primary_airport_code}
               onChange={formik.handleChange}
               formik={formik}
-            /> 
+            />
           </Box>
 
           <Box mt={5}>
@@ -255,7 +258,7 @@ const Signup = () => {
 
           <Typography variant="body2" mt={2}>
             Already have an account? {""}
-            <Link href={LOGIN} variant="subtitle2">
+            <Link href={"login"} variant="subtitle2">
               Login
             </Link>
           </Typography>
@@ -265,4 +268,4 @@ const Signup = () => {
   );
 };
 
-export default Signup;
+export default SignupPage;

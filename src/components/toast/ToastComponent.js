@@ -10,7 +10,7 @@ import MuiAlert from "@mui/material/Alert";
 // Context
 import { useToast } from "../../context/ToastContext"; 
 
-const ToastAlert = () => {
+const ToastAlertComponent = () => {
   const { toast, setToast } = useToast();
 
   const handleClose = (_, reason) => {
@@ -38,4 +38,4 @@ const ToastAlert = () => {
   );
 };
 
-export default ToastAlert;
+export default ToastAlertComponent;

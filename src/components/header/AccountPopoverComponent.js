@@ -17,14 +17,14 @@ import Avatar from "@mui/material/Avatar";
 import IconButton from "@mui/material/IconButton";
 import Popover from "@mui/material/Popover";
 
-// Utils
-import { PROFILE } from "../../utils/Constants";
+// Redux
+import { resetUser } from "../../store/features/AuthSlice";
+import { useDispatch } from "react-redux";
 
-const AccountPopover = () => {
-  // const dispatch = useDispatch();
+
+const AccountPopoverComponent = ({ auth }) => {
+  const dispatch = useDispatch();
   const [open, setOpen] = useState(null);
-
-  // const { user } = useSelector((state) => state.auth);
 
   const handleOpen = (event) => {
     setOpen(event.currentTarget);
@@ -55,11 +55,8 @@ const AccountPopover = () => {
           }),
         }}
       >
-        {/* <Avatar alt="user-initials" sx={{ bgcolor: "#479DE1" }}>
-          {`${user?.first_name.charAt(0)}${user?.last_name.charAt(0)}`}
-        </Avatar> */}
         <Avatar alt="user-initials" sx={{ bgcolor: "#479DE1" }}>
-          KC
+          {`${auth?.first_name.charAt(0)}${auth?.last_name.charAt(0)}`}
         </Avatar>
       </IconButton>
 
@@ -84,12 +81,10 @@ const AccountPopover = () => {
       >
         <Box sx={{ my: 1.5, px: 2.5 }}>
           <Typography variant="subtitle2" noWrap>
-            {/* {user?.first_name} {user?.last_name} */}
-            Kartik Chavda
+            {auth?.first_name} {auth?.last_name}
           </Typography>
           <Typography variant="body2" sx={{ color: "text.secondary" }} noWrap>
-            {/* {user?.email} */}
-            kc72284@gmail.com
+            {auth?.email}
           </Typography>
         </Box>
 
@@ -99,7 +94,7 @@ const AccountPopover = () => {
           <MenuItem
             onClick={() => {
               handleClose();
-              navigate(PROFILE);
+              navigate("profile");
             }}
           >
             Profile
@@ -109,14 +104,11 @@ const AccountPopover = () => {
         <Divider sx={{ borderStyle: "dashed" }} />
 
         <MenuItem
-          // onClick={() => {
-          //   handleClose();
-          //   localStorage.removeItem("token");
-          //   Cookies.remove("token");
-          //   dispatch(logout());
-          //   dispatch(reset());
-          //   navigate("/login");
-          // }}
+          onClick={() => {
+            handleClose();
+            dispatch(resetUser());
+            navigate("/login");
+          }}
           sx={{ m: 1 }}
         >
           Logout
@@ -126,4 +118,4 @@ const AccountPopover = () => {
   );
 };
 
-export default AccountPopover;
+export default AccountPopoverComponent;

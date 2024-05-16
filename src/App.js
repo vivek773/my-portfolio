@@ -12,7 +12,7 @@ import { GlobalStyles } from "@mui/material";
 import theme from "./utils/Theme";
 
 // Custom
-import ToastAlert from "./components/toast";
+import ToastAlertComponent from "./components/toast/ToastComponent";
 
 // Main router
 import MainRouter from "./routes";
@@ -31,7 +31,7 @@ function App() {
             },
           }}
         />
-        <ToastAlert />
+        <ToastAlertComponent />
         <Router>
           <MainRouter />
         </Router>

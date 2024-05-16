@@ -3,7 +3,7 @@
 // Default
 import { Helmet } from "react-helmet-async";
 
-const  MainHelmet = ({ title }) => {
+const HelmetComponent = ({ title }) => {
   return (
     <Helmet>
       <title>{title}</title>
@@ -11,4 +11,4 @@ const  MainHelmet = ({ title }) => {
   );
 };
 
-export default MainHelmet;
+export default HelmetComponent;

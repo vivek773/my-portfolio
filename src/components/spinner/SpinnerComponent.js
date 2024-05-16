@@ -4,7 +4,7 @@
 import Stack from "@mui/material/Stack";
 import CircularProgress from "@mui/material/CircularProgress";
 
-const Spinner = ({ show }) => {
+const SpinnerComponent = ({ show }) => {
   return (
     <>
       {show && (
@@ -16,4 +16,4 @@ const Spinner = ({ show }) => {
   );
 };
 
-export default Spinner;
+export default SpinnerComponent;

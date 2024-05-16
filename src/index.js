@@ -11,7 +11,7 @@ import App from "./App";
 // Redux
 import { store, persistor } from "./store";
 import { Provider } from "react-redux";
-import { PersistGate } from "redux-persist/es/integration/react";
+import { PersistGate } from "redux-persist/integration/react"; 
 
 // Context
 import { ToastProvider } from "./context/ToastContext";

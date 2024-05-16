@@ -1,7 +1,6 @@
 // 404 page
 
 // Default
-import { Helmet } from "react-helmet-async";
 import { useNavigate } from "react-router-dom";
 
 // MUI styles
@@ -13,10 +12,11 @@ import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
 
 // Utils
-import { PAGE404_HELMET } from "../../utils/Constants";
+import { EDISPATCHED } from "../../utils/Constants";
 
 // Custom
-import CustomButton from "../../forms/button";
+import CustomButton from "../../forms/button/CustomButton";
+import HelmetComponent from "../../components/helmet/HelmetComponent";
 
 // Assets
 import Svg404 from "../../assets/svg/404";
@@ -37,9 +37,7 @@ const Page404 = () => {
   const navigate =  useNavigate();
   return (
     <>
-      <Helmet>
-        <title>{PAGE404_HELMET}</title>
-      </Helmet>
+      <HelmetComponent title={`${EDISPATCHED} | 404 Page Not Found`} />
 
       <Container>
         <StyledContent>

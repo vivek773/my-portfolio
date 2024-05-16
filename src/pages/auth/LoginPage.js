@@ -2,6 +2,7 @@
 
 // Default
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 // Formik
 import { useFormik } from "formik";
@@ -17,14 +18,18 @@ import Link from "@mui/material/Link";
 import { styled } from "@mui/material/styles";
 
 // Custom
-import CustomInput from "../../forms/input";
-import CustomIcon from "../../components/icon";
-import CustomButton from "../../forms/button";
-import MainHelmet from "../../components/helmet";
+import CustomInput from "../../forms/input/CustomInput";
+import CustomIconComponent from "../../components/icon/CustomIconComponent";
+import CustomButton from "../../forms/button/CustomButton";
+import HelmetComponent from "../../components/helmet/HelmetComponent";
+
+// Redux
+import { useDispatch } from "react-redux";
+import { loginUser } from "../../store/features/AuthSlice";
 
 // Utils
-import { LOGIN_HELMET, SIGNUP } from "../../utils/Constants";
-import { fetchPOSTRequest } from "../../utils/services";
+import { EDISPATCHED } from "../../utils/Constants";
+import { fetchPOSTRequest } from "../../utils/Services";
 
 // Assets
 import LOGO from "../../assets/images/logo-1024.png";
@@ -43,10 +48,12 @@ const StyledContent = styled("div")(({ theme }) => ({
   padding: theme.spacing(8, 0),
 }));
 
-const Login = () => {
+const LoginPage = () => {
   const [showPassword, setShowPassword] = useState(false);
   const { setToast } = useToast();
   const { isLoading, startLoading, stopLoading } = useLoader();
+  const dispatch = useDispatch();
+  const navigate =  useNavigate();
 
   const validationSchema = Yup.object({
     email: Yup.string()
@@ -64,6 +71,7 @@ const Login = () => {
     onSubmit: async (values) => {
       startLoading();
       const response = await fetchPOSTRequest(`/auth/login`, values);
+      console.log(response);
       if (response?.statusCode === 200 && response) {
         setToast({
           open: true,
@@ -71,6 +79,9 @@ const Login = () => {
           severity: "success",
         });
         stopLoading();
+        dispatch(loginUser(response))
+        navigate(`/fleet`);
+        formik.resetForm();
       } else {
         setToast({
           open: true,
@@ -84,7 +95,7 @@ const Login = () => {
 
   return (
     <>
-      <MainHelmet title={LOGIN_HELMET} />
+      <HelmetComponent title={`${EDISPATCHED} | Login`} />
         
       <Container maxWidth="sm">
         <StyledContent>
@@ -106,7 +117,7 @@ const Login = () => {
 
           <Typography variant="body2" sx={{ mb: 5 }}>
             Don’t have an account? {""}
-            <Link href={SIGNUP} variant="subtitle2">
+            <Link href={"register"} variant="subtitle2">
               Get started
             </Link>
           </Typography>
@@ -126,7 +137,7 @@ const Login = () => {
               value={formik.values.password}
               onChange={formik.handleChange}
               icon={
-                <CustomIcon
+                <CustomIconComponent
                   icon={showPassword ? "eva:eye-fill" : "eva:eye-off-fill"}
                 />
               }
@@ -159,4 +170,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default LoginPage;

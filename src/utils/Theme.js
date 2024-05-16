@@ -112,7 +112,7 @@ const theme = createTheme({
       fontWeight: "bold",
       lineHeight: 22 / 14,
       fontSize: pxToRem(14),
-      color: `${FONT_COLOR.LINK} !important`,
+      // color: `${FONT_COLOR.LINK} !important`,
     },
     body1: {
       lineHeight: 1.5,

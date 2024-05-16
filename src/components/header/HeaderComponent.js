@@ -11,9 +11,12 @@ import IconButton from "@mui/material/IconButton";
 import { styled } from "@mui/material/styles";
 import { bgBlur } from "../../utils/Theme";
 
+// Redux
+import { useSelector } from "react-redux";
+
 // Custom
-import CustomIcon from "../icon";
-import AccountPopover from "./AccountPopover";
+import CustomIconComponent from "../icon/CustomIconComponent";
+import AccountPopoverComponent from "./AccountPopoverComponent";
 
 const NAV_WIDTH = 280;
 
@@ -37,8 +40,10 @@ const StyledToolbar = styled(Toolbar)(({ theme }) => ({
   },
 }));
 
-const Header = ({ onOpenNav }) => {
-  // const { business } = useSelector((state) => state.business);
+const HeaderComponent = ({ onOpenNav }) => {
+
+  const auth = useSelector((state) => state.auth)
+
   return (
     <StyledRoot>
       <StyledToolbar>
@@ -50,10 +55,9 @@ const Header = ({ onOpenNav }) => {
             display: { lg: "none" },
           }}
         >
-          <CustomIcon icon="eva:menu-2-fill" />
+          <CustomIconComponent icon="eva:menu-2-fill" />
         </IconButton>
-        {/* <h1 style={{ color: "#637381" }}>{business.name}</h1> */}
-        <h1 style={{ color: "#637381" }}>EDispatched Dev</h1>
+        <h1 style={{ color: "#637381" }}>{auth?.business_name}</h1>
         <Box sx={{ flexGrow: 1 }} />
         <Stack
           direction="row"
@@ -63,10 +67,10 @@ const Header = ({ onOpenNav }) => {
             sm: 1,
           }}
         >
-          <AccountPopover />
+          <AccountPopoverComponent auth={auth}/>
         </Stack>
       </StyledToolbar>
     </StyledRoot>
   );
 }
-export default Header;
+export default HeaderComponent;
