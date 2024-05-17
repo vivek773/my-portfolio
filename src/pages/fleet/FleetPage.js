@@ -17,7 +17,7 @@ import { EDISPATCHED } from "../../utils/Constants";
 import HelmetComponent from "../../components/helmet/HelmetComponent";
 import CustomButton from "../../forms/button/CustomButton";
 import FleetCardComponent from "../../components/fleet/FleetCardComponent";
-import { fetchGETRequest } from "../../utils/services";
+import { fetchGETRequest } from "../../utils/Services";
 import SpinnerComponent from "../../components/spinner/SpinnerComponent";
 
 // Context

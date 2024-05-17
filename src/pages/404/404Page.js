@@ -24,7 +24,7 @@ import Svg404 from "../../assets/svg/404";
 const StyledContent = styled("div")(({ theme }) => ({
   maxWidth: 480,
   margin: "auto",
-  minHeight: "100vh",
+  // minHeight: "100vh",
   display: "flex",
   justifyContent: "center",
   flexDirection: "column",

@@ -13,19 +13,19 @@ import Tab from "@mui/material/Tab";
 import Tabs from "@mui/material/Tabs";
 
 // Custom
-import FleetDetailComponent from "../fleet/FleetDetailComponent";
+import FleetDetailComponent from "./detail/FleetDetailComponent";
 
-const DetailComponent = () => {
+const PlaneDetailComponent = () => {
   const navigate = useNavigate();
-  const [value, setValue] = useState("Fleet");
+  const [value, setValue] = useState("Detail");
 
   const tabDetailContent = () => {
     switch (value) {
-      case "Fleet":
+      case "Detail":
         return <FleetDetailComponent />;
       case "Maintenance Logs":
         return null;
-      case "People":
+      case "Airworthiness Directives":
         return null;
       default:
         return null;
@@ -53,13 +53,13 @@ const DetailComponent = () => {
           onChange={(_, newValue) => setValue(newValue)}
           centered
         >
-          <Tab value="Fleet" label="Fleet" sx={{ textTransform: "none" }} />
+          <Tab value="Detail" label="Detail" sx={{ textTransform: "none" }} />
           <Tab
             value="Maintenance Logs"
             label="Maintenance Logs"
             sx={{ textTransform: "none" }}
           />
-          <Tab value="People" label="People" sx={{ textTransform: "none" }} />
+          <Tab value="Airworthiness Directives" label="Airworthiness Directives" sx={{ textTransform: "none" }} />
         </Tabs>
       </Box>
 
@@ -69,4 +69,4 @@ const DetailComponent = () => {
   );
 };
 
-export default DetailComponent;
+export default PlaneDetailComponent;

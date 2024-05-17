@@ -19,7 +19,7 @@ import LOGO from "../../assets/images/logo-1024.png";
 import ScrollbarComponent from "../scrollbar/ScrollbarComponent";
 
 // Utils
-import { ADMIN_CONFIG } from "../../utils/config";
+import { ADMIN_CONFIG } from "../../utils/Config";
 import { NAV_LIST } from "../../utils/Color";
 
 // hooks
