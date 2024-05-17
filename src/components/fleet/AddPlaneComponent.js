@@ -18,12 +18,15 @@ import { useToast } from "../../context/ToastContext";
 import { useLoader } from "../../context/LoaderContext";
 
 // Utils
-import {  fetchPOSTRequest } from "../../utils/Services";
+import { fetchPOSTRequest } from "../../utils/services";
 
 const AddPlaneComponent = () => {
   const { setToast } = useToast();
   const { isLoading, startLoading, stopLoading } = useLoader();
-  const CATEGORY_OPTIONS = [{ label: "ASEL" , value: "airplane_single_engine_land"}, { label: "AMEL", value: "airplane_multi_engine_land"}];
+  const CATEGORY_OPTIONS = [
+    { label: "ASEL", value: "airplane_single_engine_land" },
+    { label: "AMEL", value: "airplane_multi_engine_land" },
+  ];
 
   const validationSchema = Yup.object({
     tail_number: Yup.string().required("Tail number is required."),
@@ -38,7 +41,9 @@ const AddPlaneComponent = () => {
     category: Yup.object({
       label: Yup.string(),
       value: Yup.string(),
-    }).nullable().required('Category is required'),
+    })
+      .nullable()
+      .required("Category is required"),
     hobbs: Yup.string().required("Hobbs in required."),
     tach_engine_one: Yup.string().required("Tach engine one in required."),
     tach_engine_two: Yup.string()
@@ -72,7 +77,7 @@ const AddPlaneComponent = () => {
     validationSchema: validationSchema,
     onSubmit: async (values) => {
       startLoading();
-      values["category"] = values["category"].value
+      values["category"] = values["category"].value;
 
       const response = await fetchPOSTRequest(`/fleet/owner/add-plane`, values);
       if (response?.statusCode === 200 && response) {
@@ -94,8 +99,6 @@ const AddPlaneComponent = () => {
       }
     },
   });
-
-
 
   return (
     <Container maxWidth="sm">

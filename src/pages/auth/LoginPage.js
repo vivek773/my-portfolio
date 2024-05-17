@@ -29,7 +29,7 @@ import { loginUser } from "../../store/features/AuthSlice";
 
 // Utils
 import { EDISPATCHED } from "../../utils/Constants";
-import { fetchPOSTRequest } from "../../utils/Services";
+import { fetchPOSTRequest } from "../../utils/services";
 
 // Assets
 import LOGO from "../../assets/images/logo-1024.png";
@@ -53,7 +53,7 @@ const LoginPage = () => {
   const { setToast } = useToast();
   const { isLoading, startLoading, stopLoading } = useLoader();
   const dispatch = useDispatch();
-  const navigate =  useNavigate();
+  const navigate = useNavigate();
 
   const validationSchema = Yup.object({
     email: Yup.string()
@@ -79,7 +79,7 @@ const LoginPage = () => {
           severity: "success",
         });
         stopLoading();
-        dispatch(loginUser(response))
+        dispatch(loginUser(response));
         navigate(`/fleet`);
         formik.resetForm();
       } else {
@@ -96,7 +96,7 @@ const LoginPage = () => {
   return (
     <>
       <HelmetComponent title={`${EDISPATCHED} | Login`} />
-        
+
       <Container maxWidth="sm">
         <StyledContent>
           <Box display={"flex"} justifyContent={"center"} alignItems={"center"}>
