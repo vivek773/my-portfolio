@@ -19,12 +19,11 @@ import LOGO from "../../assets/images/logo-1024.png";
 import ScrollbarComponent from "../scrollbar/ScrollbarComponent";
 
 // Utils
-import { ADMIN_CONFIG } from "../../utils/Config";
+import { ADMIN_CONFIG } from "../../utils/config";
 import { NAV_LIST } from "../../utils/Color";
 
 // hooks
 import useResponsive from "../../hooks/useResponsive";
-
 
 const SidebarComponent = ({ openNav, onCloseNav }) => {
   const NAV_WIDTH = 280;
@@ -91,7 +90,10 @@ const SidebarComponent = ({ openNav, onCloseNav }) => {
                     fontSize: "14px",
                     mt: 0.5,
                     mb: 0.5,
-                    color: isActive === index ? NAV_LIST.selectedNavColor : NAV_LIST.navColor,
+                    color:
+                      isActive === index
+                        ? NAV_LIST.selectedNavColor
+                        : NAV_LIST.navColor,
                     fontWeight: isActive === index ? 700 : 500,
                   }}
                 >
