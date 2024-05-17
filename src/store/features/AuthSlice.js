@@ -26,21 +26,22 @@ const auth = createSlice({
         business_name,
         email,
       } = action.payload;
-      (state.webAccessToken = webAccessToken),
-        (state.first_name = first_name),
-        (state.last_name = last_name),
-        (state.user_id = user_id),
-        (state.tenant_id = tenant_id),
-        (state.business_name = business_name);
+
+      state.webAccessToken = webAccessToken;
+      state.first_name = first_name;
+      state.last_name = last_name;
+      state.user_id = user_id;
+      state.tenant_id = tenant_id;
+      state.business_name = business_name;
       state.email = email;
     },
     resetUser: (state) => {
-      (state.webAccessToken = initialState.webAccessToken),
-        (state.first_name = initialState.first_name),
-        (state.last_name = initialState.last_name),
-        (state.user_id = initialState.user_id),
-        (state.tenant_id = initialState.tenant_id),
-        (state.business_name = initialState.business_name);
+      state.webAccessToken = initialState.webAccessToken;
+      state.first_name = initialState.first_name;
+      state.last_name = initialState.last_name;
+      state.user_id = initialState.user_id;
+      state.tenant_id = initialState.tenant_id;
+      state.business_name = initialState.business_name;
       state.email = initialState.email;
     },
   },
