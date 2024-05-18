@@ -16,9 +16,9 @@ import CustomSelect from "../../forms/select/CustomSelect";
 // Context
 import { useToast } from "../../context/ToastContext";
 import { useLoader } from "../../context/LoaderContext";
+import { fetchPOSTRequest } from "../../utils/Services";
 
 // Utils
-import { fetchPOSTRequest } from "../../utils/Services";
 
 const AddPlaneComponent = () => {
   const { setToast } = useToast();
@@ -110,7 +110,7 @@ const AddPlaneComponent = () => {
               name="tail_number"
               value={formik.values.tail_number}
               label="Tail Number"
-              onChange={formik.handleChange} 
+              onChange={formik.handleChange}
               formik={formik}
               required={true}
             />
@@ -118,7 +118,7 @@ const AddPlaneComponent = () => {
               name="home_based_airport"
               value={formik.values.home_based_airport}
               label="Home Based Airport"
-              onChange={formik.handleChange} 
+              onChange={formik.handleChange}
               formik={formik}
               required={true}
             />
@@ -126,7 +126,7 @@ const AddPlaneComponent = () => {
               name="year"
               label="Year"
               value={formik.values.year}
-              onChange={formik.handleChange} 
+              onChange={formik.handleChange}
               formik={formik}
               required={true}
             />
@@ -134,7 +134,7 @@ const AddPlaneComponent = () => {
               name="make"
               label="Make"
               value={formik.values.make}
-              onChange={formik.handleChange} 
+              onChange={formik.handleChange}
               formik={formik}
               required={true}
             />
@@ -142,7 +142,7 @@ const AddPlaneComponent = () => {
               name="model"
               label="Model"
               value={formik.values.model}
-              onChange={formik.handleChange} 
+              onChange={formik.handleChange}
               formik={formik}
               required={true}
             />
@@ -151,14 +151,14 @@ const AddPlaneComponent = () => {
               label="Number Of Seats"
               type="number"
               value={formik.values.number_of_seats}
-              onChange={formik.handleChange} 
+              onChange={formik.handleChange}
               formik={formik}
             />
             <CustomInput
               name="hourly_rate"
               label="Hourly Rate"
               value={formik.values.hourly_rate}
-              onChange={formik.handleChange} 
+              onChange={formik.handleChange}
               formik={formik}
             />
             <CustomSelect
@@ -176,7 +176,7 @@ const AddPlaneComponent = () => {
               label="Hobbs"
               type="number"
               value={formik.values.hobbs}
-              onChange={formik.handleChange} 
+              onChange={formik.handleChange}
               formik={formik}
             />
             <CustomInput
@@ -184,7 +184,7 @@ const AddPlaneComponent = () => {
               label="Tach Engine One"
               type="number"
               value={formik.values.tach_engine_one}
-              onChange={formik.handleChange} 
+              onChange={formik.handleChange}
               formik={formik}
             />
             {formik.values.category["label"] === "AMEL" && (
@@ -193,7 +193,7 @@ const AddPlaneComponent = () => {
                 label="Tach Engine Two"
                 type="number"
                 value={formik.values.tach_engine_two}
-                onChange={formik.handleChange} 
+                onChange={formik.handleChange}
                 formik={formik}
               />
             )}
@@ -202,7 +202,7 @@ const AddPlaneComponent = () => {
               label="Cruise Speed kts"
               type="number"
               value={formik.values.cruise_speed_kts}
-              onChange={formik.handleChange} 
+              onChange={formik.handleChange}
               formik={formik}
             />
             {/* <CustomInput
