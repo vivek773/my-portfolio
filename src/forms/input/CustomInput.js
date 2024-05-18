@@ -28,6 +28,15 @@ const useStyles = makeStyles(() => ({
       },
     },
   },
+  inputNumber: {
+    "& input[type=number]": {
+      "-moz-appearance": "textfield",
+      "&::-webkit-outer-spin-button, &::-webkit-inner-spin-button": {
+        "-webkit-appearance": "none",
+        margin: 0,
+      },
+    },
+  },
 }));
 
 const CustomInput = ({
@@ -65,7 +74,7 @@ const CustomInput = ({
           </InputAdornment>
         ) : null,
       }}
-      className={classes.root}
+      className={`${classes.root} ${type === 'number' ? classes.inputNumber : ''}`}
     />
   );
 };

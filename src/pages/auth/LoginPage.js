@@ -29,7 +29,7 @@ import { loginUser } from "../../store/features/AuthSlice";
 
 // Utils
 import { EDISPATCHED } from "../../utils/Constants";
-import { fetchPOSTRequest } from "../../utils/services";
+import { fetchPOSTRequest } from "../../utils/Services";
 
 // Assets
 import LOGO from "../../assets/images/logo-1024.png";
