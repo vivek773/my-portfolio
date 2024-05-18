@@ -1,11 +1,12 @@
 // Fleet Details page
 
 // Default
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 
 // MUI components
 import Container from "@mui/material/Container";
+import Box from "@mui/material/Box";
 
 // Custom
 import GroundSectionComponent from "./GroundSectionComponent";
@@ -13,6 +14,7 @@ import DetailsSectionComponent from "./DetailsSectionComponent";
 import DocumentsSectionComponent from "./DocumentsSectionComponent";
 import HobbsAndTachSectionsComponent from "./HobbsAndTachSectionComponent";
 import MaintenanceSectionComponent from "./MaitenanceSectionComponent";
+import Spinner from "../../../components/spinner/SpinnerComponent";
 
 // Redux
 import {
@@ -26,11 +28,13 @@ import { useDispatch } from "react-redux";
 import { fetchGETRequest } from "../../../utils/Services";
 
 const FleetDetailComponent = () => {
+  const [isLoading, setIsLoading] = useState(false);
   const { state } = useLocation();
   const dispatch = useDispatch();
 
   useEffect(() => {
     const getPlanData = async () => {
+      setIsLoading(true);
       const response = await fetchGETRequest(
         `/fleet/owner/get-plane/${state.tail_number}`,
         {}
@@ -42,7 +46,9 @@ const FleetDetailComponent = () => {
         dispatch(setFleetDetails(rest));
         dispatch(setMaintenanceLogs(maintenance_logs));
         dispatch(setAirworthinessDirectives(airworthiness_directives));
+        setIsLoading(false);
       } else {
+        setIsLoading(false);
       }
     };
 
@@ -52,13 +58,19 @@ const FleetDetailComponent = () => {
 
   return (
     <Container maxWidth="lg">
-      <>
-        <GroundSectionComponent />
-        <DetailsSectionComponent />
-        <DocumentsSectionComponent />
-        <HobbsAndTachSectionsComponent />
-        <MaintenanceSectionComponent />
-      </>
+      {isLoading ? (
+        <Box mt={5}>
+          <Spinner />
+        </Box>
+      ) : (
+        <>
+          <GroundSectionComponent />
+          <DetailsSectionComponent />
+          <DocumentsSectionComponent />
+          <HobbsAndTachSectionsComponent />
+          <MaintenanceSectionComponent />
+        </>
+      )}
     </Container>
   );
 };

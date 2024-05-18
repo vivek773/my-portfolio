@@ -248,6 +248,7 @@ const DetailsSectionModal = ({ detailsItems, setDetailsItems }) => {
           <CustomInput
             name="hourly_rate"
             label="Hourly Rate"
+            type="number"
             value={formik.values.hourly_rate}
             onChange={formik.handleChange}
             formik={formik}
