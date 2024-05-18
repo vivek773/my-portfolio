@@ -60,7 +60,7 @@ const FleetDetailComponent = () => {
     <Container maxWidth="lg">
       {isLoading ? (
         <Box mt={5}>
-          <Spinner />
+          <Spinner show={isLoading}/>
         </Box>
       ) : (
         <>
