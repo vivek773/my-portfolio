@@ -7,9 +7,11 @@ import storage from "redux-persist/lib/storage";
 
 // Slices
 import authReducer from "./features/AuthSlice";
+import fleetReducer from  "./features/FleetSlice";
 
 const rootReducer = combineReducers({
   auth: authReducer,
+  fleet: fleetReducer,
 });
 
 const persistConfig = {

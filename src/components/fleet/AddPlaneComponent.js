@@ -83,7 +83,7 @@ const AddPlaneComponent = () => {
       if (response?.statusCode === 200 && response) {
         setToast({
           open: true,
-          message: response?.message,
+          message: response?.Message,
           severity: "success",
         });
         stopLoading();
@@ -91,7 +91,7 @@ const AddPlaneComponent = () => {
       } else {
         setToast({
           open: true,
-          message: response?.message,
+          message: response?.Message,
           severity: "error",
         });
         stopLoading();
@@ -187,7 +187,7 @@ const AddPlaneComponent = () => {
               onChange={formik.handleChange} 
               formik={formik}
             />
-            {formik.values.category === "AMEL" && (
+            {formik.values.category["label"] === "AMEL" && (
               <CustomInput
                 name="tach_engine_two"
                 label="Tach Engine Two"

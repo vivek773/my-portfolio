@@ -24,7 +24,6 @@ const FleetCardComponent = ({
   tach,
   standard_hourly_rate,
   status,
-  allFleetData,
   sx,
 }) => {
   const navigate = useNavigate();
