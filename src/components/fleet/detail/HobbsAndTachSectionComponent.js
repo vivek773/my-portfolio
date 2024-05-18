@@ -29,16 +29,19 @@ const PricingSectionComponent = () => {
   useEffect(() => {
     const items = [
       {
+        key: "hobbs",
         label: "Hobbs",
-        value: fleet.details.hobbs ?? "-",
+        value: fleet.details.hobbs,
       },
       {
+        key: "tach_engine_one",
         label: "Tach Engine One",
-        value: fleet.details.tach_engine_one ?? "-",
+        value: fleet.details.tach_engine_one,
       },
     ];
     if (fleet.details.category === "airplane_multi_engine_land") {
       items.push({
+        key: "tach_engine_two",
         label: "Tach Engine Two",
         value: fleet.details.tach_engine_two ?? "-",
       });
@@ -74,7 +77,7 @@ const PricingSectionComponent = () => {
         </Grid>
       }
     />
-    <HobbsAndTachSectionModal />
+    <HobbsAndTachSectionModal hobbsItems={hobbsItems} setHobbsItems={setHobbsItems}/>
     </>
   );
 };

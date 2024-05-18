@@ -2,7 +2,6 @@
 
 // Default
 import { useFormik } from "formik";
-import * as Yup from "yup";
 
 // MUI components
 import Stack from "@mui/material/Stack";
@@ -15,19 +14,18 @@ import { useModal } from "../../../../context/ModalContext";
 import CustomInput from "../../../../forms/input/CustomInput";
 import CustomButton from "../../../../forms/button/CustomButton";
 
-const PricingSectionModal = () => {
-  const { isModal } = useModal();
+const HobbsAndTachSectionModal = ({ hobbsItems, setHobbsItems }) => {
+  const { isModal, closeModal } = useModal();
 
-  const validationSchema = Yup.object({
-    hobbs: Yup.string().required("Hobbs is required."),
-  });
 
   const formik = useFormik({
     initialValues: {
       hobbs: "",
+      tach_engine_one: "",
     },
-    validationSchema: validationSchema,
-    onSubmit: async (values) => {},
+    onSubmit: async (values) => {
+      closeModal()
+    },
   });
 
   return (
@@ -41,6 +39,14 @@ const PricingSectionModal = () => {
             label="Hobbs"
             type="number"
             value={formik.values.hobbs}
+            onChange={formik.handleChange}
+            formik={formik}
+          />
+          <CustomInput
+            name="tach_engine_one"
+            label="Tach Engine One"
+            type="number"
+            value={formik.values.tach_engine_one}
             onChange={formik.handleChange}
             formik={formik}
           />
@@ -60,4 +66,4 @@ const PricingSectionModal = () => {
   );
 };
 
-export default PricingSectionModal;
+export default HobbsAndTachSectionModal;

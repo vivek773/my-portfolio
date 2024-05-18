@@ -124,7 +124,6 @@ const MaintenanceSectionModal = ({ maintenanceItems, setMaintenanceItems }) => {
     // eslint-disable-next-line
   }, [maintenanceItems]);
 
-  console.log(formik.values);
 
   return (
     <Modal

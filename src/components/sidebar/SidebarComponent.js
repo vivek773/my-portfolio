@@ -62,7 +62,7 @@ const SidebarComponent = ({ openNav, onCloseNav }) => {
       <Box sx={{ mb: 5, padding: "8px" }}>
         {ADMIN_CONFIG.map((config, index) => {
           return (
-            <List sx={{ p: 0, height: "48px" }}>
+            <List sx={{ p: 0, height: "48px" }} key={config.path}>
               <ListItem
                 button
                 key={config.title}
