@@ -10,11 +10,12 @@ const getStoreData = () => {
 const encodeQueryString = (params) => {
   const keys = Object.keys(params);
   const queryString = keys
-    .map(key => `${encodeURIComponent(key)}=${encodeURIComponent(params[key])}`)
-    .join('&');
-  return keys.length ? `?${queryString}` : '';
+    .map(
+      (key) => `${encodeURIComponent(key)}=${encodeURIComponent(params[key])}`
+    )
+    .join("&");
+  return keys.length ? `?${queryString}` : "";
 };
-
 
 const handleRequest = async (method, URL, body) => {
   const { webAccessToken, tenant_id, user_id } = getStoreData();
@@ -26,12 +27,16 @@ const handleRequest = async (method, URL, body) => {
       headers["user_id"] = user_id;
     }
     // headers["Content-Type"] = "application/json";
-    const response = await method(BASE_API_URL + URL, (method === axios.get) ? { headers } : body, { headers });
+    const response = await method(
+      BASE_API_URL + URL,
+      method === axios.get ? { headers } : body,
+      { headers }
+    );
     return response.data;
   } catch (error) {
-    console.log(error,"error");
+    console.log(error, "error");
     return error;
-  } 
+  }
 };
 
 export const fetchGETRequest = async (URL, body = {}) => {
