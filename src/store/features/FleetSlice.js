@@ -12,6 +12,9 @@ const fleet = createSlice({
   name: "fleet",
   initialState,
   reducers: {
+    setTailNumber: (state, action) => {
+      state.tail_number = action.payload
+    },
     setFleetDetails: (state, action) => {
       state.details = action.payload;
     },
@@ -24,5 +27,5 @@ const fleet = createSlice({
   },
 });
 
-export const { setFleetDetails, setMaintenanceLogs, setAirworthinessDirectives } = fleet.actions;
+export const { setTailNumber, setFleetDetails, setMaintenanceLogs, setAirworthinessDirectives } = fleet.actions;
 export default fleet.reducer;

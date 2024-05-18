@@ -2,7 +2,7 @@
 
 // Default
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 
 // MUI components
 import Box from "@mui/material/Box";
@@ -14,8 +14,10 @@ import Tabs from "@mui/material/Tabs";
 
 // Custom
 import FleetDetailComponent from "./detail/FleetDetailComponent";
+import AirworthinessSectionComponent from "./airworthiness/AirworthinessSectionComponent";
 
 const PlaneDetailComponent = () => {
+  const { state } = useLocation()
   const navigate = useNavigate();
   const [value, setValue] = useState("Detail");
 
@@ -26,7 +28,7 @@ const PlaneDetailComponent = () => {
       case "Maintenance Logs":
         return null;
       case "Airworthiness Directives":
-        return null;
+        return <AirworthinessSectionComponent />;
       default:
         return null;
     }
@@ -34,36 +36,35 @@ const PlaneDetailComponent = () => {
 
   return (
     <>
-    <Box
-      display={"flex"}
-      justifyContent={"space-between"}
-      alignItems={"center"}
-    >
-      <Box display={"flex"} gap={1} alignItems={"center"}>
-        <IconButton onClick={() => navigate(-1)}>
-          <ArrowBackIosNewIcon color="#000" />
-        </IconButton>
-        {/* <Typography variant="h4">{allData.tail_number}</Typography> */}
-        <Typography variant="h4">Kc12345</Typography>
-      </Box>
+      <Box
+        display={"flex"}
+        justifyContent={"space-between"}
+        alignItems={"center"}
+      >
+        <Box display={"flex"} gap={1} alignItems={"center"}>
+          <IconButton onClick={() => navigate(-1)}>
+            <ArrowBackIosNewIcon color="#000" />
+          </IconButton>
+          <Typography variant="h4">{state?.tail_number}</Typography>
+        </Box>
 
-      <Box sx={{ bgcolor: "background.paper" }}>
-        <Tabs
-          value={value}
-          onChange={(_, newValue) => setValue(newValue)}
-          centered
-        >
-          <Tab value="Detail" label="Detail" sx={{ textTransform: "none" }} />
-          <Tab
-            value="Maintenance Logs"
-            label="Maintenance Logs"
-            sx={{ textTransform: "none" }}
-          />
-          <Tab value="Airworthiness Directives" label="Airworthiness Directives" sx={{ textTransform: "none" }} />
-        </Tabs>
-      </Box>
+        <Box sx={{ bgcolor: "background.paper" }}>
+          <Tabs
+            value={value}
+            onChange={(_, newValue) => setValue(newValue)}
+            centered
+          >
+            <Tab value="Detail" label="Detail" sx={{ textTransform: "none" }} />
+            <Tab
+              value="Maintenance Logs"
+              label="Maintenance Logs"
+              sx={{ textTransform: "none" }}
+            />
+            <Tab value="Airworthiness Directives" label="Airworthiness Directives" sx={{ textTransform: "none" }} />
+          </Tabs>
+        </Box>
 
-    </Box>
+      </Box>
       <>{tabDetailContent()}</>
     </>
   );
