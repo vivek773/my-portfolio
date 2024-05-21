@@ -23,3 +23,9 @@ export const CHIP = {
   danger: "#ff4842",
   info: "#1890ff",
 };
+
+
+export const TABLE = {
+  headBgColor: "#f4f6f8",
+  headTextColor: "#637381"
+}

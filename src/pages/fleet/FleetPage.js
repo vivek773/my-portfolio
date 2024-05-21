@@ -37,6 +37,7 @@ const FleetPage = () => {
       }
     };
     getFleetData();
+    // eslint-disable-next-line
   }, []);
 
   return (

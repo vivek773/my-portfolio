@@ -2,7 +2,7 @@
 
 // Default
 import { useState } from "react";
-import { useNavigate, useLocation } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 // MUI components
 import Box from "@mui/material/Box";
@@ -12,15 +12,18 @@ import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew";
 import Tab from "@mui/material/Tab";
 import Tabs from "@mui/material/Tabs";
 
+// Redux 
+import { useSelector } from "react-redux";
+
 // Custom
 import FleetDetailComponent from "./detail/FleetDetailComponent";
 import AirworthinessSectionComponent from "./airworthiness/AirworthinessSectionComponent";
 
 const PlaneDetailComponent = () => {
-  const { state } = useLocation()
   const navigate = useNavigate();
   const [value, setValue] = useState("Detail");
-
+  const fleet = useSelector((state) => state.fleet)
+ 
   const tabDetailContent = () => {
     switch (value) {
       case "Detail":
@@ -45,7 +48,7 @@ const PlaneDetailComponent = () => {
           <IconButton onClick={() => navigate(-1)}>
             <ArrowBackIosNewIcon color="#000" />
           </IconButton>
-          <Typography variant="h4">{state?.tail_number}</Typography>
+          <Typography variant="h4">{fleet?.tail_number}</Typography>
         </Box>
 
         <Box sx={{ bgcolor: "background.paper" }}>

@@ -11,6 +11,7 @@ import DashboardLayout from "./layout/layout";
 import FleetPage from "./pages/fleet/FleetPage";
 import AddPlaneComponent from "./components/fleet/AddPlaneComponent";
 import PlaneDetailComponent from "./components/fleet/PlaneDetailComponent";
+import AddAirworthinessComponent from "./components/fleet/airworthiness/AddAirworthinessComponent"
 
 // Protected Routes
 import ProtectedRoute from "./protectedroute/ProtectedRoute";
@@ -35,6 +36,10 @@ const MainRouter = () => {
         <Route
           path="/fleet/:id"
           element={wrapWithProtectedRoute(<PlaneDetailComponent />)}
+        />
+        <Route
+          path="/fleet/:id/create-airworthiness"
+          element={wrapWithProtectedRoute(<AddAirworthinessComponent />)}
         />
         <Route
           path="/settings"

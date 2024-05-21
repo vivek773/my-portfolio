@@ -11,7 +11,7 @@ const CustomButton = ({
   variant = "contained",
   size,
   width,
-  bgColor,
+  bgColor = "#479DE1",
   hoverBgColor,
   component,
   to,
