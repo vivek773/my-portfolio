@@ -37,7 +37,7 @@ const BusinessSettingsForCustomerCardComponent = ({ settings, onEdit }) => {
   const renderSettingValue = (value) => {
     switch (typeof value) {
       case "boolean":
-        return value ? "True" : "False";
+        return value ? "Yes" : "No";
       case "number":
         return value;
       default:
@@ -68,7 +68,7 @@ const BusinessSettingsForCustomerCardComponent = ({ settings, onEdit }) => {
         <CardContent className={classes.cardContentRoot}>
           <Grid container spacing={{ xs: 5, md: 3 }} columns={{ md: 12 }}>
             {Object.entries(settings).map(([key, value], i) => (
-              <Grid item key={i} xs={3}>
+              <Grid item key={i} xs={4}>
                 <Typography variant="subtitle1" className={classes.detailLabel}>
                   {key.split("_").join(" ")}:
                 </Typography>

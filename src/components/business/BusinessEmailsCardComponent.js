@@ -17,7 +17,10 @@ const useStyles = makeStyles(() => ({
     boxShadow: "none !important",
     borderRadius: "10px !important",
   },
-  headerTitle: { alignItems: "center", display: "flex" },
+  headerTitle: {
+    alignItems: "center",
+    display: "flex",
+  },
   cardHeaderRoot: {
     background: "#f2f5f7",
     borderBottom: "1px solid #ddd",
@@ -26,13 +29,17 @@ const useStyles = makeStyles(() => ({
   cardContentRoot: {
     padding: "15px 25px !important",
   },
-  detailRow: {
-    display: "flex",
-    justifyContent: "space-between",
-    marginBottom: "8px",
+  detailItem: {
+    textAlign: "center",
   },
   detailLabel: {
     fontWeight: 600,
+    marginBottom: "8px",
+  },
+  centerGrid: {
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
   },
 }));
 
@@ -60,9 +67,24 @@ const BusinessEmailsCardComponent = ({ emails, onEdit }) => {
           }
         />
         <CardContent className={classes.cardContentRoot}>
-          <Typography variant="body2">
-            {emails ? JSON.stringify(emails) : "No emails available"}
-          </Typography>
+          <Grid container spacing={2} className={classes.centerGrid}>
+            <Grid item xs={6} className={classes.detailItem}>
+              <Typography variant="subtitle1" className={classes.detailLabel}>
+                Booking Email
+              </Typography>
+              <Typography variant="body1">
+                {emails?.booking_email || "-"}
+              </Typography>
+            </Grid>
+            <Grid item xs={6} className={classes.detailItem}>
+              <Typography variant="subtitle1" className={classes.detailLabel}>
+                Contact Email
+              </Typography>
+              <Typography variant="body1">
+                {emails?.contact_email || "-"}
+              </Typography>
+            </Grid>
+          </Grid>
         </CardContent>
       </Card>
     </Container>
