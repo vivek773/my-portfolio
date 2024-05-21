@@ -2,7 +2,7 @@
 import { createTheme, alpha } from "@mui/material/styles";
 
 // Utils
-import { FONT_PRIMARY, FONT_COLOR } from "./Color";
+import { FONT_PRIMARY, FONT_COLOR, TABLE } from "./Color";
 
 export function pxToRem(value) {
   return `${value / 16}rem`;
@@ -126,7 +126,16 @@ const theme = createTheme({
     },
   },
 
-  components: {},
+  components: {
+    MuiTableCell: {
+      styleOverrides: {
+        head: {
+          color: TABLE.headTextColor,
+          backgroundColor: TABLE.headBgColor,
+        },
+      },
+    },
+  },
 });
 
 export default theme;

@@ -33,23 +33,23 @@ const AddPlaneComponent = () => {
     home_based_airport: Yup.string().required(
       "Home based airport is required."
     ),
-    year: Yup.string().required("Year in required."),
-    make: Yup.string().required("Make in required."),
-    model: Yup.string().required("Model in required."),
-    number_of_seats: Yup.string().required("Number of seats in required."),
-    hourly_rate: Yup.string().required("Hourly rate in required."),
+    year: Yup.string().required("Year is required."),
+    make: Yup.string().required("Make is required."),
+    model: Yup.string().required("Model is required."),
+    number_of_seats: Yup.string().required("Number of seats is required."),
+    hourly_rate: Yup.string().required("Hourly rate is required."),
     category: Yup.object({
       label: Yup.string(),
       value: Yup.string(),
     })
       .nullable()
       .required("Category is required"),
-    hobbs: Yup.string().required("Hobbs in required."),
-    tach_engine_one: Yup.string().required("Tach engine one in required."),
+    hobbs: Yup.string().required("Hobbs is required."),
+    tach_engine_one: Yup.string().required("Tach engine one is required."),
     tach_engine_two: Yup.string()
-      .required("Tach engine two in required.")
+      .required("Tach engine two is required.")
       .optional(),
-    cruise_speed_kts: Yup.string().required("Cruise Speed kts in required."),
+    cruise_speed_kts: Yup.string().required("Cruise Speed kts is required."),
     // standardHourlyRate: Yup.string().required(
     //   "Standard hourly rate in required."
     // ),
