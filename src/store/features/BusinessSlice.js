@@ -60,6 +60,9 @@ const business = createSlice({
     setBusinessSettingsForEmployee: (state, action) => {
       state.business_settings_for_employee = action.payload;
     },
+    setBusinessState: (state, action) => {
+      return { ...state, ...action.payload };
+    },
   },
 });
 
@@ -77,5 +80,6 @@ export const {
   setMerchantAccountDetails,
   setBusinessSettingsForCustomer,
   setBusinessSettingsForEmployee,
+  setBusinessState,
 } = business.actions;
 export default business.reducer;
