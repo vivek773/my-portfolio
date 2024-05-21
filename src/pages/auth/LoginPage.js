@@ -37,6 +37,7 @@ import LOGO from "../../assets/images/logo-1024.png";
 // Context
 import { useLoader } from "../../context/LoaderContext";
 import { useToast } from "../../context/ToastContext";
+import { setBusinessName } from "../../store/features/BusinessSlice";
 
 const StyledContent = styled("div")(({ theme }) => ({
   margin: "auto",
@@ -71,7 +72,6 @@ const LoginPage = () => {
     onSubmit: async (values) => {
       startLoading();
       const response = await fetchPOSTRequest(`/auth/login`, values);
-      console.log(response);
       if (response?.statusCode === 200 && response) {
         setToast({
           open: true,
@@ -80,6 +80,7 @@ const LoginPage = () => {
         });
         stopLoading();
         dispatch(loginUser(response));
+        dispatch(setBusinessName(response?.business_name));
         navigate(`/fleet`);
         formik.resetForm();
       } else {

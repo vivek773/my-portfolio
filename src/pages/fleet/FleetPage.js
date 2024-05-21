@@ -32,7 +32,6 @@ const FleetPage = () => {
       startLoading();
       const response = await fetchGETRequest(`/fleet/owner/get-fleet`, {});
       if (response?.statusCode === 200 && response && response?.data) {
-        console.log(response.data);
         setFleetData(response?.data);
         stopLoading();
       }

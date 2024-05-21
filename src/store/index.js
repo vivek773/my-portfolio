@@ -1,17 +1,19 @@
 // Store
 
 import { combineReducers, configureStore } from "@reduxjs/toolkit";
-import {thunk} from "redux-thunk";
+import { thunk } from "redux-thunk";
 import { persistReducer, persistStore } from "redux-persist";
 import storage from "redux-persist/lib/storage";
 
 // Slices
 import authReducer from "./features/AuthSlice";
-import fleetReducer from  "./features/FleetSlice";
+import fleetReducer from "./features/FleetSlice";
+import businessReducer from "./features/BusinessSlice";
 
 const rootReducer = combineReducers({
   auth: authReducer,
   fleet: fleetReducer,
+  business: businessReducer,
 });
 
 const persistConfig = {

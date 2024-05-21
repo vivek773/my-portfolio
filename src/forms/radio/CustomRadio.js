@@ -15,7 +15,6 @@ const CustomRadio = ({
   required = false,
   radioOption,
 }) => {
-  console.log(value,"valuyeeeee");
   return (
     <FormControl>
       <FormLabel id="">{label}</FormLabel>
@@ -29,7 +28,7 @@ const CustomRadio = ({
         {radioOption.map((option) => {
           return (
             <FormControlLabel
-             key={option.value}
+              key={option.value}
               value={option.value}
               control={<Radio />}
               label={option.label}

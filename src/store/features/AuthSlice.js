@@ -16,7 +16,6 @@ const auth = createSlice({
   initialState,
   reducers: {
     loginUser: (state, action) => {
-      console.log(action.payload);
       const {
         webAccessToken,
         first_name,
