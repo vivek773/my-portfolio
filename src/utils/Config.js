@@ -53,8 +53,8 @@ export const ADMIN_CONFIG = [
     icon: <MonetizationOnIcon />,
   },
   {
-    title: "Business Settings",
-    path: "business-settings",
+    title: "Settings",
+    path: "settings",
     icon: <SettingsIcon />,
   },
   {

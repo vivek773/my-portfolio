@@ -14,6 +14,7 @@ import PlaneDetailComponent from "./components/fleet/PlaneDetailComponent";
 
 // Protected Routes
 import ProtectedRoute from "./protectedroute/ProtectedRoute";
+import SettingsPage from "./pages/settings/SettingsPage";
 
 const MainRouter = () => {
   const wrapWithProtectedRoute = (children) => {
@@ -34,6 +35,10 @@ const MainRouter = () => {
         <Route
           path="/fleet/:id"
           element={wrapWithProtectedRoute(<PlaneDetailComponent />)}
+        />
+        <Route
+          path="/settings"
+          element={wrapWithProtectedRoute(<SettingsPage />)}
         />
       </Route>
     </Routes>
