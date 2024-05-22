@@ -1,6 +1,6 @@
 import axios from "axios";
 import { BASE_API_URL } from "./Constants";
-import { store } from "../store/index";
+import { store } from "../store/store";
 
 const getStoreData = () => {
   const { webAccessToken, tenant_id, user_id } = store.getState().auth;
