@@ -162,7 +162,7 @@ const AddAirworthinessComponent = () => {
                 required={true}
               />
               <CustomButton
-                label={"Add Plane"}
+                label={"Add Airworthiness Directives"}
                 size={"large"}
                 onClick={formik.handleSubmit}
                 disabled={false}

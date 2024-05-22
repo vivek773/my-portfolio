@@ -53,3 +53,25 @@ export const fetchPUTRequest = async (URL, body = {}) => {
 export const fetchDELETERequest = async (URL, body = {}) => {
   return handleRequest(axios.delete, URL, body);
 };
+
+export const pdfDownloadRequest = async (URL, body = {}) => {
+  try {
+    const { webAccessToken, tenant_id, user_id } = getStoreData();
+
+    const response = await axios({
+      url: BASE_API_URL + URL,
+      method: "GET",
+      responseType: "blob",
+      headers: {
+        "Content-Type": "application/pdf",
+        Authorization: `Bearer ${webAccessToken}`,
+        tenant_id: tenant_id,
+        user_id: user_id
+      },
+    });
+
+    return response?.data;
+  } catch (error) {
+    return error?.response?.data;
+  }
+};

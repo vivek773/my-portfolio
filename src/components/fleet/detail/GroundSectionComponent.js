@@ -21,7 +21,6 @@ const GroundSectionComponent = () => {
           <Typography variant="subtitle1">Ground Plane?</Typography>
           <Switch
             checked={true}
-            onChange={(e) => console.log(e.target.value)}
             inputProps={{ "aria-label": "controlled" }}
           />
         </Stack>

@@ -28,7 +28,6 @@ function SettingsPage() {
         dispatch(setBusinessState(response.data));
         setIsLoading(false);
       } else {
-        console.log("FAILED: " + response.data);
         setIsLoading(false);
       }
     };
@@ -38,7 +37,6 @@ function SettingsPage() {
   }, [dispatch]);
 
   const handleEdit = () => {
-    console.log("Edit button clicked");
     // Implement edit functionality
   };
 
