@@ -34,7 +34,7 @@ const handleRequest = async (method, URL, body) => {
     );
     return response.data;
   } catch (error) {
-    return error;
+    return error?.response?.data;
   }
 };
 
