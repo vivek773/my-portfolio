@@ -1,5 +1,8 @@
 // Document section
 
+// Default
+import { useState } from "react";
+
 // MUI components
 import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
@@ -12,60 +15,174 @@ import CloudUploadIcon from "@mui/icons-material/CloudUpload";
 
 // Custom
 import FleetDetailCardComponent from "./FleetDetailCardComponent";
+import DocumentsSectionModal from "./detailModal/DocumentsSectionModal";
+import SpinnerComponent from "../../../components/spinner/SpinnerComponent";
+import PdfViewer from "../../pdfViewer/PdfViewer";
+
+// Redux
+import { useSelector } from "react-redux";
+
+// Context
+import { useModal } from "../../../context/ModalContext";
+import { useLoader } from "../../../context/LoaderContext";
+
+// Utils
+import { DOCUMENTS_TYPES } from "../../../utils/Constants";
+import { pdfDownloadRequest } from "../../../utils/Services";
 
 const DocumentsSectionComponent = () => {
-  
+  const fleet = useSelector((state) => state.fleet);
+  const { openModal } = useModal();
+
+  const { isLoading, startLoading, stopLoading } = useLoader();
+
+  const [documentModal, setDocumentModal] = useState("");
+  const [fileUrl, setFileUrl] = useState("");
+
   const itemArr = [
-    { label: "Pilot Operating Handbook", value: "" },
-    { label: "Checklist", value: "" },
-    { label: "Weight and Balance", value: "" },
-    { label: "Airworthiness Certificate", value: "" },
+    {
+      key: DOCUMENTS_TYPES[0],
+      label: "Pilot Operating Handbook",
+      value: fleet?.details?.documents?.[DOCUMENTS_TYPES[0]],
+    },
+    {
+      key: DOCUMENTS_TYPES[1],
+      label: "Checklist",
+      value: fleet?.details?.documents?.[DOCUMENTS_TYPES[1]],
+    },
+    {
+      key: DOCUMENTS_TYPES[2],
+      label: "Weight and Balance",
+      value: fleet?.details?.documents?.[DOCUMENTS_TYPES[2]],
+    },
+    {
+      key: DOCUMENTS_TYPES[3],
+      label: "Airworthiness Certificate",
+      value: fleet?.details?.documents?.[DOCUMENTS_TYPES[3]],
+    },
   ];
 
+  const downloadDocuments = async (payload) => {
+    startLoading();
+    const response = await pdfDownloadRequest(
+      `/document/owner/fleet/download-fleet-document/${fleet?.tail_number}/${payload}`,
+      {}
+    );
+
+    if (response) {
+      const blob = new Blob([response], { type: "application/pdf" });
+      const link = document.createElement("a");
+      link.href = window.URL.createObjectURL(blob);
+      link.download = `${payload}.pdf`;
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      stopLoading();
+    } else {
+      stopLoading();
+    }
+  };
+
+  const viewPDF = async (payload) => {
+    startLoading();
+    const response = await pdfDownloadRequest(
+      `/document/owner/fleet/download-fleet-document/${fleet?.tail_number}/${payload}`,
+      {}
+    );
+    if (response) {
+      const file = new Blob([response], { type: "application/pdf" });
+      const fileURL = URL.createObjectURL(file);
+      setFileUrl(fileURL);
+
+      stopLoading();
+    } else {
+      stopLoading();
+    }
+  };
+
   return (
-    <FleetDetailCardComponent
-      title="Documents"
-      component={
-        <Grid container spacing={{ xs: 5, md: 2 }} columns={{ md: 12 }}>
-          {itemArr.map((item, index) => (
-            <Grid sx={{ opacity: "1" }} item key={index} xs={6}>
-              <Stack
-                useFlexGap
-                direction="row"
-                justifyContent="space-between"
-                alignItems="center"
-                margin="0px 10px"
+    <>
+      <FleetDetailCardComponent
+        title="Documents"
+        component={
+          <Grid
+            container
+            spacing={{ xs: 5, md: 2 }}
+            columns={{ md: 12 }}
+            style={{ position: "relative" }}
+          >
+            <Box
+              sx={{
+                position: "absolute",
+                top: "50%",
+                left: "50%",
+                transform: "translate(-50%, -50%)",
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+                zIndex: 1,
+              }}
+            >
+              <SpinnerComponent show={isLoading} />
+            </Box>
+            {itemArr.map((item, index) => (
+              <Grid
+                item
+                key={index}
+                xs={6}
+                sx={{ opacity: isLoading ? 0.5 : 1 }}
               >
-                <Typography variant="subtitle1" noWrap>
-                  {item.label}
-                </Typography>
-                <Box
+                <Stack
                   direction="row"
                   justifyContent="space-between"
                   alignItems="center"
+                  margin="0px 10px"
                 >
-                  <IconButton color="primary">
-                    {" "}
-                    <VisibilityIcon />{" "}
-                  </IconButton>
-                  <IconButton color="primary">
-                    <DownloadIcon />{" "}
-                  </IconButton>
-                  <IconButton
-                    color="primary"
-                    aria-label="upload picture"
-                    component="label"
+                  <Typography variant="subtitle1" noWrap>
+                    {item.label}
+                  </Typography>
+                  <Box
+                    direction="row"
+                    justifyContent="space-between"
+                    alignItems="center"
                   >
-                    <input hidden accept="application/pdf" type="file" />
-                    <CloudUploadIcon />
-                  </IconButton>
-                </Box>
-              </Stack>
-            </Grid>
-          ))}
-        </Grid>
-      }
-    />
+                    {item.value && (
+                      <IconButton
+                        color="primary"
+                        onClick={() => viewPDF(item.key)}
+                      >
+                        <VisibilityIcon />
+                      </IconButton>
+                    )}
+                    {item.value && (
+                      <IconButton
+                        color="primary"
+                        onClick={() => downloadDocuments(item.key)}
+                      >
+                        <DownloadIcon />
+                      </IconButton>
+                    )}
+                    <IconButton
+                      color="primary"
+                      aria-label="upload picture"
+                      component="label"
+                      onClick={() => {
+                        setDocumentModal(item.label);
+                        openModal("Documents");
+                      }}
+                    >
+                      <CloudUploadIcon />
+                    </IconButton>
+                  </Box>
+                </Stack>
+              </Grid>
+            ))}
+          </Grid>
+        }
+      />
+      <DocumentsSectionModal documentModal={documentModal} />
+      {fileUrl && <PdfViewer fileUrl={fileUrl} setFileUrl={setFileUrl}/>}
+    </>
   );
 };
 

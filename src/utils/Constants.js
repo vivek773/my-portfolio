@@ -69,3 +69,6 @@ export const US_STATES = [
   "Puerto Rico",
   "Virgin Islands",
 ];
+
+// Documents Types
+export const  DOCUMENTS_TYPES = ["pilotOperatingHandbook", "checklist", "weightAndBalance", "airworthinessCertificate" ]
