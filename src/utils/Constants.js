@@ -71,4 +71,4 @@ export const US_STATES = [
 ];
 
 // Documents Types
-export const  DOCUMENTS_TYPES = ["pilotOperatingHandbook", "checklist", "weightAndBalance", "airworthinessCertificate" ]
+export const  DOCUMENTS_TYPES = ["pilot_operating_handbook", "checklist", "weight_and_balance", "airworthiness_certificate", "registration", "insurance" ]

@@ -4,12 +4,12 @@
 import Stack from "@mui/material/Stack";
 import CircularProgress from "@mui/material/CircularProgress";
 
-const SpinnerComponent = ({ show }) => {
+const SpinnerComponent = ({ show, size = 40 }) => {
   return (
     <>
       {show && (
         <Stack alignItems="center">
-          <CircularProgress />
+          <CircularProgress size={size}/>
         </Stack>
       )}
     </>
