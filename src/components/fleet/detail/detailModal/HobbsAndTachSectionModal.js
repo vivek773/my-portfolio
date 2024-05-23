@@ -25,7 +25,7 @@ import { fetchPUTRequest } from "../../../../utils/Services";
 
 const HobbsAndTachSectionModal = ({ hobbsItems, setHobbsItems }) => {
   const { isModal, closeModal } = useModal();
-  const { startLoading, stopLoading } = useLoader();
+  const { isLoading, startLoading, stopLoading } = useLoader();
   const { setToast } = useToast();
   const fleet = useSelector((state) => state.fleet);
 
@@ -130,6 +130,7 @@ const HobbsAndTachSectionModal = ({ hobbsItems, setHobbsItems }) => {
           width={"fit-content"}
           onClick={formik.handleSubmit}
           disabled={false}
+          isLoading={isLoading}
           bgColor={"#479DE1"}
         />
       }

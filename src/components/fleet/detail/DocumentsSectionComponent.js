@@ -60,6 +60,16 @@ const DocumentsSectionComponent = () => {
       label: "Airworthiness Certificate",
       value: fleet?.details?.documents?.[DOCUMENTS_TYPES[3]],
     },
+    {
+      key: DOCUMENTS_TYPES[4],
+      label: "Registration",
+      value: fleet?.details?.documents?.[DOCUMENTS_TYPES[4]],
+    },
+    {
+      key: DOCUMENTS_TYPES[5],
+      label: "Insurance",
+      value: fleet?.details?.documents?.[DOCUMENTS_TYPES[5]],
+    },
   ];
 
   const downloadDocuments = async (payload) => {
@@ -123,7 +133,7 @@ const DocumentsSectionComponent = () => {
                 zIndex: 1,
               }}
             >
-              <SpinnerComponent show={isLoading} />
+              <SpinnerComponent show={isLoading} size={30}/>
             </Box>
             {itemArr.map((item, index) => (
               <Grid

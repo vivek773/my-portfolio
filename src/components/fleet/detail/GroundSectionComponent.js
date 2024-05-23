@@ -1,29 +1,91 @@
 // Ground section
 
-// MUI components
-import Stack from "@mui/material/Stack";
-import Switch from "@mui/material/Switch";
-import Typography from "@mui/material/Typography";
+// Default
+import { useEffect, useState } from "react";
+
+// MUI component
+import Box from "@mui/material/Box";
+
+// Redux
+import { useSelector } from "react-redux";
 
 // Custom
 import FleetDetailCardComponent from "./FleetDetailCardComponent";
+import SwitchComponent from "../../switch/SwitchComponent";
+import SpinnerComponent from "../../spinner/SpinnerComponent";
+
+// Context
+import { useToast } from "../../../context/ToastContext";
+import { useLoader } from "../../../context/LoaderContext";
+
+// Utils
+import { fetchPUTRequest } from "../../../utils/Services";
 
 const GroundSectionComponent = () => {
+  const [groundedChecked, setGroundedChecked] = useState(false);
+
+  const fleet = useSelector((state) => state.fleet);
+  const { setToast } = useToast();
+  const { isLoading, startLoading, stopLoading } = useLoader();
+
+  useEffect(() => {
+    setGroundedChecked(fleet?.details?.is_grounded);
+  }, [fleet]);
+
+  const handleGroundedChange = async () => {
+    startLoading();
+    const payload = {
+      tail_number: fleet?.tail_number,
+      is_grounded: !groundedChecked,
+    };
+    const response = await fetchPUTRequest(
+      `/fleet/owner/ground-unground-plane`,
+      payload
+    );
+
+    if (response?.statusCode === 200 && response) {
+      setToast({
+        open: true,
+        message: response?.message,
+        severity: "success",
+      });
+      stopLoading();
+      setGroundedChecked(response?.is_grounded);
+    } else {
+      setToast({
+        open: true,
+        message: response?.message,
+        severity: "error",
+      });
+    }
+    stopLoading();
+  };
+
   return (
     <FleetDetailCardComponent
       component={
-        <Stack
-          direction="row"
-          justifyContent="space-between"
-          alignItems="center"
-          spacing={2}
-        >
-          <Typography variant="subtitle1">Ground Plane?</Typography>
-          <Switch
-            checked={true}
-            inputProps={{ "aria-label": "controlled" }}
-          />
-        </Stack>
+        <Box sx={{ position: "relative" }}>
+          {isLoading && (
+            <Box
+              sx={{
+                position: "absolute",
+                top: "50%",
+                left: "50%",
+                transform: "translate(-50%, -50%)",
+                zIndex: 2,
+              }}
+            >
+              <SpinnerComponent size={20} show={isLoading} />
+            </Box>
+          )}
+          <Box sx={{ opacity: isLoading ? 0.5 : 1 }}>
+            <SwitchComponent
+              label={groundedChecked ? "Grounded" : "Ground Plane?"}
+              value={groundedChecked}
+              onChange={handleGroundedChange}
+            />
+          </Box>
+        </Box>
       }
     />
   );

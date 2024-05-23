@@ -37,6 +37,10 @@ const DocumentsSectionModal = ({ documentModal }) => {
         return DOCUMENTS_TYPES[2];
       case "Airworthiness Certificate":
         return DOCUMENTS_TYPES[3];
+      case "Registration":
+        return DOCUMENTS_TYPES[4];
+      case "Insurance":
+        return DOCUMENTS_TYPES[5];
       default:
         return "";
     }
