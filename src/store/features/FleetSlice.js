@@ -13,7 +13,7 @@ const fleet = createSlice({
   initialState,
   reducers: {
     setTailNumber: (state, action) => {
-      state.tail_number = action.payload
+      state.tail_number = action.payload;
     },
     setFleetDetails: (state, action) => {
       state.details = action.payload;
@@ -24,8 +24,20 @@ const fleet = createSlice({
     setAirworthinessDirectives: (state, action) => {
       state.airworthinessDirectives = action.payload;
     },
+    resetFleet: (state) => {
+      state.tail_number = initialState.tail_number;
+      state.details = initialState.details;
+      state.maintenanceLogs = initialState.maintenanceLogs;
+      state.airworthinessDirectives = initialState.airworthinessDirectives;
+    },
   },
 });
 
-export const { setTailNumber, setFleetDetails, setMaintenanceLogs, setAirworthinessDirectives } = fleet.actions;
+export const {
+  setTailNumber,
+  setFleetDetails,
+  setMaintenanceLogs,
+  setAirworthinessDirectives,
+  resetFleet,
+} = fleet.actions;
 export default fleet.reducer;

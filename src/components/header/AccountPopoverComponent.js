@@ -19,6 +19,8 @@ import Popover from "@mui/material/Popover";
 
 // Redux
 import { resetUser } from "../../store/features/AuthSlice";
+import { resetFleet } from "../../store/features/FleetSlice";
+import { resetBusiness } from "../../store/features/BusinessSlice";
 import { useDispatch } from "react-redux";
 
 
@@ -33,6 +35,14 @@ const AccountPopoverComponent = ({ auth }) => {
   const handleClose = () => {
     setOpen(null);
   };
+
+  const handleLogout = () => { 
+    handleClose();
+    dispatch(resetUser());
+    dispatch(resetFleet());
+    dispatch(resetBusiness());
+    navigate("/login");
+  }
 
   const navigate = useNavigate();
 
@@ -104,11 +114,7 @@ const AccountPopoverComponent = ({ auth }) => {
         <Divider sx={{ borderStyle: "dashed" }} />
 
         <MenuItem
-          onClick={() => {
-            handleClose();
-            dispatch(resetUser());
-            navigate("/login");
-          }}
+          onClick={handleLogout}
           sx={{ m: 1 }}
         >
           Logout

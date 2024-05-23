@@ -1,4 +1,4 @@
-//  Fleet card
+//  Business card
 
 // MUI components
 import CardHeader from "@mui/material/CardHeader";
@@ -24,7 +24,7 @@ const useStyles = makeStyles(() => ({
   },
 }));
 
-const FleetDetailCardComponent = ({
+const BusinessCardComponent = ({
   action = <></>,
   title = "",
   component,
@@ -48,4 +48,4 @@ const FleetDetailCardComponent = ({
   );
 };
 
-export default FleetDetailCardComponent;
+export default BusinessCardComponent;
