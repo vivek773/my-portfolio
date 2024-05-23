@@ -35,7 +35,7 @@ const CustomFileInput = ({ label, setFieldValue, name }) => {
           cursor: "pointer",
         }}
       >
-        <input {...getInputProps()} />
+        <TextField {...getInputProps()} />
         <p>Drag 'n' drop some files here, or click to select files</p>
         {selectedFileName && (
           <Typography variant="body2" color="textSecondary">
