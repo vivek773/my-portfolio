@@ -24,7 +24,7 @@ import CustomButton from "../../forms/button/CustomButton";
 import HelmetComponent from "../../components/helmet/HelmetComponent";
 
 // Redux
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { loginUser } from "../../store/features/AuthSlice";
 
 // Utils
@@ -37,7 +37,7 @@ import LOGO from "../../assets/images/logo-1024.png";
 // Context
 import { useLoader } from "../../context/LoaderContext";
 import { useToast } from "../../context/ToastContext";
-import { setBusinessName } from "../../store/features/BusinessSlice";
+import { setBusinessDetails } from "../../store/features/BusinessSlice";
 
 const StyledContent = styled("div")(({ theme }) => ({
   margin: "auto",
@@ -53,6 +53,7 @@ const LoginPage = () => {
   const [showPassword, setShowPassword] = useState(false);
   const { setToast } = useToast();
   const { isLoading, startLoading, stopLoading } = useLoader();
+  const { business } = useSelector((state) => state.business)
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -80,7 +81,7 @@ const LoginPage = () => {
         });
         stopLoading();
         dispatch(loginUser(response));
-        dispatch(setBusinessName(response?.business_name));
+        dispatch(setBusinessDetails({ ...business?.business_details, name: response?.business_name}));
         navigate(`/fleet`);
         formik.resetForm();
       } else {
