@@ -71,4 +71,27 @@ export const US_STATES = [
 ];
 
 // Documents Types
-export const  DOCUMENTS_TYPES = ["pilot_operating_handbook", "checklist", "weight_and_balance", "airworthiness_certificate", "registration", "insurance" ]
+export const DOCUMENTS_TYPES = [
+  "pilot_operating_handbook",
+  "checklist",
+  "weight_and_balance",
+  "airworthiness_certificate",
+  "registration",
+  "insurance",
+];
+
+
+// Time Zone
+export const TIME_ZONE = [
+  { label: "America/New_York - Eastern Time (ET)", value: "America/New_York" },
+  { label: "America/Chicago - Central Time (CT)", value: "America/Chicago" },
+  { label: "America/Denver - Mountain Time (MT)", value: "America/Denver" },
+  {
+    label: "America/Los_Angeles - Pacific Time (PT)",
+    value: "America/Los_Angeles",
+  },
+  {
+    label: "America/Puerto_Rico - Atlantic Standard Time (AST)",
+    value: "America/Puerto_Rico",
+  },
+];
