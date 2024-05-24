@@ -12,10 +12,11 @@ import FleetPage from "./pages/fleet/FleetPage";
 import AddPlaneComponent from "./components/fleet/AddPlaneComponent";
 import PlaneDetailComponent from "./components/fleet/PlaneDetailComponent";
 import AddAirworthinessComponent from "./components/fleet/airworthiness/AddAirworthinessComponent"
+import SettingsPage from "./pages/settings/SettingsPage";
+import DestinationsPage from "./pages/destinations/DestinationsPage";
 
 // Protected Routes
 import ProtectedRoute from "./protectedroute/ProtectedRoute";
-import SettingsPage from "./pages/settings/SettingsPage";
 
 const MainRouter = () => {
   const wrapWithProtectedRoute = (children) => {
@@ -44,6 +45,10 @@ const MainRouter = () => {
         <Route
           path="/settings"
           element={wrapWithProtectedRoute(<SettingsPage />)}
+        />
+        <Route
+          path="/destinations"
+          element={wrapWithProtectedRoute(<DestinationsPage />)}
         />
       </Route>
     </Routes>

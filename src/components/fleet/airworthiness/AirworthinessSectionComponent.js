@@ -62,15 +62,24 @@ const AirworthinessSectionComponent = () => {
 
   return (
     <>
-      <Typography variant="h4" gutterBottom mt={5}>
-        Airworthiness Directives
-      </Typography>
       <Container maxWidth="xl">
-        <Box mt={5}></Box>
-        <Box display={"flex"} justifyContent={"flex-end"} mb={5}>
+        <Box
+          mt={5}
+          mb={5}
+          display={"flex"}
+          justifyContent={"space-between"}
+          alignItems={"center"}
+        >
+          <Typography variant="h4" gutterBottom mb={0}>
+            Airworthiness Directives
+          </Typography>
           <CustomButton
             label="Create Airworthiness Directives"
             width={"fit-content"}
+            sx={{
+              width: "auto",
+              whiteSpace: "nowrap",
+            }}
             onClick={() =>
               navigate(`/fleet/${fleet.tail_number}/create-airworthiness`)
             }
@@ -80,7 +89,14 @@ const AirworthinessSectionComponent = () => {
           <DataTable rows={rows} columns={columns} />
         ) : (
           <Box>
-            <Typography variant="h6" gutterBottom mt={10} fontWeight={500} textAlign={"center"} color={"Gray"}>
+            <Typography
+              variant="h6"
+              gutterBottom
+              mt={10}
+              fontWeight={500}
+              textAlign={"center"}
+              color={"Gray"}
+            >
               No data available
             </Typography>
           </Box>

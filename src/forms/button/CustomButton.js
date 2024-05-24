@@ -15,6 +15,7 @@ const CustomButton = ({
   hoverBgColor,
   component,
   to,
+  sx
 }) => {
   return (
     <LoadingButton
@@ -27,6 +28,7 @@ const CustomButton = ({
       component={component}
       to={to}
       sx={{
+        ...sx,
         backgroundColor: bgColor,
         textTransform: "none",
         width: width,

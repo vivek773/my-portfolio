@@ -9,11 +9,13 @@ import storage from "redux-persist/lib/storage";
 import authReducer from "./features/AuthSlice";
 import fleetReducer from "./features/FleetSlice";
 import businessReducer from "./features/BusinessSlice";
+import destinationsReducer from "./features/DestinationsSlice";
 
 const rootReducer = combineReducers({
   auth: authReducer,
   fleet: fleetReducer,
   business: businessReducer,
+  destinations: destinationsReducer
 });
 
 const persistConfig = {
