@@ -108,13 +108,13 @@ const AirworthinessSectionComponent = () => {
             Directions
           </Typography>
           <CustomButton
-            label="Create Directions"
+            label=" Add Destination"
             width={"fit-content"}
             sx={{
               width: "auto",
               whiteSpace: "nowrap",
             }}
-            onClick={() => navigate("/destinations/create-destination")}
+            onClick={() => navigate("/destinations/add-destination")}
           />
         </Box>
 

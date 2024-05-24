@@ -14,6 +14,7 @@ import PlaneDetailComponent from "./components/fleet/PlaneDetailComponent";
 import AddAirworthinessComponent from "./components/fleet/airworthiness/AddAirworthinessComponent"
 import SettingsPage from "./pages/settings/SettingsPage";
 import DestinationsPage from "./pages/destinations/DestinationsPage";
+import AddDestinationComponent from "./components/destinations/AddDestinationComponent";
 
 // Protected Routes
 import ProtectedRoute from "./protectedroute/ProtectedRoute";
@@ -49,6 +50,10 @@ const MainRouter = () => {
         <Route
           path="/destinations"
           element={wrapWithProtectedRoute(<DestinationsPage />)}
+        />
+         <Route
+          path="/destinations/add-destination"
+          element={wrapWithProtectedRoute(<AddDestinationComponent />)}
         />
       </Route>
     </Routes>
