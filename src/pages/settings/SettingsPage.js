@@ -21,10 +21,10 @@ import {
 // Custom
 import HelmetComponent from "../../components/helmet/HelmetComponent";
 import BusinessDetailsComponent from "../../components/business/BusinessDetailsComponent";
-import BusinessEmailsCardComponent from "../../components/business/BusinessEmailsComponent";
-import BusinessMerchantAccountDetailsCardComponent from "../../components/business/BusinessMerchantAccountComponent";
+import BusinessEmailsComponent from "../../components/business/BusinessEmailsComponent";
+import BusinessMerchantAccountDetailsComponent from "../../components/business/BusinessMerchantAccountComponent";
 import BusinessSettingsForCustomerComponent from "../../components/business/BusinessSettingsForCustomerComponent";
-import BusinessSettingsForEmployeeCardComponent from "../../components/business/BusinessSettingsForEmployeeCardComponent";
+import BusinessSettingsForEmployeeComponent from "../../components/business/BusinessSettingsForEmployeeComponent";
 import SpinnerComponent from "../../components/spinner/SpinnerComponent";
 
 
@@ -110,14 +110,14 @@ function SettingsPage() {
         {!isLoading && (
           <>
             <BusinessDetailsComponent details={business.business_details} />
-            <BusinessEmailsCardComponent emails={business.emails} />
-            <BusinessMerchantAccountDetailsCardComponent
+            <BusinessEmailsComponent emails={business.emails} />
+            <BusinessMerchantAccountDetailsComponent
               merchantAccountDetails={business?.merchant_account_details}
             />
             <BusinessSettingsForCustomerComponent
               settings={business?.business_settings_for_customer}
             />
-            <BusinessSettingsForEmployeeCardComponent
+            <BusinessSettingsForEmployeeComponent
               settings={business?.business_settings_for_employee}
             />
           </>

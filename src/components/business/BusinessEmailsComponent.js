@@ -1,94 +1,69 @@
-import React from "react";
-import {
-  Card,
-  CardContent,
-  Typography,
-  CardHeader,
-  Grid,
-  Container,
-} from "@mui/material";
-import { makeStyles } from "@mui/styles";
+// Business Emails
+
+// Default
+import { useState, useEffect } from "react";
+
+// MUI components
+import Typography from "@mui/material/Typography";
+import Grid from "@mui/material/Grid";
+
+// Custom
 import CustomButton from "../../forms/button/CustomButton";
+import BusinessCardComponent from "./BusinessCardComponent";
+import BusinessEmailsModal from "./businessModal/BusinessEmailsModal";
 
-const useStyles = makeStyles(() => ({
-  cardRoot: {
-    border: "1px solid #ddd",
-    margin: "35px 0",
-    boxShadow: "none !important",
-    borderRadius: "10px !important",
-  },
-  headerTitle: {
-    alignItems: "center",
-    display: "flex",
-  },
-  cardHeaderRoot: {
-    background: "#f2f5f7",
-    borderBottom: "1px solid #ddd",
-    padding: "15px 25px !important",
-  },
-  cardContentRoot: {
-    padding: "15px 25px !important",
-  },
-  detailItem: {
-    textAlign: "center",
-  },
-  detailLabel: {
-    fontWeight: 600,
-    marginBottom: "8px",
-  },
-  centerGrid: {
-    display: "flex",
-    justifyContent: "center",
-    alignItems: "center",
-  },
-}));
+// Context
+import { useModal } from "../../context/ModalContext";
 
-const BusinessEmailsCardComponent = ({ emails, onEdit }) => {
-  const classes = useStyles();
+const BusinessEmailsComponent = ({ emails }) => {
+  const [businessEmail, setBusinessEmail] = useState(null);
+  const { openModal } = useModal();
+
+  useEffect(() => {
+    const items = [
+      {
+        key: "booking_email",
+        label: "Booking Email",
+        value: emails.booking_email,
+      },
+      {
+        key: "contact_email",
+        label: "Contact Email",
+        value: emails.contact_email,
+      },
+    ];
+    setBusinessEmail([...items]);
+  }, [emails]);
 
   return (
-    <Container>
-      <Card className={classes.cardRoot}>
-        <CardHeader
-          className={classes.cardHeaderRoot}
-          title={
-            <Typography className={classes.headerTitle} variant={"h6"}>
-              Emails
-            </Typography>
-          }
-          action={
-            <CustomButton
-              label={"Edit"}
-              size={"medium"}
-              disabled={false}
-              bgColor={"#479DE1"}
-              onClick={onEdit}
-            />
-          }
-        />
-        <CardContent className={classes.cardContentRoot}>
-          <Grid container spacing={2} className={classes.centerGrid}>
-            <Grid item xs={6} className={classes.detailItem}>
-              <Typography variant="subtitle1" className={classes.detailLabel}>
-                Booking Email
-              </Typography>
-              <Typography variant="body1">
-                {emails?.booking_email || "-"}
-              </Typography>
-            </Grid>
-            <Grid item xs={6} className={classes.detailItem}>
-              <Typography variant="subtitle1" className={classes.detailLabel}>
-                Contact Email
-              </Typography>
-              <Typography variant="body1">
-                {emails?.contact_email || "-"}
-              </Typography>
-            </Grid>
+    <>
+      <BusinessCardComponent
+        title={"Emails"}
+        action={
+          <CustomButton
+            label={"Edit"}
+            size={"medium"}
+            disabled={false}
+            bgColor={"#479DE1"}
+            onClick={() => openModal("businessEmail")}
+          />
+        }
+        component={
+          <Grid container spacing={{ xs: 5, md: 3 }} columns={{ md: 12 }}>
+            {businessEmail?.map((element, i) => (
+              <Grid item key={i} xs={3}>
+                <Typography variant="subtitle1">{element.label}:</Typography>
+                <Typography paragraph>
+                  {element?.value ? element.value : "-"}
+                </Typography>
+              </Grid>
+            ))}
           </Grid>
-        </CardContent>
-      </Card>
-    </Container>
+        }
+      /> 
+      <BusinessEmailsModal businessEmail={businessEmail} setBusinessEmail={setBusinessEmail}/>
+    </>
   );
 };
 
-export default BusinessEmailsCardComponent;
+export default BusinessEmailsComponent;
