@@ -21,6 +21,7 @@ import { useToast } from "../../context/ToastContext";
 
 // Utils
 import { fetchPUTRequest } from "../../utils/Services";
+import { Divider } from "@mui/material";
 
 const BusinessSettingsForCustomerComponent = ({ settings }) => {
   const [businessSettingsCustomer, setBusinessSettingsCustomer] =
@@ -40,28 +41,11 @@ const BusinessSettingsForCustomerComponent = ({ settings }) => {
       },
       {
         show: true,
-        key: "allow_search_for_any_arrival_airport",
-        label: "Allow Search For Any Arrival Airport",
-        value: settings.allow_search_for_any_arrival_airport,
-      },
-      {
-        show: true,
-        key: "allow_search_for_any_departure_airport",
-        label: "Allow Search For Any Departure Airport",
-        value: settings.allow_search_for_any_departure_airport,
-      },
-      {
-        show: true,
-        key: "one_way_customer_pays_for_return",
-        label: "One Way Customer Pays For Return",
-        value: settings.one_way_customer_pays_for_return,
-      },
-      {
-        show: true,
         key: "pay_in_full_at_time_of_booking",
         label: "Pay In Full At Time Of Booking",
         value: settings.pay_in_full_at_time_of_booking,
       },
+
       {
         show: !settings.pay_in_full_at_time_of_booking,
         key: "percentage_at_time_of_booking",
@@ -74,12 +58,34 @@ const BusinessSettingsForCustomerComponent = ({ settings }) => {
         label: "Hours Before Flight For Remaining Payment",
         value: settings.hours_before_flight_for_remaining_payment,
       },
+
+      {
+        show: true,
+        key: "one_way_customer_pays_for_return",
+        label: "One Way Customer Pays For Return",
+        value: settings.one_way_customer_pays_for_return,
+      },
+
       {
         show: settings.one_way_customer_pays_for_return,
         key: "one_way_customer_pays_for_return_percentage",
         label: "One Way Customer Pays For Return Percentage",
         value: settings.one_way_customer_pays_for_return_percentage,
       },
+
+      {
+        show: true,
+        key: "allow_search_for_any_arrival_airport",
+        label: "Allow Search For Any Arrival Airport",
+        value: settings.allow_search_for_any_arrival_airport,
+      },
+      {
+        show: true,
+        key: "allow_search_for_any_departure_airport",
+        label: "Allow Search For Any Departure Airport",
+        value: settings.allow_search_for_any_departure_airport,
+      },
+
       {
         show: true,
         key: "hours_before_flight_for_cancellation",
@@ -89,7 +95,6 @@ const BusinessSettingsForCustomerComponent = ({ settings }) => {
     ];
     setBusinessSettingsCustomer([...items]);
   }, [settings]);
-
 
   const handleBusinessCustomerSettingsChange = async (setting) => {
     setIsLoading(true);
@@ -171,7 +176,7 @@ const BusinessSettingsForCustomerComponent = ({ settings }) => {
         component={
           <Grid
             container
-            spacing={{ xs: 5, md: 3 }}
+            spacing={{ xs: 5, md: 5 }}
             columns={12}
             style={{ position: "relative" }}
           >

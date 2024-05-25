@@ -24,12 +24,12 @@ const BusinessEmailsComponent = ({ emails }) => {
       {
         key: "booking_email",
         label: "Booking Email",
-        value: emails.booking_email,
+        value: emails?.booking_email,
       },
       {
         key: "contact_email",
         label: "Contact Email",
-        value: emails.contact_email,
+        value: emails?.contact_email,
       },
     ];
     setBusinessEmail([...items]);
@@ -60,8 +60,11 @@ const BusinessEmailsComponent = ({ emails }) => {
             ))}
           </Grid>
         }
-      /> 
-      <BusinessEmailsModal businessEmail={businessEmail} setBusinessEmail={setBusinessEmail}/>
+      />
+      <BusinessEmailsModal
+        businessEmail={businessEmail}
+        setBusinessEmail={setBusinessEmail}
+      />
     </>
   );
 };

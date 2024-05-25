@@ -26,39 +26,37 @@ const DataTable = ({
 }) => {
   return (
     <Card sx={{ boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.04)" }}>
-      <ScrollbarComponent>
-        <TableContainer sx={{ minWidth: 800 }}>
-          <Table>
-            <TableHead>
-              <TableRow>
-                {columns.map((column, index) => {
-                  return (
-                    <TableCell align="center" key={index}>
-                      {column.label}
-                    </TableCell>
-                  );
-                })}
+      <TableContainer sx={{ minWidth: 800 }}>
+        <Table>
+          <TableHead>
+            <TableRow>
+              {columns.map((column, index) => {
+                return (
+                  <TableCell align="center" key={index}>
+                    {column.label}
+                  </TableCell>
+                );
+              })}
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {rows?.map((rowData, rowIndex) => (
+              <TableRow
+                key={rowIndex}
+                hover
+                role="checkbox"
+                selected={selected}
+              >
+                {rowData?.map((cellData, cellIndex) => (
+                  <TableCell key={cellIndex} align="center">
+                    {cellData.value}
+                  </TableCell>
+                ))}
               </TableRow>
-            </TableHead>
-            <TableBody>
-              {rows?.map((rowData, rowIndex) => (
-                <TableRow
-                  key={rowIndex}
-                  hover
-                  role="checkbox"
-                  selected={selected}
-                >
-                  {rowData?.map((cellData, cellIndex) => (
-                    <TableCell key={cellIndex} align="center">
-                      {cellData.value}
-                    </TableCell>
-                  ))}
-                </TableRow>
-              ))}
-            </TableBody>
-          </Table>
-        </TableContainer>
-      </ScrollbarComponent>
+            ))}
+          </TableBody>
+        </Table>
+      </TableContainer>
 
       {pagination && (
         <TablePagination

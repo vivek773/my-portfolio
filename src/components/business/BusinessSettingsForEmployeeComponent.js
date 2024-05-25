@@ -29,7 +29,7 @@ const BusinessSettingsForCustomerComponent = ({ settings }) => {
       {
         key: "automatically_add_pic_to_booking",
         label: "Automatically Add Pic To Booking",
-        value: settings.automatically_add_pic_to_booking,
+        value: settings?.automatically_add_pic_to_booking,
       },
     ];
     setBusinessSettingsEmployee([...items]);
@@ -84,7 +84,7 @@ const BusinessSettingsForCustomerComponent = ({ settings }) => {
   return (
     <>
       <BusinessCardComponent
-        title={"Business Settings for Customer"}
+        title={"Business Settings for Employee"}
         component={
           <Grid
             container
