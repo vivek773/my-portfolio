@@ -10,7 +10,12 @@ import TableCell from "@mui/material/TableCell";
 import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TablePagination from "@mui/material/TablePagination";
-import ScrollbarComponent from "../scrollbar/ScrollbarComponent";
+
+// Custom
+import ChipComponent from "../chip/ChipComponent";
+
+// Utils
+import  { TABLE_CHIP } from "../../utils/Color"; 
 
 const DataTable = ({
   rows,
@@ -24,6 +29,25 @@ const DataTable = ({
   onPageChange,
   onRowsPerPageChange,
 }) => {
+
+  const getChipBgColor = (status) => {
+    switch (status) {
+      case "active":
+        return TABLE_CHIP.activeBgColor;
+      default:
+        return TABLE_CHIP.activeBgColor;
+    }
+  };
+
+  const getChipColor = (status) => {
+    switch (status) {
+      case "active":
+        return TABLE_CHIP.activeColor;
+      default:
+        return TABLE_CHIP.activeColor;
+    }
+  };
+
   return (
     <Card sx={{ boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.04)" }}>
       <TableContainer sx={{ minWidth: 800 }}>
@@ -49,7 +73,7 @@ const DataTable = ({
               >
                 {rowData?.map((cellData, cellIndex) => (
                   <TableCell key={cellIndex} align="center">
-                    {cellData.value}
+                    {cellData.key === "status" ?  <ChipComponent label={cellData.value} bgColor={() => getChipBgColor(cellData.value)} color={() => getChipColor(cellData.value)}/>  : cellData.value}
                   </TableCell>
                 ))}
               </TableRow>

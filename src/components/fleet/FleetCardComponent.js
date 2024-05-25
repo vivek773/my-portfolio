@@ -34,14 +34,16 @@ const FleetCardComponent = ({
   make,
   model,
   hobbs,
-  tach,
+  tach_one,
+  tach_two,
   standard_hourly_rate,
   status,
+  category,
   sx,
 }) => {
   const navigate = useNavigate();
-  const dispatch =  useDispatch();
-  const { isLoading, startLoading, stopLoading } =  useLoader()
+  const dispatch = useDispatch();
+  const { isLoading, startLoading, stopLoading } = useLoader();
 
   const chipBgColor = (chipStatus) => {
     switch (chipStatus) {
@@ -54,26 +56,26 @@ const FleetCardComponent = ({
     }
   };
 
-    const getPlanData = async () => {
-      startLoading();
-      const response = await fetchGETRequest(
-        `/fleet/owner/get-plane/${tail_number}`,
-        {}
-      );
+  const getPlanData = async () => {
+    startLoading();
+    const response = await fetchGETRequest(
+      `/fleet/owner/get-plane/${tail_number}`,
+      {}
+    );
 
-      if (response.statusCode === 200 && response) {
-        const { airworthiness_directives, maintenance_logs, ...rest } =
-          response?.data;
-        dispatch(setTailNumber(tail_number));
-        dispatch(setFleetDetails(rest));
-        dispatch(setMaintenanceLogs(maintenance_logs));
-        dispatch(setAirworthinessDirectives(airworthiness_directives));
-        stopLoading();
-        navigate(`/fleet/${tail_number}`);
-      } else {
-        stopLoading();
-      }
-    };
+    if (response.statusCode === 200 && response) {
+      const { airworthiness_directives, maintenance_logs, ...rest } =
+        response?.data;
+      dispatch(setTailNumber(tail_number));
+      dispatch(setFleetDetails(rest));
+      dispatch(setMaintenanceLogs(maintenance_logs));
+      dispatch(setAirworthinessDirectives(airworthiness_directives));
+      stopLoading();
+      navigate(`/fleet/${tail_number}`);
+    } else {
+      stopLoading();
+    }
+  };
 
   return (
     <Card
@@ -110,8 +112,13 @@ const FleetCardComponent = ({
         <b>Hobbs:</b> {hobbs ?? "--"}
       </Typography>
       <Typography variant="subtitle2" sx={{ opacity: 0.72 }}>
-        <b>Tach:</b> {tach ?? "--"}
+        <b>Tach One:</b> {tach_one ?? "--"}
       </Typography>
+      {category === "airplane_multi_engine_land" && (
+        <Typography variant="subtitle2" sx={{ opacity: 0.72 }}>
+          <b>Tach Two:</b> {tach_two ?? "--"}
+        </Typography>
+      )}
       <Typography variant="subtitle2" sx={{ opacity: 0.72, paddingTop: 1 }}>
         <b>Rate:</b> ${standard_hourly_rate}/hr
       </Typography>

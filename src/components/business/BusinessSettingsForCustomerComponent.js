@@ -194,66 +194,232 @@ const BusinessSettingsForCustomerComponent = ({ settings }) => {
             >
               <SpinnerComponent show={isLoading} size={30} />
             </Box>
-            {businessSettingsCustomer?.map((setting, i) => {
-              if (setting.show) {
-                if (typeof setting?.value === "boolean") {
-                  return (
-                    <Grid
-                      item
-                      key={i}
-                      xs={12}
-                      sx={{ opacity: isLoading ? 0.5 : 1 }}
-                    >
-                      <SwitchComponent
-                        label={setting.label}
-                        value={setting?.value}
-                        onChange={() =>
-                          handleBusinessCustomerSettingsChange(setting)
-                        }
-                      />
-                    </Grid>
-                  );
-                } else {
-                  return (
-                    <Grid
-                      item
-                      key={i}
-                      xs={12}
-                      sx={{
-                        display: "flex",
-                        justifyContent: "space-between",
-                        alignItems: "center",
-                        opacity: isLoading ? 0.5 : 1,
-                      }}
-                    >
-                      <Box sx={{ flexGrow: 1 }}>
-                        <Typography variant="subtitle1">
-                          {setting?.label}
-                        </Typography>
-                        <Typography paragraph>
-                          {setting?.value ? setting?.value : "N/A"}
-                        </Typography>
-                      </Box>
-                      <Box sx={{ display: "flex", justifyContent: "flex-end" }}>
-                        <CustomButton
-                          label="Edit"
-                          size="small"
-                          disabled={false}
-                          bgColor="#479DE1"
-                          sx={{
-                            width: "fit-content",
-                          }}
-                          onClick={() => {
-                            setEditable(setting);
-                            openModal("businessSettingsForCustomer");
-                          }}
-                        />
-                      </Box>
-                    </Grid>
-                  );
-                }
-              }
-            })}
+
+            {businessSettingsCustomer?.[0]?.show && (
+              <Grid item xs={12} sx={{ opacity: isLoading ? 0.5 : 1 }}>
+                <SwitchComponent
+                  label={businessSettingsCustomer?.[0]?.label}
+                  value={businessSettingsCustomer?.[0]?.value}
+                  onChange={() =>
+                    handleBusinessCustomerSettingsChange(
+                      businessSettingsCustomer?.[0]
+                    )
+                  }
+                />
+              </Grid>
+            )}
+
+            {businessSettingsCustomer?.[1]?.show && (
+              <Grid item xs={12} sx={{ opacity: isLoading ? 0.5 : 1 }}>
+                <SwitchComponent
+                  label={businessSettingsCustomer?.[1]?.label}
+                  value={businessSettingsCustomer?.[1]?.value}
+                  onChange={() =>
+                    handleBusinessCustomerSettingsChange(
+                      businessSettingsCustomer?.[1]
+                    )
+                  }
+                />
+              </Grid>
+            )}
+
+            {businessSettingsCustomer?.[2]?.show && (
+              <Grid
+                item
+                xs={12}
+                sx={{
+                  display: "flex",
+                  justifyContent: "space-between",
+                  alignItems: "center",
+                  opacity: isLoading ? 0.5 : 1,
+                }}
+              >
+                <Box sx={{ flexGrow: 1 }}>
+                  <Typography variant="subtitle1">
+                    {businessSettingsCustomer?.[2]?.label}
+                  </Typography>
+                  <Typography paragraph>
+                    {businessSettingsCustomer?.[2]?.value
+                      ? businessSettingsCustomer?.[2]?.value
+                      : "N/A"}
+                  </Typography>
+                </Box>
+                <Box sx={{ display: "flex", justifyContent: "flex-end" }}>
+                  <CustomButton
+                    label="Edit"
+                    size="small"
+                    disabled={false}
+                    bgColor="#479DE1"
+                    sx={{
+                      width: "fit-content",
+                    }}
+                    onClick={() => {
+                      setEditable(businessSettingsCustomer?.[2]);
+                      openModal("businessSettingsForCustomer");
+                    }}
+                  />
+                </Box>
+              </Grid>
+            )}
+
+            {businessSettingsCustomer?.[3]?.show && (
+              <Grid
+                item
+                xs={12}
+                sx={{
+                  display: "flex",
+                  justifyContent: "space-between",
+                  alignItems: "center",
+                  opacity: isLoading ? 0.5 : 1,
+                }}
+              >
+                <Box sx={{ flexGrow: 1 }}>
+                  <Typography variant="subtitle1">
+                    {businessSettingsCustomer?.[3]?.label}
+                  </Typography>
+                  <Typography paragraph>
+                    {businessSettingsCustomer?.[3]?.value
+                      ? businessSettingsCustomer?.[3]?.value
+                      : "N/A"}
+                  </Typography>
+                </Box>
+                <Box sx={{ display: "flex", justifyContent: "flex-end" }}>
+                  <CustomButton
+                    label="Edit"
+                    size="small"
+                    disabled={false}
+                    bgColor="#479DE1"
+                    sx={{
+                      width: "fit-content",
+                    }}
+                    onClick={() => {
+                      setEditable(businessSettingsCustomer?.[3]);
+                      openModal("businessSettingsForCustomer");
+                    }}
+                  />
+                </Box>
+              </Grid>
+            )}
+
+            {businessSettingsCustomer?.[4]?.show && (
+              <Grid item xs={12} sx={{ opacity: isLoading ? 0.5 : 1 }}>
+                <SwitchComponent
+                  label={businessSettingsCustomer?.[4]?.label}
+                  value={businessSettingsCustomer?.[4]?.value}
+                  onChange={() =>
+                    handleBusinessCustomerSettingsChange(
+                      businessSettingsCustomer?.[4]
+                    )
+                  }
+                />
+              </Grid>
+            )}
+
+            {businessSettingsCustomer?.[5]?.show && (
+              <Grid
+                item
+                xs={12}
+                sx={{
+                  display: "flex",
+                  justifyContent: "space-between",
+                  alignItems: "center",
+                  opacity: isLoading ? 0.5 : 1,
+                }}
+              >
+                <Box sx={{ flexGrow: 1 }}>
+                  <Typography variant="subtitle1">
+                    {businessSettingsCustomer?.[5]?.label}
+                  </Typography>
+                  <Typography paragraph>
+                    {businessSettingsCustomer?.[5]?.value
+                      ? businessSettingsCustomer?.[5]?.value
+                      : "N/A"}
+                  </Typography>
+                </Box>
+                <Box sx={{ display: "flex", justifyContent: "flex-end" }}>
+                  <CustomButton
+                    label="Edit"
+                    size="small"
+                    disabled={false}
+                    bgColor="#479DE1"
+                    sx={{
+                      width: "fit-content",
+                    }}
+                    onClick={() => {
+                      setEditable(businessSettingsCustomer?.[5]);
+                      openModal("businessSettingsForCustomer");
+                    }}
+                  />
+                </Box>
+              </Grid>
+            )}
+
+            {businessSettingsCustomer?.[6]?.show && (
+              <Grid item xs={12} sx={{ opacity: isLoading ? 0.5 : 1 }}>
+                <SwitchComponent
+                  label={businessSettingsCustomer?.[6]?.label}
+                  value={businessSettingsCustomer?.[6]?.value}
+                  onChange={() =>
+                    handleBusinessCustomerSettingsChange(
+                      businessSettingsCustomer?.[6]
+                    )
+                  }
+                />
+              </Grid>
+            )}
+
+            {businessSettingsCustomer?.[7]?.show && (
+              <Grid item xs={12} sx={{ opacity: isLoading ? 0.5 : 1 }}>
+                <SwitchComponent
+                  label={businessSettingsCustomer?.[7]?.label}
+                  value={businessSettingsCustomer?.[7]?.value}
+                  onChange={() =>
+                    handleBusinessCustomerSettingsChange(
+                      businessSettingsCustomer?.[7]
+                    )
+                  }
+                />
+              </Grid>
+            )}
+
+            {businessSettingsCustomer?.[8]?.show && (
+              <Grid
+                item
+                xs={12}
+                sx={{
+                  display: "flex",
+                  justifyContent: "space-between",
+                  alignItems: "center",
+                  opacity: isLoading ? 0.5 : 1,
+                }}
+              >
+                <Box sx={{ flexGrow: 1 }}>
+                  <Typography variant="subtitle1">
+                    {businessSettingsCustomer?.[8]?.label}
+                  </Typography>
+                  <Typography paragraph>
+                    {businessSettingsCustomer?.[8]?.value
+                      ? businessSettingsCustomer?.[8]?.value
+                      : "N/A"}
+                  </Typography>
+                </Box>
+                <Box sx={{ display: "flex", justifyContent: "flex-end" }}>
+                  <CustomButton
+                    label="Edit"
+                    size="small"
+                    disabled={false}
+                    bgColor="#479DE1"
+                    sx={{
+                      width: "fit-content",
+                    }}
+                    onClick={() => {
+                      setEditable(businessSettingsCustomer?.[8]);
+                      openModal("businessSettingsForCustomer");
+                    }}
+                  />
+                </Box>
+              </Grid>
+            )}
           </Grid>
         }
       />
