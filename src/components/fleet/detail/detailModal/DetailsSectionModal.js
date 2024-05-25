@@ -18,6 +18,10 @@ import { useModal } from "../../../../context/ModalContext";
 import { useToast } from "../../../../context/ToastContext";
 import { useLoader } from "../../../../context/LoaderContext";
 
+// Redux
+import { useDispatch, useSelector } from "react-redux";
+import { setFleetDetails } from "../../../../store/features/FleetSlice";
+
 // Utils
 import { fetchPUTRequest } from "../../../../utils/Services";
 
@@ -25,7 +29,8 @@ const DetailsSectionModal = ({ detailsItems, setDetailsItems }) => {
   const { isModal, closeModal } = useModal();
   const { setToast } = useToast();
   const { isLoading, startLoading, stopLoading } = useLoader();
-
+  const dispatch = useDispatch();
+  const fleet = useSelector((state) => state.fleet);
   const [initialValues, setInitialValues] = useState({});
 
   const CATEGORY_OPTIONS = [
@@ -54,13 +59,12 @@ const DetailsSectionModal = ({ detailsItems, setDetailsItems }) => {
       hourly_rate: "",
     },
     onSubmit: async (values) => {
-
       values["category"] = values["category"].value;
 
-      if(initialValues.tail_number !== formik.values.tail_number) {
-        values["updated_tail_number"] = formik.values.tail_number
-        values["tail_number"] = initialValues.tail_number
-      }   
+      if (initialValues.tail_number !== formik.values.tail_number) {
+        values["updated_tail_number"] = formik.values.tail_number;
+        values["tail_number"] = initialValues.tail_number;
+      }
       startLoading();
 
       const response = await fetchPUTRequest(`/fleet/owner/edit-plane`, values);
@@ -75,6 +79,13 @@ const DetailsSectionModal = ({ detailsItems, setDetailsItems }) => {
         closeModal();
         stopLoading();
 
+        const newObj = {
+          ...fleet.details,
+          category: response.data.category,
+        }
+        
+        dispatch(setFleetDetails(newObj));
+
         const updatedArray = detailsItems.map((item) => {
           if (response.data.hasOwnProperty(item.key)) {
             return {
@@ -86,7 +97,10 @@ const DetailsSectionModal = ({ detailsItems, setDetailsItems }) => {
         });
 
         setDetailsItems([...updatedArray]);
+        
         formik.resetForm();
+
+
       } else {
         setToast({
           open: true,

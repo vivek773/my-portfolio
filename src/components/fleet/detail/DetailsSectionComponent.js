@@ -26,6 +26,11 @@ const DetailsSectionComponent = () => {
   const fleet = useSelector((state) => state.fleet);
   const { openModal } = useModal();
 
+  const CATEGORY_OPTIONS = [
+    { label: "ASEL", value: "airplane_single_engine_land" },
+    { label: "AMEL", value: "airplane_multi_engine_land" },
+  ];
+
   useEffect(() => {
     const items = [
       {
@@ -127,7 +132,10 @@ const DetailsSectionComponent = () => {
               <FormControl>
                 <Typography variant="subtitle1">{element.label}</Typography>
                 <Typography paragraph>
-                  {element.value ? element.key === "hourly_rate" ? `$${element.value}` : element.value : "-"}
+                   {element.key === "category" ?
+                   element.value ? CATEGORY_OPTIONS.find((item) => item.value === element.value).label : "-"
+                   :
+                  element.value ? element.key === "hourly_rate" ? `$${element.value}` : element.value : "-"}
                 </Typography>
               </FormControl>
             </Grid>

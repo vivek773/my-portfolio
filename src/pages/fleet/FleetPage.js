@@ -76,9 +76,11 @@ const FleetPage = () => {
                     make={fleet.make}
                     model={fleet.model}
                     hobbs={fleet.hobbs}
-                    tach={fleet.tach_engine_one}
+                    tach_one={fleet.tach_engine_one}
+                    tach_two={fleet.tach_engine_two}
                     tenant_id={fleet.tenant_id}
                     standard_hourly_rate={fleet.hourly_rate}
+                    category={fleet.category}
                     allFleetData={fleet}
                     status={
                       fleet.is_grounded
