@@ -105,7 +105,7 @@ const AirworthinessSectionComponent = () => {
           alignItems={"center"}
         >
           <Typography variant="h4" gutterBottom mb={0}>
-            Directions
+            Destinations
           </Typography>
           <CustomButton
             label=" Add Destination"
