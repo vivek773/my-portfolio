@@ -34,6 +34,8 @@ const DataTable = ({
     switch (status) {
       case "active":
         return TABLE_CHIP.activeBgColor;
+      case "pending":
+        return TABLE_CHIP.pendingBgColor; 
       default:
         return TABLE_CHIP.activeBgColor;
     }
@@ -43,6 +45,8 @@ const DataTable = ({
     switch (status) {
       case "active":
         return TABLE_CHIP.activeColor;
+      case "pending":
+        return TABLE_CHIP.pendingColor;   
       default:
         return TABLE_CHIP.activeColor;
     }

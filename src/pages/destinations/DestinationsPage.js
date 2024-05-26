@@ -24,7 +24,7 @@ import { fetchGETRequest } from "../../utils/Services";
 // Context
 import { useLoader } from "../../context/LoaderContext";
 
-const AirworthinessSectionComponent = () => {
+const DestinationsPage = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [rows, setRows] = useState([]);
@@ -145,4 +145,4 @@ const AirworthinessSectionComponent = () => {
   );
 };
 
-export default AirworthinessSectionComponent;
+export default DestinationsPage;
