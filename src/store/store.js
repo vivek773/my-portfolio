@@ -10,12 +10,14 @@ import authReducer from "./features/AuthSlice";
 import fleetReducer from "./features/FleetSlice";
 import businessReducer from "./features/BusinessSlice";
 import destinationsReducer from "./features/DestinationsSlice";
+import bookingsReducer from "./features/BookingsSlice";
 
 const rootReducer = combineReducers({
   auth: authReducer,
   fleet: fleetReducer,
   business: businessReducer,
-  destinations: destinationsReducer
+  destinations: destinationsReducer,
+  bookings: bookingsReducer
 });
 
 const persistConfig = {
