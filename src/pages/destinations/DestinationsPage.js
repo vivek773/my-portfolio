@@ -26,9 +26,11 @@ import { setDestinations } from "../../store/features/DestinationsSlice";
 import Label from "../../components/label";
 import CustomButton from "../../forms/button/CustomButton";
 import SpinnerComponent from "../../components/spinner/SpinnerComponent";
+import HelmetComponent from "../../components/helmet/HelmetComponent";
 
 // Utils
 import { fetchGETRequest } from "../../utils/Services";
+import { EDISPATCHED } from "../../utils/Constants";
 import { renderChipColorByStatus } from "../../utils/Helper";
  
 // Context
@@ -85,20 +87,9 @@ export default function DestinationsPage() {
 
   return (
     <>
+    <HelmetComponent title={`${EDISPATCHED} | Destinations`} />
       <Container maxWidth="xl">
-        {isLoading && (
-          <div
-            style={{
-              position: "absolute",
-              left: "50%",
-              top: "50%",
-              transform: "translate(-50%, -50%)",
-            }}
-          >
-            <SpinnerComponent show={isLoading} />
-          </div>
-        )}
-
+      
         <Stack
           direction="row"
           alignItems="center"
@@ -120,7 +111,14 @@ export default function DestinationsPage() {
           />
         </Stack>
 
-        {destinations?.length === 0 ? (
+        {isLoading && (
+          <Box mt={10}>
+            <SpinnerComponent show={isLoading} />
+          </Box>
+        )}
+
+        {!isLoading && 
+        (destinations?.length === 0 ? (
           <Box>
             <Typography
               variant="h6"
@@ -194,13 +192,13 @@ export default function DestinationsPage() {
             <TablePagination
               rowsPerPageOptions={[10]}
               component="div"
-              count={destinations.length}
+              count={destinations?.length}
               rowsPerPage={limit}
               page={page}
               onPageChange={(event, newPage) => setPage(newPage)}
             />
           </Card>
-        )}
+        ))}
       </Container>
     </>
   );

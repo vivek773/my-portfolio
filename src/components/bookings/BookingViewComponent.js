@@ -1,5 +1,6 @@
 // Booking view component
 
+
 // MUI components
 import Container from "@mui/material/Container";
 
@@ -8,6 +9,7 @@ import BookingDetailComponent from "./BookingDetailComponent";
 import BookingCustomerComponent from "./BookingCustomerComponent";
 import BookingFlightSegmentsComponent from "./BookingFlightSegmentsComponent";
 import BookingPassengersComponent from "./bookingPassengersComponent";
+
 
 
 const BookingViewComponent = () => {

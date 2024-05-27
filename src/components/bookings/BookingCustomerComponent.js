@@ -11,18 +11,21 @@ import Grid from "@mui/material/Grid";
 // Custom
 import BookingCardComponent from "./BookingCardComponent";
 
+ // Redux
+ import { useSelector } from "react-redux";
+
 const BookingCustomerComponent = () => {
   const params = useLocation();
   const [bookingCustomer, setBookingCustomer] = useState(null);
 
   const getAddress = (payload) => {
     const addressParts = [
-      payload.street,
-      payload.unit,
-      payload.city,
-      payload.state,
-      payload.zip_code,
-      payload.country,
+      payload?.street,
+      payload?.unit,
+      payload?.city,
+      payload?.state,
+      payload?.zip_code,
+      payload?.country,
     ];
 
     if (addressParts) {

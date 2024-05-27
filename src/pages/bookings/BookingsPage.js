@@ -28,9 +28,11 @@ import { useLoader } from "../../context/LoaderContext";
 import SpinnerComponent from "../../components/spinner/SpinnerComponent";
 import CustomButton from "../../forms/button/CustomButton";
 import Label from "../../components/label";
+import HelmetComponent from "../../components/helmet/HelmetComponent";
 
 // Utils
 import { fetchGETRequest } from "../../utils/Services";
+import { EDISPATCHED } from "../../utils/Constants";
 import { formatCurrency, renderChipColorByStatus } from "../../utils/Helper";
 
 const BookingsPage = () => {
@@ -40,7 +42,6 @@ const BookingsPage = () => {
   const [limit, setLimit] = useState(10);
   const { isLoading, startLoading, stopLoading } = useLoader();
   const state = useSelector((state) => state.bookings);
-
 
   const TABLE_HEAD = [
     { id: "index", label: "#" },
@@ -62,7 +63,6 @@ const BookingsPage = () => {
     { id: "status", label: "Status" },
     { id: "action", label: "Action" },
   ];
-
 
   useEffect(() => {
     const getBookingsData = async () => {
@@ -90,121 +90,116 @@ const BookingsPage = () => {
       : "-";
   };
 
-
   const handleView = (data) => {
     navigate(`/bookings/${data?.booking_id}`, { state: data });
   };
 
   return (
     <>
+    <HelmetComponent title={`${EDISPATCHED} | Bookings`} />
       <Container maxWidth="xl">
-        {isLoading && (
-          <div
-            style={{
-              position: "absolute",
-              left: "50%",
-              top: "50%",
-              transform: "translate(-50%, -50%)",
-            }}
-          >
-            <SpinnerComponent show={isLoading} />
-          </div>
-        )}
         <Typography variant="h4" gutterBottom mb={5}>
-           Bookings
+          Bookings
         </Typography>
-        {state?.bookings?.length === 0 ? (
-          <Box>
-            <Typography
-              variant="h6"
-              gutterBottom
-              mt={10}
-              fontWeight={500}
-              textAlign={"center"}
-              color={"Gray"}
-            >
-              No data available
-            </Typography>
-          </Box>
-        ) : (
-          <Card>
-            <TableContainer sx={{ minWidth: 800 }}>
-              <Table>
-                <TableHead>
-                  <TableRow>
-                    {TABLE_HEAD.map((header) => (
-                      <TableCell key={header.id} align="center">
-                        {header.label}
-                      </TableCell>
-                    ))}
-                  </TableRow>
-                </TableHead>
-                <TableBody>
-                  {Array.isArray(state?.bookings) &&
-                    state?.bookings?.map((booking, index) => (
-                      <TableRow hover key={booking.destination_id}>
-                        <TableCell align="center">{index + 1}</TableCell>
-                        <TableCell align="center">{booking?.tail_number}</TableCell>
-                        <TableCell align="center">
-                          {getDepartureDate(booking?.flightSegments)}
-                        </TableCell>
-                        <TableCell align="center">
-                          {booking?.trip_departure_airport_code}
-                        </TableCell>
-                        <TableCell align="center">
-                          {booking?.trip_arrival_airport_code}
-                        </TableCell>
-                        
-                        <TableCell align="center">
-                          {`${booking?.customer?.first_name} ${booking?.customer?.last_name}`}
-                        </TableCell>
-                        <TableCell align="center">
-                          {formatCurrency(booking?.total_price)}
-                        </TableCell>
-                        <TableCell align="center">
-                          {formatCurrency(booking?.amount_paid)}
-                        </TableCell>
-                        <TableCell align="center">
-                          {booking?.number_of_passengers}
-                        </TableCell>
-                        <TableCell align="center">
-                          <Label
-                            color={
-                              // (status === "banned" && "inactive") || "success"
-                              renderChipColorByStatus(booking?.status)
-                            }
-                          >
-                            {booking?.status}
-                          </Label>
-                        </TableCell>
-                        <TableCell align="center">
-                          <CustomButton
-                            size={"small"}
-                            width={"fit-content"}
-                            onClick={() => handleView(booking)}
-                            label={"View"}
-                          />
-                        </TableCell>
-                      </TableRow>
-                    ))}
-                </TableBody>
-              </Table>
-            </TableContainer>
 
-            <TablePagination
-              rowsPerPageOptions={[10]}
-              component="div"
-              count={state?.bookings?.length}
-              rowsPerPage={limit}
-              page={page}
-              onPageChange={(event, newPage) => setPage(newPage)}
-            />
-          </Card>
-        )}
+        <Box mt={10}>
+          <SpinnerComponent show={isLoading} />
+        </Box>
+
+        {!isLoading &&
+          (state?.bookings?.length === 0 ? (
+            <Box>
+              <Typography
+                variant="h6"
+                gutterBottom
+                mt={10}
+                fontWeight={500}
+                textAlign={"center"}
+                color={"Gray"}
+              >
+                No data available
+              </Typography>
+            </Box>
+          ) : (
+            <Card>
+              <TableContainer sx={{ minWidth: 800 }}>
+                <Table>
+                  <TableHead>
+                    <TableRow>
+                      {TABLE_HEAD.map((header) => (
+                        <TableCell key={header.id} align="center">
+                          {header.label}
+                        </TableCell>
+                      ))}
+                    </TableRow>
+                  </TableHead>
+                  <TableBody>
+                    {Array.isArray(state?.bookings) &&
+                      state?.bookings?.map((booking, index) => (
+                        <TableRow hover key={booking.destination_id}>
+                          <TableCell align="center">{index + 1}</TableCell>
+                          <TableCell align="center">
+                            {booking?.tail_number}
+                          </TableCell>
+                          <TableCell align="center">
+                            {getDepartureDate(booking?.flightSegments)}
+                          </TableCell>
+                          <TableCell align="center">
+                            {booking?.trip_departure_airport_code}
+                          </TableCell>
+                          <TableCell align="center">
+                            {booking?.trip_arrival_airport_code}
+                          </TableCell>
+
+                          <TableCell align="center">
+                            {`${booking?.customer?.first_name} ${booking?.customer?.last_name}`}
+                          </TableCell>
+                          <TableCell align="center">
+                            {formatCurrency(booking?.total_price)}
+                          </TableCell>
+                          <TableCell align="center">
+                            {formatCurrency(booking?.amount_paid)}
+                          </TableCell>
+                          <TableCell align="center">
+                            {booking?.number_of_passengers}
+                          </TableCell>
+                          <TableCell align="center">
+                            <Label
+                              color={
+                                // (status === "banned" && "inactive") || "success"
+                                renderChipColorByStatus(booking?.status)
+                              }
+                            >
+                              {booking?.status}
+                            </Label>
+                          </TableCell>
+                          <TableCell align="center">
+                            <CustomButton
+                              size={"small"}
+                              width={"fit-content"}
+                              onClick={() => handleView(booking)}
+                              label={"View"}
+                            />
+                          </TableCell>
+                        </TableRow>
+                      ))}
+                  </TableBody>
+                </Table>
+              </TableContainer>
+
+              <TablePagination
+                rowsPerPageOptions={[10]}
+                component="div"
+                count={state?.bookings?.length}
+                rowsPerPage={limit}
+                page={page}
+                onPageChange={(event, newPage) => setPage(newPage)}
+              />
+            </Card>
+          ))}
       </Container>
     </>
   );
 };
 
 export default BookingsPage;
-

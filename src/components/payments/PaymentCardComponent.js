@@ -1,4 +1,4 @@
-//  Booking card
+//  Payments card
 
 // MUI components
 import CardHeader from "@mui/material/CardHeader";
@@ -24,7 +24,7 @@ const useStyles = makeStyles(() => ({
   },
 }));
 
-const BookingCardComponent = ({
+const PaymentsCardComponent = ({
   action = <></>,
   title = "",
   component,
@@ -48,4 +48,4 @@ const BookingCardComponent = ({
   );
 };
 
-export default BookingCardComponent;
+export default PaymentsCardComponent;
