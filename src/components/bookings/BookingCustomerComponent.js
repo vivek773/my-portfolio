@@ -12,21 +12,56 @@ import Grid from "@mui/material/Grid";
 import BookingCardComponent from "./BookingCardComponent";
 
 const BookingCustomerComponent = () => {
-  const params = useLocation()
+  const params = useLocation();
   const [bookingCustomer, setBookingCustomer] = useState(null);
+
+  const getAddress = (payload) => {
+    const addressParts = [
+      payload.street,
+      payload.unit,
+      payload.city,
+      payload.state,
+      payload.zip_code,
+      payload.country,
+    ];
+
+    if (addressParts) {
+      return addressParts.filter((item) => item).join(", ");
+    }
+  };
 
   useEffect(() => {
     const items = [
-      { key: "first_name", label: "First Name", value: params?.state?.customer?.first_name },
-      { key: "last_name", label: "Last Name", value: params?.state?.customer?.last_name },
+      {
+        key: "first_name",
+        label: "First Name",
+        value: params?.state?.customer?.first_name,
+      },
+      {
+        key: "last_name",
+        label: "Last Name",
+        value: params?.state?.customer?.last_name,
+      },
       { key: "email", label: "Email", value: params?.state?.customer?.email },
-      { key: "phone_number", label: "Phone Number", value: params?.state?.customer?.phone_number },
-      { key: "nationality", label: "Nationality", value: params?.state?.customer?.nationality },
-      { key: "date_of_birth", label: "Date Of Birth", value: params?.state?.customer?.date_of_birth },
+      {
+        key: "phone_number",
+        label: "Phone Number",
+        value: params?.state?.customer?.phone_number,
+      },
+      {
+        key: "nationality",
+        label: "Nationality",
+        value: params?.state?.customer?.nationality,
+      },
+      {
+        key: "date_of_birth",
+        label: "Date Of Birth",
+        value: params?.state?.customer?.date_of_birth,
+      },
       {
         key: "address",
         label: "Address",
-        value: params?.state?.customer?.address,
+        value: getAddress(params?.state?.customer),
       },
       {
         key: "weight",
@@ -41,7 +76,6 @@ const BookingCustomerComponent = () => {
     ];
     setBookingCustomer([...items]);
   }, [params]);
-
 
   return (
     <>

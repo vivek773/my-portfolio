@@ -1,7 +1,7 @@
 // Airworthiness Section
 
 // Default
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 // Redux
@@ -9,66 +9,44 @@ import { useSelector } from "react-redux";
 
 // MUI components
 import Container from "@mui/material/Container";
+import Stack from "@mui/material/Stack";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
+import Card from "@mui/material/Card";
+import Table from "@mui/material/Table";
+import TableBody from "@mui/material/TableBody";
+import TableCell from "@mui/material/TableCell";
+import TableContainer from "@mui/material/TableContainer";
+import TableHead from "@mui/material/TableHead";
+import TablePagination from "@mui/material/TablePagination";
+import TableRow from "@mui/material/TableRow";
 
 // Custom
 import CustomButton from "../../../forms/button/CustomButton";
-import DataTable from "../../../components/table/TableComponent";
 
 const AirworthinessSectionComponent = () => {
   const fleet = useSelector((state) => state.fleet);
   const navigate = useNavigate();
-  const [rows, setRows] = useState([]);
+  const [page, setPage] = useState(0);
+  const [limit, setLimit] = useState(10);
 
-  const columns = [
-    // { key: "ad_id", label: "Ad Id" },
-    { key: "ad_title", label: "Ad Title" },
-    { key: "due_at_date", label: "Due At Date" },
-    // { key: "due_at_engine_one_tach_hours", label: "Due At Engine One Hours" },
-    // { key: "due_at_engine_two_tach_hours", label: "Due At Engine Two Hours" },
-    { key: "due_at_hobbs_hours", label: "Due At Hobs Hours" },
-    { key: "prop_one_tach_due_hours", label: "Prop One Due Hours" },
-    { key: "service_bulletin_id", label: "Service Bulleting Id" },
-    // {
-    //   key: "service_bulletin_description",
-    //   label: "Service Bulletin Description",
-    // },
+  const TABLE_HEAD = [
+    { id: "ad_title", label: "Ad Title" },
+    { id: "due_at_date", label: "Due At Date" },
+    { id: "due_at_hobbs_hours", label: "Due At Hobs Hours" },
+    { id: "prop_one_tach_due_hours", label: "Prop One Due Hours" },
+    { id: "service_bulletin_id", label: "Service Bulleting Id" },
   ];
-
-  useEffect(() => {
-    let newData = [];
-    const columnsKeys = columns.map((item) => item.key);
-
-    if (fleet?.airworthinessDirectives?.length > 0) {
-      newData = fleet.airworthinessDirectives.map((directive) => {
-        return Object.entries(directive)
-          .map(([directiveKey, directiveValue]) => {
-            if (columnsKeys.includes(directiveKey)) {
-              return {
-                key: directiveKey,
-                value: directiveValue ?? "-",
-              };
-            }
-            return null;
-          })
-          .filter((entry) => entry !== null);
-      });
-    }
-
-    setRows([...newData]);
-    // eslint-disable-next-line
-  }, [fleet]);
 
   return (
     <>
       <Container maxWidth="xl">
-        <Box
-          mt={5}
+        <Stack
+          direction="row"
+          alignItems="center"
+          justifyContent="space-between"
+          spacing={1}
           mb={5}
-          display={"flex"}
-          justifyContent={"space-between"}
-          alignItems={"center"}
         >
           <Typography variant="h4" gutterBottom mb={0}>
             Airworthiness Directives
@@ -84,10 +62,9 @@ const AirworthinessSectionComponent = () => {
               navigate(`/fleet/${fleet.tail_number}/create-airworthiness`)
             }
           />
-        </Box>
-        {rows?.length > 0 ? (
-          <DataTable rows={rows} columns={columns} />
-        ) : (
+        </Stack>
+
+        {fleet?.airworthinessDirectives === 0 ? (
           <Box>
             <Typography
               variant="h6"
@@ -100,6 +77,49 @@ const AirworthinessSectionComponent = () => {
               No data available
             </Typography>
           </Box>
+        ) : (
+          <Card>
+            <TableContainer sx={{ minWidth: 800 }}>
+              <Table>
+                <TableHead>
+                  <TableRow>
+                    {TABLE_HEAD.map((header) => (
+                      <TableCell key={header.id} align="center">
+                        {header.label}
+                      </TableCell>
+                    ))}
+                  </TableRow>
+                </TableHead>
+                <TableBody>
+                  {Array.isArray(fleet?.airworthinessDirectives) &&
+                    fleet?.airworthinessDirectives?.map((ad, index) => (
+                      <TableRow hover key={index}>
+                        <TableCell align="center">{ad?.ad_title}</TableCell>
+                        <TableCell align="center">{ad?.due_at_date}</TableCell>
+                        <TableCell align="center">
+                          {ad?.due_at_hobbs_hours}
+                        </TableCell>
+                        <TableCell align="center">
+                          {ad.prop_one_tach_due_hours}
+                        </TableCell>
+                        <TableCell align="center">
+                          {ad.service_bulletin_id}
+                        </TableCell>
+                      </TableRow>
+                    ))}
+                </TableBody>
+              </Table>
+            </TableContainer>
+
+            <TablePagination
+              rowsPerPageOptions={[10]}
+              component="div"
+              count={fleet?.airworthinessDirectives?.length}
+              rowsPerPage={limit}
+              page={page}
+              onPageChange={(event, newPage) => setPage(newPage)}
+            />
+          </Card>
         )}
       </Container>
     </>
@@ -107,3 +127,5 @@ const AirworthinessSectionComponent = () => {
 };
 
 export default AirworthinessSectionComponent;
+
+

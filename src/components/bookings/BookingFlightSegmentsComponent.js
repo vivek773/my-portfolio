@@ -8,39 +8,32 @@ import moment from "moment";
 // MUI components
 import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
+import Card from "@mui/material/Card";
+import Table from "@mui/material/Table";
+import TableBody from "@mui/material/TableBody";
+import TableCell from "@mui/material/TableCell";
+import TableContainer from "@mui/material/TableContainer";
+import TableHead from "@mui/material/TableHead";
+import TableRow from "@mui/material/TableRow";
 
 // Custom
 import BookingCardComponent from "./BookingCardComponent";
-import DataTable from "../table/TableComponent";
 
 const BookingFlightSegmentsComponent = () => {
-  const params = useLocation()
+  const params = useLocation();
   const [bookingFlightSegments, setBookingFlightSegments] = useState(null);
 
-  const columns = [
-    { key: "trip_leg_number", label: "Trip Leg Number" },
-    { key: "departure_airport_code", label: "Departure Airport Code " },
-    { key: "departing_flight_time", label: "Departing Flight Time" },
-    { key: "arrival_airport_code", label: "Arrival Airport Code" },
+  const TABLE_HEAD = [
+    { id: "trip_leg_number", label: "Trip Leg Number" },
+    { id: "departure_airport_code", label: "Departure Airport Code " },
+    { id: "departing_flight_time", label: "Departing Flight Time" },
+    { id: "arrival_airport_code", label: "Arrival Airport Code" },
   ];
 
   useEffect(() => {
-    function transformData(data, columns) {
-      return data.map((item, index) => {
-          return columns.map(column => {
-              let value = item[column.key];
-              if (column.key === "departing_flight_time" && value) {
-                  value = moment(value).format('h:mm') ?? "-"; 
-              }
-              return { key: column.key, value: value ?? "-" };
-          });
-      });
-  }
-
-  const transformedData = transformData(params?.state?.flightSegments, columns);
-  setBookingFlightSegments([...transformedData])
-// eslint-disable-next-line
-    }, [params])
+    setBookingFlightSegments([... params?.state?.flightSegments]);
+    // eslint-disable-next-line
+  }, [params]);
 
   return (
     <>
@@ -48,9 +41,42 @@ const BookingFlightSegmentsComponent = () => {
         title={"Booking Flight Segments"}
         component={
           bookingFlightSegments?.length > 0 ? (
-            <Box mt={1} mb={1}> 
-            <DataTable rows={bookingFlightSegments} columns={columns} />
-            </Box>
+            <Card>
+              <TableContainer sx={{ minWidth: 800 }}>
+                <Table>
+                  <TableHead>
+                    <TableRow>
+                      {TABLE_HEAD.map((header) => (
+                        <TableCell key={header.id} align="center">
+                          {header.label}
+                        </TableCell>
+                      ))}
+                    </TableRow>
+                  </TableHead>
+                  <TableBody>
+                    {Array.isArray(bookingFlightSegments) &&
+                      bookingFlightSegments?.map((segment, index) => (
+                        <TableRow hover key={index}>
+                          <TableCell align="center">
+                            {segment?.trip_leg_number}
+                          </TableCell>
+                          <TableCell align="center">
+                            {segment?.departure_airport_code}
+                          </TableCell>
+                          <TableCell align="center">
+                            {moment(segment?.departing_flight_time).format(
+                              "h:mm"
+                            )}
+                          </TableCell>
+                          <TableCell align="center">
+                            {segment?.arrival_airport_code}
+                          </TableCell>
+                        </TableRow>
+                      ))}
+                  </TableBody>
+                </Table>
+              </TableContainer>
+            </Card>
           ) : (
             <Box>
               <Typography

@@ -10,6 +10,8 @@ import Grid from "@mui/material/Grid";
 
 // Custom
 import BookingCardComponent from "./BookingCardComponent";
+
+// Utils
 import { formatCurrency } from "../../utils/Helper";
 
 const BookingDetailComponent = () => {
@@ -29,21 +31,9 @@ const BookingDetailComponent = () => {
         value: params?.state?.number_of_passengers,
       },
       { key: "trip_type", label: "Trip Type", value: params?.state?.trip_type },
-      {
-        key: "trip_departure_airport_code",
-        label: "Trip Departure Airport Code",
-        value: params?.state?.trip_departure_airport_code,
-      },
-      {
-        key: "trip_arrival_airport_code",
-        label: "Trip Arrival Airport Code",
-        value: params?.state?.trip_arrival_airport_code,
-      },
-      {
-        key: "base_price",
-        label: "Base Price",
-        value: params?.state?.base_price,
-      },
+      { key: "trip_departure_airport_code", label: "Trip Departure Airport Code", value: params?.state?.trip_departure_airport_code },
+      { key: "trip_arrival_airport_code", label: "Trip Arrival Airport Code", value: params?.state?.trip_arrival_airport_code },
+      { key: "base_price", label: "Base Price", value: formatCurrency(params?.state?.base_price) },
       {
         key: "tax",
         label: "Tax",
@@ -57,7 +47,7 @@ const BookingDetailComponent = () => {
       {
         key: "total_price",
         label: "Total Price",
-        value: params?.state?.total_price,
+        value: formatCurrency(params?.state?.total_price),
       },
       {
         key: "amount_paid",
