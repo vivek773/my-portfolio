@@ -24,16 +24,16 @@ const BookingsPage = () => {
     { key: "departure_date", label: "Departure Date" },
     {
       key: "trip_departure_airport_code",
-      label: "Trip Departure Airport Code",
+      label: "Departure",
     },
-    { key: "trip_arrival_airport_code", label: "Trip Arrival Airport Code" },
+    { key: "trip_arrival_airport_code", label: "Arrival" },
 
     { key: `Custoemr Name`, label: "Customer Name" },
 
     { key: "total_price", label: "Total Price" },
     { key: "amount_paid", label: "Amount Paid" },
 
-    { key: "number_of_passengers", label: "Number Of Passengers" },
+    { key: "number_of_passengers", label: "# of Passengers" },
 
     { key: "status", label: "Status" },
     { key: "action", label: "Action" },
