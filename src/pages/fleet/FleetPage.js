@@ -22,6 +22,7 @@ import SpinnerComponent from "../../components/spinner/SpinnerComponent";
 
 // Context
 import { useLoader } from "../../context/LoaderContext";
+import { formatCurrency } from "../../utils/Helper";
 
 const FleetPage = () => {
   const [fleetData, setFleetData] = useState([]);
@@ -79,7 +80,7 @@ const FleetPage = () => {
                     tach_one={fleet.tach_engine_one}
                     tach_two={fleet.tach_engine_two}
                     tenant_id={fleet.tenant_id}
-                    standard_hourly_rate={fleet.hourly_rate}
+                    standard_hourly_rate={formatCurrency(fleet.hourly_rate)}
                     category={fleet.category}
                     allFleetData={fleet}
                     status={

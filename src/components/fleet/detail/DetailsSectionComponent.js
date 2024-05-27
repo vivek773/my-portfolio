@@ -20,6 +20,7 @@ import { useModal } from "../../../context/ModalContext";
 
 // Modal
 import DetailsSectionModal from "./detailModal/DetailsSectionModal";
+import { formatCurrency } from "../../../utils/Helper";
 
 const DetailsSectionComponent = () => {
   const [detailsItems, setDetailsItems] = useState([]);
@@ -106,7 +107,7 @@ const DetailsSectionComponent = () => {
       {
         key: "hourly_rate",
         label: "Hourly Rate",
-        value: fleet?.details.hourly_rate,
+        value: formatCurrency(fleet?.details.hourly_rate),
       },
     ];
     setDetailsItems([...items]);
@@ -114,36 +115,46 @@ const DetailsSectionComponent = () => {
 
   return (
     <>
-    <FleetDetailCardComponent
-      title="Details"
-      action={
-        <CustomButton
-          label={"Edit"}
-          size={"medium"}
-          disabled={false}
-          bgColor={"#479DE1"}
-          onClick={() => openModal("Details")}
-        />
-      }
-      component={
-        <Grid container spacing={{ xs: 5, md: 3 }} columns={{ md: 12 }}>
-          {detailsItems?.map((element, i) => (
-            <Grid item key={i} xs={3}>
-              <FormControl>
-                <Typography variant="subtitle1">{element.label}</Typography>
-                <Typography paragraph>
-                   {element.key === "category" ?
-                   element.value ? CATEGORY_OPTIONS.find((item) => item.value === element.value).label : "-"
-                   :
-                  element.value ? element.key === "hourly_rate" ? `$${element.value}` : element.value : "-"}
-                </Typography>
-              </FormControl>
-            </Grid>
-          ))}
-        </Grid>
-      }
-    />
-      <DetailsSectionModal detailsItems={detailsItems} setDetailsItems={setDetailsItems}/>
+      <FleetDetailCardComponent
+        title="Details"
+        action={
+          <CustomButton
+            label={"Edit"}
+            size={"medium"}
+            disabled={false}
+            bgColor={"#479DE1"}
+            onClick={() => openModal("Details")}
+          />
+        }
+        component={
+          <Grid container spacing={{ xs: 5, md: 3 }} columns={{ md: 12 }}>
+            {detailsItems?.map((element, i) => (
+              <Grid item key={i} xs={3}>
+                <FormControl>
+                  <Typography variant="subtitle1">{element.label}</Typography>
+                  <Typography paragraph>
+                    {element.key === "category"
+                      ? element.value
+                        ? CATEGORY_OPTIONS.find(
+                            (item) => item.value === element.value
+                          ).label
+                        : "-"
+                      : element.value
+                      ? element.key === "hourly_rate"
+                        ? `$${element.value}`
+                        : element.value
+                      : "-"}
+                  </Typography>
+                </FormControl>
+              </Grid>
+            ))}
+          </Grid>
+        }
+      />
+      <DetailsSectionModal
+        detailsItems={detailsItems}
+        setDetailsItems={setDetailsItems}
+      />
     </>
   );
 };
