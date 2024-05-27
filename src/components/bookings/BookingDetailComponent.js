@@ -10,20 +10,40 @@ import Grid from "@mui/material/Grid";
 
 // Custom
 import BookingCardComponent from "./BookingCardComponent";
+import { formatCurrency } from "../../utils/Helper";
 
 const BookingDetailComponent = () => {
-  const params = useLocation()
+  const params = useLocation();
   const [bookingDetails, setBookingDetails] = useState(null);
 
   useEffect(() => {
-
     const items = [
-      { key: "tail_number", label: "Tail Number", value: params?.state?.tail_number },
-      { key: "number_of_passengers", label: "Number Of Passengers", value: params?.state?.number_of_passengers },
+      {
+        key: "tail_number",
+        label: "Tail Number",
+        value: params?.state?.tail_number,
+      },
+      {
+        key: "number_of_passengers",
+        label: "Number Of Passengers",
+        value: params?.state?.number_of_passengers,
+      },
       { key: "trip_type", label: "Trip Type", value: params?.state?.trip_type },
-      { key: "trip_departure_airport_code", label: "Trip Departure Airport Code", value: params?.state?.trip_departure_airport_code },
-      { key: "trip_arrival_airport_code", label: "Trip Arrival Airport Code", value: params?.state?.trip_arrival_airport_code },
-      { key: "base_price", label: "Base Price", value: params?.state?.base_price },
+      {
+        key: "trip_departure_airport_code",
+        label: "Trip Departure Airport Code",
+        value: params?.state?.trip_departure_airport_code,
+      },
+      {
+        key: "trip_arrival_airport_code",
+        label: "Trip Arrival Airport Code",
+        value: params?.state?.trip_arrival_airport_code,
+      },
+      {
+        key: "base_price",
+        label: "Base Price",
+        value: params?.state?.base_price,
+      },
       {
         key: "tax",
         label: "Tax",
@@ -44,10 +64,29 @@ const BookingDetailComponent = () => {
         label: "Amount Paid",
         value: params?.state?.amount_paid,
       },
+      {
+        key: "status",
+        label: "Status",
+        value: params?.state?.status,
+      },
+      {
+        key: "amount_due_at_time_of_booking",
+        label: "Amount Due At Time Of Booking",
+        value: params?.state?.amount_due_at_time_of_booking,
+      },
+      {
+        key: "amount_due_later",
+        label: "Amount Due Later",
+        value: `$${formatCurrency(params?.state?.amount_due_later)}`,
+      },
+      {
+        key: "amount_due_later_date",
+        label: "Amount Due Later Date",
+        value: params?.state?.amount_due_later_date,
+      },
     ];
     setBookingDetails([...items]);
   }, [params]);
-
 
   return (
     <>
