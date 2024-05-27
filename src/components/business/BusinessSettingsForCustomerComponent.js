@@ -21,7 +21,6 @@ import { useToast } from "../../context/ToastContext";
 
 // Utils
 import { fetchPUTRequest } from "../../utils/Services";
-import { Divider } from "@mui/material";
 
 const BusinessSettingsForCustomerComponent = ({ settings }) => {
   const [businessSettingsCustomer, setBusinessSettingsCustomer] =
@@ -92,6 +91,15 @@ const BusinessSettingsForCustomerComponent = ({ settings }) => {
         label: "Hours Before Flight For Cancellation",
         value: settings.hours_before_flight_for_cancellation,
       },
+
+      {
+        show: true,
+        key: "is_calculate_tax",
+        label: "Calculate Tax",
+        value: settings.is_calculate_tax,
+      },
+
+      
     ];
     setBusinessSettingsCustomer([...items]);
   }, [settings]);
@@ -418,6 +426,20 @@ const BusinessSettingsForCustomerComponent = ({ settings }) => {
                     }}
                   />
                 </Box>
+              </Grid>
+            )}
+
+            {businessSettingsCustomer?.[9]?.show && (
+              <Grid item xs={12} sx={{ opacity: isLoading ? 0.5 : 1 }}>
+                <SwitchComponent
+                  label={businessSettingsCustomer?.[9]?.label}
+                  value={businessSettingsCustomer?.[9]?.value}
+                  onChange={() =>
+                    handleBusinessCustomerSettingsChange(
+                      businessSettingsCustomer?.[9]
+                    )
+                  }
+                />
               </Grid>
             )}
           </Grid>

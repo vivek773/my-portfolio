@@ -47,6 +47,7 @@ const AirworthinessSectionComponent = () => {
           justifyContent="space-between"
           spacing={1}
           mb={5}
+          mt={5}
         >
           <Typography variant="h4" gutterBottom mb={0}>
             Airworthiness Directives
@@ -64,7 +65,7 @@ const AirworthinessSectionComponent = () => {
           />
         </Stack>
 
-        {fleet?.airworthinessDirectives === 0 ? (
+        {fleet?.airworthinessDirectives?.length === 0 ? (
           <Box>
             <Typography
               variant="h6"
