@@ -17,6 +17,8 @@ import DestinationsPage from "./pages/destinations/DestinationsPage";
 import AddDestinationComponent from "./components/destinations/AddDestinationComponent";
 import BookingsPage from "./pages/bookings/BookingsPage";
 import BookingViewComponent from "./components/bookings/BookingViewComponent";
+import PaymentsPage from "./pages/payments/PaymentsPage";
+import PaymentViewComponent from "./components/payments/PaymentViewComponent";
 
 // Protected Routes
 import ProtectedRoute from "./protectedroute/ProtectedRoute";
@@ -64,6 +66,14 @@ const MainRouter = () => {
         <Route
           path="/bookings/:id/"
           element={wrapWithProtectedRoute(<BookingViewComponent />)}
+        />
+        <Route
+          path="/payments"
+          element={wrapWithProtectedRoute(<PaymentsPage />)}
+        />
+         <Route
+          path="/payments/:id/"
+          element={wrapWithProtectedRoute(<PaymentViewComponent />)}
         />
       </Route>
     </Routes>

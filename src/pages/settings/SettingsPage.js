@@ -29,7 +29,6 @@ import BusinessSettingsForCustomerComponent from "../../components/business/Busi
 import BusinessSettingsForEmployeeComponent from "../../components/business/BusinessSettingsForEmployeeComponent";
 import SpinnerComponent from "../../components/spinner/SpinnerComponent";
 
-
 // Utils
 import { EDISPATCHED } from "../../utils/Constants";
 import { fetchGETRequest } from "../../utils/Services";
@@ -37,8 +36,7 @@ import { fetchGETRequest } from "../../utils/Services";
 function SettingsPage() {
   const dispatch = useDispatch();
   const business = useSelector((state) => state.business);
-  const [isLoading, setIsLoading] = useState(false)
-
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     const getBusinessData = async () => {
@@ -76,7 +74,7 @@ function SettingsPage() {
             primary_airport_code,
           })
         );
-        dispatch(setTax(tax))
+        dispatch(setTax(tax));
         dispatch(setEmails(emails));
         dispatch(setMerchantAccountDetails(merchant_account_details));
         dispatch(
@@ -109,26 +107,27 @@ function SettingsPage() {
           </Box>
         </Box>
 
-        <Container maxWidth="lg"> 
-        <SpinnerComponent show={isLoading} />
+        <Container maxWidth="lg">
+          <Box mt={10}>
+            <SpinnerComponent show={isLoading} />
+          </Box>
 
-        {!isLoading && (
-          <>
-            <BusinessDetailsComponent details={business.business_details} />
-            <BusinessEmailsComponent emails={business.emails} />
-            <BusinessMerchantAccountDetailsComponent
-              merchantAccountDetails={business?.merchant_account_details}
-            />
-            <BusinessSettingsForCustomerComponent
-              settings={business?.business_settings_for_customer}
-            />
-            <BusinessTaxComponent tax={business?.tax}/>
-            <BusinessSettingsForEmployeeComponent
-              settings={business?.business_settings_for_employee}
-            />
-          </>
-        )}
-      
+          {!isLoading && (
+            <>
+              <BusinessDetailsComponent details={business.business_details} />
+              <BusinessEmailsComponent emails={business.emails} />
+              <BusinessMerchantAccountDetailsComponent
+                merchantAccountDetails={business?.merchant_account_details}
+              />
+              <BusinessSettingsForCustomerComponent
+                settings={business?.business_settings_for_customer}
+              />
+              <BusinessTaxComponent tax={business?.tax} />
+              <BusinessSettingsForEmployeeComponent
+                settings={business?.business_settings_for_employee}
+              />
+            </>
+          )}
         </Container>
       </Container>
     </div>
