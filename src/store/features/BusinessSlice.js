@@ -12,6 +12,7 @@ const initialState = {
     phone_number: null,
     primary_airport_code: "",
   },
+  tax: null,
   emails: [],
   merchant_account_details: [],
   business_settings_for_customer: [],
@@ -24,6 +25,9 @@ const business = createSlice({
   reducers: {
     setBusinessDetails: (state, action) => {
       state.business_details = action.payload;
+    },
+    setTax: (state, action) => { 
+      state.tax = action.payload;
     },
     setEmails: (state, action) => {
       state.emails = action.payload;
@@ -51,6 +55,7 @@ const business = createSlice({
 
 export const {
   setBusinessDetails,
+  setTax,
   setEmails,
   setMerchantAccountDetails,
   setBusinessSettingsForCustomer,

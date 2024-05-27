@@ -12,6 +12,7 @@ import Typography from "@mui/material/Typography";
 import { useDispatch, useSelector } from "react-redux";
 import {
   setBusinessDetails,
+  setTax,
   setEmails,
   setMerchantAccountDetails,
   setBusinessSettingsForCustomer,
@@ -22,6 +23,7 @@ import {
 import HelmetComponent from "../../components/helmet/HelmetComponent";
 import BusinessDetailsComponent from "../../components/business/BusinessDetailsComponent";
 import BusinessEmailsComponent from "../../components/business/BusinessEmailsComponent";
+import BusinessTaxComponent from "../../components/business/BusinessTaxComponent";
 import BusinessMerchantAccountDetailsComponent from "../../components/business/BusinessMerchantAccountComponent";
 import BusinessSettingsForCustomerComponent from "../../components/business/BusinessSettingsForCustomerComponent";
 import BusinessSettingsForEmployeeComponent from "../../components/business/BusinessSettingsForEmployeeComponent";
@@ -36,6 +38,7 @@ function SettingsPage() {
   const dispatch = useDispatch();
   const business = useSelector((state) => state.business);
   const [isLoading, setIsLoading] = useState(false)
+
 
   useEffect(() => {
     const getBusinessData = async () => {
@@ -56,6 +59,7 @@ function SettingsPage() {
           phone_number,
           primary_airport_code,
           emails,
+          tax,
           merchant_account_details,
           business_settings_for_customer,
           business_settings_for_employee,
@@ -72,6 +76,7 @@ function SettingsPage() {
             primary_airport_code,
           })
         );
+        dispatch(setTax(tax))
         dispatch(setEmails(emails));
         dispatch(setMerchantAccountDetails(merchant_account_details));
         dispatch(
@@ -117,6 +122,7 @@ function SettingsPage() {
             <BusinessSettingsForCustomerComponent
               settings={business?.business_settings_for_customer}
             />
+            <BusinessTaxComponent tax={business?.tax}/>
             <BusinessSettingsForEmployeeComponent
               settings={business?.business_settings_for_employee}
             />
