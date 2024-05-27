@@ -152,6 +152,10 @@ const BookingsPage = () => {
                           {booking?.trip_departure_airport_code}
                         </TableCell>
                         <TableCell align="center">
+                          {booking?.trip_arrival_airport_code}
+                        </TableCell>
+                        
+                        <TableCell align="center">
                           {`${booking?.customer?.first_name} ${booking?.customer?.last_name}`}
                         </TableCell>
                         <TableCell align="center">
