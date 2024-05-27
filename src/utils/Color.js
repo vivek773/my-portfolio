@@ -24,15 +24,14 @@ export const CHIP = {
   info: "#1890ff",
 };
 
-
 export const TABLE = {
   headBgColor: "#f4f6f8",
-  headTextColor: "#637381"
-}
+  headTextColor: "#637381",
+};
 
 export const TABLE_CHIP = {
   activeBgColor: "rgba(84, 214, 44, 0.16)",
   activeColor: "#229a16",
   pendingBgColor: "rgba(156, 39, 176, 0.16)",
   pendingColor: "#9c27b0",
-}
+};
