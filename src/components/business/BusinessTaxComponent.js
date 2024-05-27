@@ -15,28 +15,25 @@ import BusinessTaxModal from "./businessModal/BusinessTaxModal";
 // Context
 import { useModal } from "../../context/ModalContext";
 
-
 const BusinessTaxComponent = ({ tax }) => {
-  const [businessTax, setBusinessTax] =useState(null);
+  const [businessTax, setBusinessTax] = useState(null);
   const { openModal } = useModal();
   useEffect(() => {
     const items = [
       {
         key: "tax_name",
         label: "Tax Name",
-        value: tax.tax_name,
+        value: tax?.tax_name,
       },
       {
         show: true,
         key: "tax_rate",
         label: "Tax Rate",
-        value: tax.tax_rate,
+        value: tax?.tax_rate,
       },
-      
     ];
     setBusinessTax([...items]);
   }, [tax]);
-
 
   return (
     <>
