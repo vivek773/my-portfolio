@@ -28,3 +28,7 @@ export const TABLE = {
   headBgColor: "#f4f6f8",
   headTextColor: "#637381",
 };
+
+export const COLOR_OBJECT = {
+  primary: "#479DE1",
+};

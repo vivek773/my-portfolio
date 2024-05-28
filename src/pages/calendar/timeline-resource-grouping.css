@@ -1,0 +1,6 @@
+.schedule-control-section .e-schedule .e-vertical-view,
+.schedule-control-section .e-schedule .e-timeline-view,
+.schedule-control-section .e-schedule .e-agenda-view,
+.schedule-control-section .e-schedule .e-month-view {
+  background-color: #f3f3f3;
+}

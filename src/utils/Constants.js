@@ -80,7 +80,6 @@ export const DOCUMENTS_TYPES = [
   "insurance",
 ];
 
-
 // Time Zone
 export const TIME_ZONE = [
   { label: "America/New_York - Eastern Time (ET)", value: "America/New_York" },
@@ -95,3 +94,6 @@ export const TIME_ZONE = [
     value: "America/Puerto_Rico",
   },
 ];
+
+export const SYNC_FUSION_SCHEDULER_KEY =
+  "Ngo9BigBOggjHTQxAR8/V1NBaF5cXmZCf1FpRmJGdld5fUVHYVZUTXxaS00DNHVRdkdnWXtdcHRURGhZVUZ1WUQ=";

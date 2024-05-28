@@ -11,7 +11,7 @@ import DashboardLayout from "./layout/layout";
 import FleetPage from "./pages/fleet/FleetPage";
 import AddPlaneComponent from "./components/fleet/AddPlaneComponent";
 import PlaneDetailComponent from "./components/fleet/PlaneDetailComponent";
-import AddAirworthinessComponent from "./components/fleet/airworthiness/AddAirworthinessComponent"
+import AddAirworthinessComponent from "./components/fleet/airworthiness/AddAirworthinessComponent";
 import SettingsPage from "./pages/settings/SettingsPage";
 import DestinationsPage from "./pages/destinations/DestinationsPage";
 import AddDestinationComponent from "./components/destinations/AddDestinationComponent";
@@ -22,6 +22,7 @@ import PaymentViewComponent from "./components/payments/PaymentViewComponent";
 
 // Protected Routes
 import ProtectedRoute from "./protectedroute/ProtectedRoute";
+import CalendarPage from "./pages/calendar/CalendarPage";
 
 const MainRouter = () => {
   const wrapWithProtectedRoute = (children) => {
@@ -55,7 +56,7 @@ const MainRouter = () => {
           path="/destinations"
           element={wrapWithProtectedRoute(<DestinationsPage />)}
         />
-         <Route
+        <Route
           path="/destinations/add-destination"
           element={wrapWithProtectedRoute(<AddDestinationComponent />)}
         />
@@ -71,10 +72,11 @@ const MainRouter = () => {
           path="/payments"
           element={wrapWithProtectedRoute(<PaymentsPage />)}
         />
-         <Route
+        <Route
           path="/payments/:id/"
           element={wrapWithProtectedRoute(<PaymentViewComponent />)}
         />
+        <Route path={"/calendar"} element={<CalendarPage />} />
       </Route>
     </Routes>
   );
