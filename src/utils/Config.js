@@ -45,7 +45,7 @@ export const ADMIN_CONFIG = [
   },
   {
     title: "People",
-    path: "users",
+    path: "people",
     icon: <GroupIcon />,
   },
   {

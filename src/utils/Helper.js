@@ -13,8 +13,10 @@ export const formatDate = (date, format = "MM/DD/YYYY") => {
 
 // FormatCurrency
 
-export const formatCurrency = (amountInCents) =>
-  (amountInCents / 100).toFixed(2);
+export const formatCurrency = (amountInCents) =>{ 
+  return "$" + (amountInCents / 100).toFixed(2);
+
+} 
 
 
 // Chip
