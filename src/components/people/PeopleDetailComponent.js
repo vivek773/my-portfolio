@@ -15,6 +15,24 @@ const PeopleDetailComponent = () => {
   const params = useLocation();
   const [peopleDetails, setPeopleDetails] = useState(null);
 
+  const getAddress = (payload) => {
+
+    // will replace address with street
+
+    const addressParts = [
+      payload?.address,
+      payload?.unit,
+      payload?.city,
+      payload?.state,
+      payload?.zip_code,
+      payload?.country,
+    ];
+
+    if (addressParts) { 
+      return addressParts.filter((item) => item).join(", ");
+    }
+  };
+
 
   useEffect(() => {
     const items = [
@@ -29,7 +47,10 @@ const PeopleDetailComponent = () => {
         value: params?.state?.last_name,
       },
       { key: "email", label: "Email", value: params?.state?.email },
+      { key: "address", label: "Address", value: getAddress(params?.state?.details) },
       { key: "date_of_birth", label: "Date Of Birth", value: params?.state?.details?.date_of_birth },
+      { key: "role", label: "Role", value: params?.state?.user_tenant_profile[0]?.role },
+      { key: "status", label: "Status", value: params?.state?.user_tenant_profile[0]?.status },
     ];
     setPeopleDetails([...items]);
   }, [params]);

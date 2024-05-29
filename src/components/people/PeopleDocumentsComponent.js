@@ -63,7 +63,7 @@ const PeopleDocumentsComponent = () => {
             >
               <SpinnerComponent show={false} size={30} />
             </Box>
-            {peopleDocuments.map((item, index) => (
+            {peopleDocuments?.map((item, index) => (
               <Grid item key={index} xs={6} sx={{ opacity: false ? 0.5 : 1 }}>
                 <Stack
                   direction="row"
