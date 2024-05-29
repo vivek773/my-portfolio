@@ -19,6 +19,9 @@ import BookingsPage from "./pages/bookings/BookingsPage";
 import BookingViewComponent from "./components/bookings/BookingViewComponent";
 import PaymentsPage from "./pages/payments/PaymentsPage";
 import PaymentViewComponent from "./components/payments/PaymentViewComponent";
+import PeoplePage from "./pages/people/PeoplePage";
+import AddPeopleComponent from "./components/people/AddPeopleComponent";
+import PeopleViewComponent from "./components/people/PeopleViewComponent";
 
 // Protected Routes
 import ProtectedRoute from "./protectedroute/ProtectedRoute";
@@ -77,6 +80,19 @@ const MainRouter = () => {
           element={wrapWithProtectedRoute(<PaymentViewComponent />)}
         />
         <Route path={"/calendar"} element={<CalendarPage />} />
+        <Route
+          path={"/people"}
+          element={wrapWithProtectedRoute(<PeoplePage />)}
+        />
+        <Route
+          path={"/people/add-people"}
+          element={wrapWithProtectedRoute(<AddPeopleComponent />)}
+        />
+
+        <Route
+          path={"/people/:id/"}
+          element={wrapWithProtectedRoute(<PeopleViewComponent />)}
+        />
       </Route>
     </Routes>
   );
