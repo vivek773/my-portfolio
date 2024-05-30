@@ -150,6 +150,7 @@ const CalendarPage = () => {
                   dataSource: data,
                   ignoreWhitespace: true,
                   allowEditing: false,
+                  allowAdding: false,
                 }}
                 group={{ resources: ["Planes", "Pilots"] }}
                 dateChange={handleDateChange}

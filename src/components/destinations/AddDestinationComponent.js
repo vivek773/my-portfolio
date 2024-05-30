@@ -58,7 +58,7 @@ const AddDestinationComponent = () => {
     validationSchema: validationSchema,
     onSubmit: async (values) => {
       startLoading();
-      values["airport_timezone"] = values.airport_timezone.value
+      values["airport_timezone"] = values.airport_timezone.value;
 
       const response = await fetchPOSTRequest(
         `/destination/owner/add-destination`,
@@ -137,7 +137,6 @@ const AddDestinationComponent = () => {
             value={formik.values.destination_specific_cost}
             onChange={formik.handleChange}
             formik={formik}
-            required={true}
           />
 
           <SwitchComponent
