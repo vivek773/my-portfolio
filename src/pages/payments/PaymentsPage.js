@@ -72,7 +72,7 @@ const PaymentsPage = () => {
   }, []);
 
   const handleView = (data) => {
-    navigate(`/payments/${data?.customer_id}`, { state: data });
+    navigate(`/payments/${data?.payment_id}`, { state: data });
   };
 
   return (
