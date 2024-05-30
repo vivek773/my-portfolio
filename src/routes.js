@@ -22,6 +22,7 @@ import PaymentViewComponent from "./components/payments/PaymentViewComponent";
 import PeoplePage from "./pages/people/PeoplePage";
 import AddPeopleComponent from "./components/people/AddPeopleComponent";
 import PeopleViewComponent from "./components/people/PeopleViewComponent";
+import ProfilePage from "./pages/profile/ProfilePage";
 
 // Protected Routes
 import ProtectedRoute from "./protectedroute/ProtectedRoute";
@@ -92,6 +93,10 @@ const MainRouter = () => {
         <Route
           path={"/people/:id/"}
           element={wrapWithProtectedRoute(<PeopleViewComponent />)}
+        />
+        <Route
+          path={"/profile"}
+          element={wrapWithProtectedRoute(<ProfilePage />)}
         />
       </Route>
     </Routes>
