@@ -71,12 +71,12 @@ const PaymentDetailComponent = () => {
       {
         key: "processor_details.card_last_4_digit",
         label: "Processor Details Card Last 4 Digit",
-        value: params?.state?.processor_details.card_last_4_digit,
+        value: params?.state?.processor_details?.card_last_4_digit,
       },
       {
         key: "processor_details.transaction_reference_id",
         label: "Processor Details Transaction Reference Id",
-        value: params?.state?.processor_details.transaction_reference_id,
+        value: params?.state?.processor_details?.transaction_reference_id,
       },
       {
         key: "action",
