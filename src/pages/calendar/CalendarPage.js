@@ -44,9 +44,7 @@ const CalendarPage = () => {
 
         const scheduleData = bookings.map((item) => ({
           Id: item.schedule_id,
-          Subject:
-            `${item.booking.customer.first_name} ${item.booking.customer.last_name} - ${item.booking.booking_reference} ` ||
-            "No Title",
+          Subject: item.title || "No Title",
           StartTime: new Date(item.booking_start_time),
           EndTime: new Date(item.booking_end_time),
           TailNumber: "plane",
@@ -109,8 +107,6 @@ const CalendarPage = () => {
     }
   };
 
-  const workDays = [0, 1, 2, 3, 4, 5];
-
   const fleetData = [
     { text: "PLANES", id: "plane", color: "#cb6bb2" },
     { text: "PILOTS", id: "pilot", color: "#56ca85" },
@@ -145,7 +141,6 @@ const CalendarPage = () => {
                 showQuickInfo={false}
                 selectedDate={selectedDate}
                 currentView="TimelineWeek"
-                workDays={workDays}
                 eventSettings={{
                   dataSource: data,
                   ignoreWhitespace: true,
@@ -182,7 +177,6 @@ const CalendarPage = () => {
                 <ViewsDirective>
                   <ViewDirective option="TimelineDay" />
                   <ViewDirective option="TimelineWeek" />
-                  <ViewDirective option="TimelineWorkWeek" />
                   <ViewDirective option="TimelineMonth" />
                   <ViewDirective option="Agenda" />
                 </ViewsDirective>
