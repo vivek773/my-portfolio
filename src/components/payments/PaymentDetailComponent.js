@@ -26,7 +26,7 @@ import { useLoader } from "../../context/LoaderContext";
 const PaymentDetailComponent = () => {
   const params = useLocation();
   const dispatch = useDispatch();
-  const navigate =  useNavigate();
+  const navigate = useNavigate();
   const { isLoading, startLoading, stopLoading } = useLoader();
   const [paymentDetails, setPaymentDetails] = useState(null);
 
@@ -35,16 +35,16 @@ const PaymentDetailComponent = () => {
     const response = await fetchGETRequest(`/booking/owner/get-bookings`, {});
 
     if (response?.statusCode === 200 && response) {
-
       dispatch(setBookings(response?.bookings));
-      
-      const findData = response?.bookings?.find((item) => item?.booking_id === params?.state?.booking_id)
-      
-      if(findData) {
+
+      const findData = response?.bookings?.find(
+        (item) => item?.booking_id === params?.state?.booking_id
+      );
+
+      if (findData) {
         navigate(`/bookings/${params?.state?.booking_id}`, { state: findData });
       }
       stopLoading();
-
     } else {
       stopLoading();
     }
@@ -71,12 +71,12 @@ const PaymentDetailComponent = () => {
       {
         key: "processor_details.card_last_4_digit",
         label: "Processor Details Card Last 4 Digit",
-        value: params?.state?.processor_details.card_last_4_digit,
+        value: params?.state?.processor_details?.card_last_4_digit,
       },
       {
         key: "processor_details.transaction_reference_id",
         label: "Processor Details Transaction Reference Id",
-        value: params?.state?.processor_details.transaction_reference_id,
+        value: params?.state?.processor_details?.transaction_reference_id,
       },
       {
         key: "action",

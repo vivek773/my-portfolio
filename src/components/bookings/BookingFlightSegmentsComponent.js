@@ -28,10 +28,11 @@ const BookingFlightSegmentsComponent = () => {
     { id: "departure_airport_code", label: "Departure Airport Code " },
     { id: "departing_flight_time", label: "Departing Flight Time" },
     { id: "arrival_airport_code", label: "Arrival Airport Code" },
+    { id: "arrival_time", label: "Estimated Arrival" },
   ];
 
   useEffect(() => {
-    setBookingFlightSegments([... params?.state?.flightSegments]);
+    setBookingFlightSegments([...params?.state?.flightSegments]);
     // eslint-disable-next-line
   }, [params]);
 
@@ -65,11 +66,14 @@ const BookingFlightSegmentsComponent = () => {
                           </TableCell>
                           <TableCell align="center">
                             {moment(segment?.departing_flight_time).format(
-                              "h:mm"
+                              "h:mm a"
                             )}
                           </TableCell>
                           <TableCell align="center">
                             {segment?.arrival_airport_code}
+                          </TableCell>
+                          <TableCell align="center">
+                            {moment(segment?.arrival_time).format("h:mm a")}
                           </TableCell>
                         </TableRow>
                       ))}
