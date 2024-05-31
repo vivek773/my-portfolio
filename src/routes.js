@@ -23,6 +23,7 @@ import PeoplePage from "./pages/people/PeoplePage";
 import AddPeopleComponent from "./components/people/AddPeopleComponent";
 import PeopleViewComponent from "./components/people/PeopleViewComponent";
 import ProfilePage from "./pages/profile/ProfilePage";
+import DestinationViewComponent from "./components/destinations/DestinationViewComponent";
 
 // Protected Routes
 import ProtectedRoute from "./protectedroute/ProtectedRoute";
@@ -63,6 +64,10 @@ const MainRouter = () => {
         <Route
           path="/destinations/add-destination"
           element={wrapWithProtectedRoute(<AddDestinationComponent />)}
+        />
+        <Route
+          path="/destinations/:id"
+          element={wrapWithProtectedRoute(<DestinationViewComponent />)}
         />
         <Route
           path="/bookings"
