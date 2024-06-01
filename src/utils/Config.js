@@ -30,11 +30,6 @@ export const ADMIN_CONFIG = [
   },
 
   {
-    title: "People",
-    path: "people",
-    icon: <GroupIcon />,
-  },
-  {
     title: "Payments",
     path: "payments",
     icon: <MonetizationOnIcon />,
@@ -58,6 +53,11 @@ export const ADMIN_CONFIG = [
     title: "Maintenance Logs",
     path: "maintenance-logs",
     icon: <BuildIcon />,
+  },
+  {
+    title: "People",
+    path: "people",
+    icon: <GroupIcon />,
   },
   {
     title: "Settings",

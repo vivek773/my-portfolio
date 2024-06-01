@@ -18,8 +18,6 @@ import { useToast } from "../../context/ToastContext";
 import { useLoader } from "../../context/LoaderContext";
 import { fetchPOSTRequest } from "../../utils/Services";
 
-
-
 const AddPeopleComponent = () => {
   const { setToast } = useToast();
   const { isLoading, startLoading, stopLoading } = useLoader();
@@ -33,13 +31,12 @@ const AddPeopleComponent = () => {
     is_pilot: Yup.string().optional(),
   });
 
-
   const formik = useFormik({
     initialValues: {
       first_name: "",
       last_name: "",
       email: "",
-      role: "",
+      role: "member",
       is_admin: false,
       is_pilot: false,
     },
@@ -47,10 +44,7 @@ const AddPeopleComponent = () => {
     onSubmit: async (values) => {
       startLoading();
 
-      const response = await fetchPOSTRequest(
-        `/user/owner/add-user`,
-        values
-      );
+      const response = await fetchPOSTRequest(`/user/owner/add-user`, values);
       if (response?.statusCode === 201 && response) {
         setToast({
           open: true,
@@ -101,31 +95,12 @@ const AddPeopleComponent = () => {
             formik={formik}
             required={true}
           />
-          <CustomInput
-            name="role"
-            label="Role"
-            value={formik.values.role}
-            onChange={formik.handleChange}
-            formik={formik}
-            required={true}
-          />
-          <CustomInput
-            name="country"
-            label="Country"
-            value={formik.values.country}
-            onChange={formik.handleChange}
-            formik={formik}
-            required={true}
-          />
-    
+
           <SwitchComponent
             value={formik.values.is_admin}
             label={"Admin"}
             onChange={() =>
-              formik.setFieldValue(
-                "is_admin",
-                !formik.values.is_admin
-              )
+              formik.setFieldValue("is_admin", !formik.values.is_admin)
             }
           />
 
@@ -133,10 +108,7 @@ const AddPeopleComponent = () => {
             value={formik.values.is_pilot}
             label={"Pilot"}
             onChange={() =>
-              formik.setFieldValue(
-                "is_pilot",
-                !formik.values.is_pilot
-              )
+              formik.setFieldValue("is_pilot", !formik.values.is_pilot)
             }
           />
 

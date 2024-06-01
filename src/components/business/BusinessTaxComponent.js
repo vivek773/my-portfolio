@@ -21,11 +21,6 @@ const BusinessTaxComponent = ({ tax }) => {
   useEffect(() => {
     const items = [
       {
-        key: "tax_name",
-        label: "Tax Name",
-        value: tax?.tax_name,
-      },
-      {
         show: true,
         key: "tax_rate",
         label: "Tax Rate",
@@ -38,7 +33,7 @@ const BusinessTaxComponent = ({ tax }) => {
   return (
     <>
       <BusinessCardComponent
-        title={"Business Tax"}
+        title={"Sales Tax"}
         action={
           <CustomButton
             label={"Edit"}
