@@ -36,7 +36,7 @@ import { useLoader } from "../../context/LoaderContext";
 
 const TABLE_HEAD = [
   { id: "index", label: "#" },
-  { id: "name", label: "Name" },
+  { id: "name", label: "Customer Name" },
   { id: "email", label: "Email" },
   { id: "amount", label: "Amount" },
   { id: "tax", label: "Tax" },
@@ -77,10 +77,10 @@ const PaymentsPage = () => {
 
   return (
     <>
-    <HelmetComponent title={`${EDISPATCHED} | Payments`} />
+      <HelmetComponent title={`${EDISPATCHED} | Payments`} />
       <Container maxWidth="xl">
         <Typography variant="h4" gutterBottom mb={5}>
-          payments
+          Payments
         </Typography>
         {isLoading && (
           <Box mt={10}>
@@ -125,12 +125,13 @@ const PaymentsPage = () => {
                             {payment?.customer?.email}
                           </TableCell>
                           <TableCell align="center">
-                            {formatCurrency(payment?.amount)}
+                            ${formatCurrency(payment?.amount)}
                           </TableCell>
                           <TableCell align="center">
-                            {formatCurrency(payment?.tax)}
+                            ${formatCurrency(payment?.tax)}
                           </TableCell>
                           <TableCell align="center">
+                            $
                             {formatCurrency(
                               payment?.processor_details?.amount_paid
                             )}

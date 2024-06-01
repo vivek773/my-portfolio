@@ -96,7 +96,7 @@ const BookingsPage = () => {
 
   return (
     <>
-    <HelmetComponent title={`${EDISPATCHED} | Bookings`} />
+      <HelmetComponent title={`${EDISPATCHED} | Bookings`} />
       <Container maxWidth="xl">
         <Typography variant="h4" gutterBottom mb={5}>
           Bookings

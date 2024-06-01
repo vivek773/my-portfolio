@@ -32,7 +32,7 @@ const BookingFlightSegmentsComponent = () => {
   ];
 
   useEffect(() => {
-    setBookingFlightSegments([...params?.state?.flightSegments]);
+    setBookingFlightSegments([...params?.state?.flight_segments]);
     // eslint-disable-next-line
   }, [params]);
 
