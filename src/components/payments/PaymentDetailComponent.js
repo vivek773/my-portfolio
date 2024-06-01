@@ -21,6 +21,11 @@ import { fetchGETRequest } from "../../utils/Services";
 
 // Context
 import { useLoader } from "../../context/LoaderContext";
+import {
+  formatDate,
+  formatDateTime,
+  formatPhoneNumber,
+} from "../../utils/Helper";
 
 const PaymentDetailComponent = () => {
   const params = useLocation();
@@ -74,25 +79,24 @@ const PaymentDetailComponent = () => {
             <Grid item xs={3}>
               <Typography variant="subtitle1">Card Number</Typography>
               <Typography paragraph>
-                {`**** **** **** ${paymentDetails?.processor_details?.card_last_four}`}
+                {` **** ${paymentDetails?.processor_details?.card_last_four}`}
               </Typography>
             </Grid>
             <Grid item xs={3}>
               <Typography variant="subtitle1">Phone Number</Typography>
               <Typography paragraph>
-                {paymentDetails?.customer?.phone_number || "-"}
-              </Typography>
-            </Grid>
-            <Grid item xs={3}>
-              <Typography variant="subtitle1">
-                Transaction Reference ID
-              </Typography>
-              <Typography paragraph>
-                {paymentDetails?.processor_details?.transaction_reference_id ||
+                {formatPhoneNumber(paymentDetails?.customer?.phone_number) ||
                   "-"}
               </Typography>
             </Grid>
             <Grid item xs={3}>
+              <Typography variant="subtitle1">Transaction Time</Typography>
+              <Typography paragraph>
+                {formatDateTime(paymentDetails?.created_at) || "-"}
+              </Typography>
+            </Grid>
+            <Grid item xs={3}>
+              <Typography variant="subtitle1">Booking Details</Typography>
               <CustomButton
                 width={"fit-content"}
                 onClick={getBookingsData}

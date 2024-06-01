@@ -28,7 +28,11 @@ import { useSelector } from "react-redux";
 import { useModal } from "../../context/ModalContext";
 
 // Utils
-import { formatCurrency, renderChipColorByStatus } from "../../utils/Helper"
+import {
+  formatCurrency,
+  formatDate,
+  renderChipColorByStatus,
+} from "../../utils/Helper";
 
 const BookingFlightSegmentsComponent = () => {
   const params = useLocation();
@@ -36,7 +40,7 @@ const BookingFlightSegmentsComponent = () => {
   const [pendingPayments, setPendingPayments] = useState(null);
   const [paymentData, setPaymentData] = useState(null);
 
-  const state = useSelector((state) => state.payments)
+  const state = useSelector((state) => state.payments);
 
   const TABLE_HEAD = [
     { id: "amount", label: "Amount" },
@@ -46,8 +50,10 @@ const BookingFlightSegmentsComponent = () => {
   ];
 
   useEffect(() => {
-    if(state?.payments?.length > 0) {
-     const findData =  state?.payments?.find((item) => item?.payment_id === params?.state?.payment_id)
+    if (state?.payments?.length > 0) {
+      const findData = state?.payments?.find(
+        (item) => item?.payment_id === params?.state?.payment_id
+      );
       setPendingPayments([...findData?.pending_payments]);
     }
     // eslint-disable-next-line
@@ -76,10 +82,10 @@ const BookingFlightSegmentsComponent = () => {
                       pendingPayments?.map((pending, index) => (
                         <TableRow hover key={index}>
                           <TableCell align="center">
-                            {formatCurrency(pending?.amount)}
+                            ${formatCurrency(pending?.amount)}
                           </TableCell>
                           <TableCell align="center">
-                            {pending?.due_date}
+                            {formatDate(pending?.due_date)}
                           </TableCell>
                           <TableCell align="center">
                             <Label
@@ -92,10 +98,9 @@ const BookingFlightSegmentsComponent = () => {
                             <CustomButton
                               width={"fit-content"}
                               onClick={() => {
-                                openModal("pendingPayment")
-                                setPaymentData(pending)
-                              }
-                              }
+                                openModal("pendingPayment");
+                                setPaymentData(pending);
+                              }}
                               label={"View"}
                               size={"small"}
                             />

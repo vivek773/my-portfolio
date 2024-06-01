@@ -11,10 +11,17 @@ export const formatDate = (date, format = "MM/DD/YYYY") => {
   return null;
 };
 
+export const formatDateTime = (date, format = "MM/DD/YYYY hh:mm A") => {
+  if (date) {
+    return moment(date).format(format);
+  }
+  return null;
+};
+
 // FormatCurrency
 
-export const formatCurrency = (amountInCents) =>(amountInCents / 100).toFixed(2);
-
+export const formatCurrency = (amountInCents) =>
+  (amountInCents / 100).toFixed(2);
 
 // Chip
 export const renderChipColorByStatus = (status) => {
@@ -29,4 +36,21 @@ export const renderChipColorByStatus = (status) => {
   } else if (status === "inactive") {
     return "warning";
   }
+};
+
+// Phone Number Formatter
+export const formatPhoneNumber = (phoneNumber) => {
+  if (!phoneNumber) return "";
+
+  // Remove all non-digit characters
+  const cleaned = ("" + phoneNumber).replace(/\D/g, "");
+
+  // Assuming phone number includes country code
+  const match = cleaned.match(/^(\d{1})(\d{3})(\d{3})(\d{4})$/);
+
+  if (match) {
+    return `+${match[1]} ${match[2]} ${match[3]} ${match[4]}`;
+  }
+
+  return phoneNumber;
 };
