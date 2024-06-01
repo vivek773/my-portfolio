@@ -2,8 +2,7 @@
 
 // Default
 import { useEffect, useState } from "react";
-import { useLocation, useNavigation } from "react-router-dom";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
 // MUI components
 import Typography from "@mui/material/Typography";
@@ -51,64 +50,57 @@ const PaymentDetailComponent = () => {
   };
 
   useEffect(() => {
-    const items = [
-      {
-        key: "first_name",
-        label: "First Name",
-        value: params?.state?.customer?.first_name,
-      },
-      {
-        key: "last_name",
-        label: "Last Name",
-        value: params?.state?.customer?.last_name,
-      },
-      { key: "email", label: "Email", value: params?.state?.customer?.email },
-      {
-        key: "phone_number",
-        label: "Phone Number",
-        value: params?.state?.customer?.phone_number,
-      },
-      {
-        key: "processor_details.card_last_4_digit",
-        label: "Processor Details Card Last 4 Digit",
-        value: params?.state?.processor_details?.card_last_4_digit,
-      },
-      {
-        key: "processor_details.transaction_reference_id",
-        label: "Processor Details Transaction Reference Id",
-        value: params?.state?.processor_details?.transaction_reference_id,
-      },
-      {
-        key: "action",
-        label: "View Booking",
-        value: (
-          <CustomButton
-            width={"fit-content"}
-            onClick={getBookingsData}
-            label={"Go"}
-            isLoading={isLoading}
-            size={"small"}
-          />
-        ),
-      },
-    ];
-    setPaymentDetails([...items]);
+    setPaymentDetails(params?.state);
   }, [params]);
 
   return (
     <>
       <PaymentCardComponent
-        title={"Payment Detail"}
+        title={"Detail"}
         component={
           <Grid container spacing={{ xs: 5, md: 3 }} columns={{ md: 12 }}>
-            {paymentDetails?.map((element, i) => (
-              <Grid item key={i} xs={3}>
-                <Typography variant="subtitle1">{element.label}</Typography>
-                <Typography paragraph>
-                  {element?.value ? element.value : "-"}
-                </Typography>
-              </Grid>
-            ))}
+            <Grid item xs={3}>
+              <Typography variant="subtitle1">Customer Name</Typography>
+              <Typography paragraph>
+                {`${paymentDetails?.customer?.first_name} ${paymentDetails?.customer?.last_name}`}
+              </Typography>
+            </Grid>
+            <Grid item xs={3}>
+              <Typography variant="subtitle1">Email</Typography>
+              <Typography paragraph>
+                {paymentDetails?.customer?.email || "-"}
+              </Typography>
+            </Grid>
+            <Grid item xs={3}>
+              <Typography variant="subtitle1">Card Last 4 Digits</Typography>
+              <Typography paragraph>
+                {`**** **** **** ${paymentDetails?.processor_details?.card_last_four}`}
+              </Typography>
+            </Grid>
+            <Grid item xs={3}>
+              <Typography variant="subtitle1">Phone Number</Typography>
+              <Typography paragraph>
+                {paymentDetails?.customer?.phone_number || "-"}
+              </Typography>
+            </Grid>
+            <Grid item xs={3}>
+              <Typography variant="subtitle1">
+                Transaction Reference ID
+              </Typography>
+              <Typography paragraph>
+                {paymentDetails?.processor_details?.transaction_reference_id ||
+                  "-"}
+              </Typography>
+            </Grid>
+            <Grid item xs={3}>
+              <CustomButton
+                width={"fit-content"}
+                onClick={getBookingsData}
+                label={"Go"}
+                isLoading={isLoading}
+                size={"small"}
+              />
+            </Grid>
           </Grid>
         }
       />
