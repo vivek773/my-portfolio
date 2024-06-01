@@ -1,6 +1,3 @@
-// Add plan
-
-// Default
 import { useFormik } from "formik";
 import * as Yup from "yup";
 
@@ -50,10 +47,6 @@ const AddPlaneComponent = () => {
       .required("Tach engine two is required.")
       .optional(),
     cruise_speed_kts: Yup.string().required("Cruise Speed kts is required."),
-    // standardHourlyRate: Yup.string().required(
-    //   "Standard hourly rate in required."
-    // ),
-    // clubHourlyRate: Yup.string().required("Club hourly rate in required."),
   });
 
   const formik = useFormik({
@@ -70,16 +63,19 @@ const AddPlaneComponent = () => {
       tach_engine_one: "",
       tach_engine_two: "",
       cruise_speed_kts: "",
-      // standardHourlyRate: "",
-      // clubHourlyRate: "",
-      // isBillByHobbs: "true",
     },
     validationSchema: validationSchema,
     onSubmit: async (values) => {
       startLoading();
-      values["category"] = values["category"].value;
 
-      const response = await fetchPOSTRequest(`/fleet/owner/add-plane`, values);
+      const modifiedValues = { ...values };
+      modifiedValues["category"] = values["category"].value;
+      modifiedValues["hourly_rate"] = parseFloat(values["hourly_rate"]) * 100;
+
+      const response = await fetchPOSTRequest(
+        `/fleet/owner/add-plane`,
+        modifiedValues
+      );
       if (response?.statusCode === 200 && response) {
         setToast({
           open: true,
@@ -205,27 +201,6 @@ const AddPlaneComponent = () => {
               onChange={formik.handleChange}
               formik={formik}
             />
-            {/* <CustomInput
-              name="standardHourlyRate"
-              label="Standard Hourly Rate"
-              value={formik.values.standardHourlyRate}
-              onChange={formik.handleChange}
-              required={true}
-            /> */}
-            {/* <CustomInput
-              name="clubHourlyRate"
-              label="Club Hourly Rate"
-              value={formik.values.clubHourlyRate}
-              onChange={formik.handleChange}
-              helperText="If you are offering a club membership program that entitles customers to discounted rates. This rate will be charged to club members instead of the standard hourly rate. This feature is still in development."
-            /> */}
-            {/* <CustomRadio
-              label={"Calculate Billing by"}
-              name={"isBillByHobbs"}
-              value={formik.values.isBillByHobbs}
-              onChange={formik.handleChange}
-              radioOption={RADIO_OPTIONS}
-            /> */}
 
             <CustomButton
               label={"Add Plane"}

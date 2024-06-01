@@ -32,39 +32,38 @@ const DestinationDetailsModal = ({ destinationDetails, destinationData }) => {
   const { setToast } = useToast();
   const dispatch = useDispatch();
   const { isLoading, startLoading, stopLoading } = useLoader();
-  const state = useSelector((state) => state.destinations)
-
+  const state = useSelector((state) => state.destinations);
 
   const formik = useFormik({
     initialValues: {
-      city: "",
-      state: "",
-      country: "",
-      airport_name: "",
-      destination_specific_cost: "",
-      status: "",
-      airport_timezone: "",
-      show_in_arrival_list: false,
-      show_in_departure_list: false,
-      airport_longitude: "",
-      airport_latitude: ""
+      city: destinationData?.city || "",
+      state: destinationData?.state || "",
+      country: destinationData?.country || "",
+      airport_name: destinationData?.airport_name || "",
+      destination_specific_cost:
+        destinationData?.destination_specific_cost || "",
+      status: destinationData?.status || "",
+      airport_timezone: destinationData?.airport_timezone || "",
+      show_in_arrival_list: destinationData?.show_in_arrival_list || false,
+      show_in_departure_list: destinationData?.show_in_departure_list || false,
+      airport_longitude: destinationData?.airport_longitude || "",
+      airport_latitude: destinationData?.airport_latitude || "",
     },
 
     onSubmit: async (values) => {
       startLoading();
 
-      const newPayload = { ...values }
+      const newPayload = { ...values };
 
-      newPayload["airport_timezone"] = newPayload["airport_timezone"].value
-      newPayload["destination_id"] = destinationData?.destination_id
-      newPayload["destination_specific_cost"] = newPayload.destination_specific_cost * 100
-
+      newPayload["airport_timezone"] = newPayload["airport_timezone"].value;
+      newPayload["destination_id"] = destinationData?.destination_id;
+      newPayload["destination_specific_cost"] =
+        newPayload.destination_specific_cost * 100;
 
       const response = await fetchPUTRequest(
         `/destination/owner/edit-destination`,
         newPayload
       );
-
 
       if (response?.statusCode === 201 && response) {
         setToast({
@@ -77,14 +76,14 @@ const DestinationDetailsModal = ({ destinationDetails, destinationData }) => {
 
         closeModal();
         stopLoading();
-        const updatedDestinations = state?.destinations?.map(destination => {
+        const updatedDestinations = state?.destinations?.map((destination) => {
           if (destination?.destination_id === destinationData?.destination_id) {
             return destinationData;
           }
           return destination;
         });
 
-        dispatch(setDestinations(updatedDestinations))
+        dispatch(setDestinations(updatedDestinations));
 
         formik.resetForm();
       } else {
@@ -216,8 +215,6 @@ const DestinationDetailsModal = ({ destinationDetails, destinationData }) => {
             required={true}
             type="number"
           />
-
-
         </Stack>
       }
       action={

@@ -72,7 +72,7 @@ const PaymentDetailComponent = () => {
               </Typography>
             </Grid>
             <Grid item xs={3}>
-              <Typography variant="subtitle1">Card Last 4 Digits</Typography>
+              <Typography variant="subtitle1">Card Number</Typography>
               <Typography paragraph>
                 {`**** **** **** ${paymentDetails?.processor_details?.card_last_four}`}
               </Typography>

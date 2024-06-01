@@ -10,7 +10,7 @@ import ScheduleIcon from "@mui/icons-material/Schedule";
 import CalendarTodayIcon from "@mui/icons-material/CalendarToday";
 import BuildIcon from "@mui/icons-material/Build";
 import SettingsIcon from "@mui/icons-material/Settings";
-import FmdGoodIcon from '@mui/icons-material/FmdGood';
+import FmdGoodIcon from "@mui/icons-material/FmdGood";
 
 export const ADMIN_CONFIG = [
   {
@@ -28,6 +28,22 @@ export const ADMIN_CONFIG = [
     path: "calendar",
     icon: <CalendarTodayIcon />,
   },
+
+  {
+    title: "People",
+    path: "people",
+    icon: <GroupIcon />,
+  },
+  {
+    title: "Payments",
+    path: "payments",
+    icon: <MonetizationOnIcon />,
+  },
+  {
+    title: "Destinations",
+    path: "destinations",
+    icon: <FmdGoodIcon />,
+  },
   {
     title: "Statistics",
     path: "stats",
@@ -44,16 +60,6 @@ export const ADMIN_CONFIG = [
     icon: <BuildIcon />,
   },
   {
-    title: "People",
-    path: "people",
-    icon: <GroupIcon />,
-  },
-  {
-    title: "Payments",
-    path: "payments",
-    icon: <MonetizationOnIcon />,
-  },
-  {
     title: "Settings",
     path: "settings",
     icon: <SettingsIcon />,
@@ -63,10 +69,4 @@ export const ADMIN_CONFIG = [
     path: "profile",
     icon: <AccountCircleIcon />,
   },
-  {
-    title: "Destinations",
-    path: "destinations",
-    icon: <FmdGoodIcon />,
-  },
-  
 ];
