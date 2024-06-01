@@ -1,11 +1,12 @@
-// Details Section Modal
-
-// Default
 import { useFormik, FormikProvider, Form } from "formik";
 import { useEffect } from "react";
 
 // MUI components
 import Stack from "@mui/material/Stack";
+import FormControl from "@mui/material/FormControl";
+import InputLabel from "@mui/material/InputLabel";
+import Select from "@mui/material/Select";
+import MenuItem from "@mui/material/MenuItem";
 
 // Custom
 import Modal from "../../modal/Modal";
@@ -32,23 +33,20 @@ const PaymentPendingModal = ({ data, paymentData }) => {
   const dispatch = useDispatch();
   const { isLoading, startLoading, stopLoading } = useLoader();
 
-  const { payments } = useSelector((state) => state.payments)
-
+  const { payments } = useSelector((state) => state.payments);
 
   const formik = useFormik({
     initialValues: {
-      // pending_payment_id: "",
       amount: "",
       status: "",
-      due_date: ""
+      due_date: "",
     },
 
     onSubmit: async (values) => {
-
       const newPayload = { ...values };
 
-      newPayload["pending_payment_id"] = paymentData?.pending_payment_id
-      newPayload["amount"] = values["amount"] * 100
+      newPayload["pending_payment_id"] = paymentData?.pending_payment_id;
+      newPayload["amount"] = values["amount"] * 100;
 
       startLoading();
 
@@ -58,23 +56,25 @@ const PaymentPendingModal = ({ data, paymentData }) => {
       );
 
       if (response?.statusCode === 200 && response) {
-
         setToast({
           open: true,
           message: response?.Message,
           severity: "success",
         });
 
-        const newData = { ...data, pending_payments: response?.pendingPayment[1] }
+        const newData = {
+          ...data,
+          pending_payments: response?.pendingPayment[1],
+        };
 
-        const updatedPayment = payments.map(payment => {
+        const updatedPayment = payments.map((payment) => {
           if (payment.payment_id === newData.payment_id) {
             return newData;
           }
           return payment;
         });
 
-        dispatch(setPayments(updatedPayment))
+        dispatch(setPayments(updatedPayment));
         closeModal();
         stopLoading();
         formik.resetForm();
@@ -91,20 +91,17 @@ const PaymentPendingModal = ({ data, paymentData }) => {
     },
   });
 
-
   useEffect(() => {
     if (paymentData) {
       Object.keys(formik.values).forEach((item) => {
         if (item === "amount") {
-          formik.setFieldValue(item, formatCurrency(paymentData[item]))
+          formik.setFieldValue(item, formatCurrency(paymentData[item]));
         } else {
-          formik.setFieldValue(item, paymentData[item])
+          formik.setFieldValue(item, paymentData[item]);
         }
-      }
-      )
+      });
     }
   }, [paymentData]);
-
 
   return (
     <Modal
@@ -123,22 +120,30 @@ const PaymentPendingModal = ({ data, paymentData }) => {
                 type="number"
                 required={true}
               />
-              <CustomInput
-                name="status"
-                label="Status"
-                value={formik.values.status}
-                onChange={formik.handleChange}
-                formik={formik}
-                required={true}
-              />
+              <FormControl required>
+                <InputLabel>Status</InputLabel>
+                <Select
+                  name="status"
+                  label="Status"
+                  value={formik.values.status}
+                  onChange={formik.handleChange}
+                  required
+                >
+                  <MenuItem value="on_hold">On Hold</MenuItem>
+                  <MenuItem value="active">Active</MenuItem>
+                  <MenuItem value="deleted">Delete</MenuItem>
+                </Select>
+              </FormControl>
               <CustomDatePicker
                 name={"due_date"}
                 label={"Due Date"}
+                value={formik.values.due_date}
+                onChange={(value) => formik.setFieldValue("due_date", value)}
+                formik={formik}
               />
             </Stack>
           </Form>
         </FormikProvider>
-
       }
       action={
         <CustomButton
