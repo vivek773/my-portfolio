@@ -136,13 +136,13 @@ const BookingsPage = () => {
                   <TableBody>
                     {Array.isArray(state?.bookings) &&
                       state?.bookings?.map((booking, index) => (
-                        <TableRow hover key={booking.destination_id}>
+                        <TableRow hover key={booking.booking_id || index}>
                           <TableCell align="center">{index + 1}</TableCell>
                           <TableCell align="center">
                             {booking?.tail_number}
                           </TableCell>
                           <TableCell align="center">
-                            {getDepartureDate(booking?.flightSegments)}
+                            {getDepartureDate(booking?.flight_segments)}
                           </TableCell>
                           <TableCell align="center">
                             {booking?.trip_departure_airport_code}
@@ -150,7 +150,6 @@ const BookingsPage = () => {
                           <TableCell align="center">
                             {booking?.trip_arrival_airport_code}
                           </TableCell>
-
                           <TableCell align="center">
                             {`${booking?.customer?.first_name} ${booking?.customer?.last_name}`}
                           </TableCell>
@@ -165,10 +164,7 @@ const BookingsPage = () => {
                           </TableCell>
                           <TableCell align="center">
                             <Label
-                              color={
-                                // (status === "banned" && "inactive") || "success"
-                                renderChipColorByStatus(booking?.status)
-                              }
+                              color={renderChipColorByStatus(booking?.status)}
                             >
                               {booking?.status}
                             </Label>
