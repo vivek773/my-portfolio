@@ -54,6 +54,7 @@ const BookingsPage = () => {
     { id: "trip_arrival_airport_code", label: "Arrival" },
 
     { id: `Customer Name`, label: "Customer Name" },
+    { id: "booking_reference", label: "Booking Reference" },
 
     { id: "total_price", label: "Total Price" },
     { id: "amount_paid", label: "Amount Paid" },
@@ -152,6 +153,9 @@ const BookingsPage = () => {
                           </TableCell>
                           <TableCell align="center">
                             {`${booking?.customer?.first_name} ${booking?.customer?.last_name}`}
+                          </TableCell>
+                          <TableCell align="center">
+                            {booking?.booking_reference}
                           </TableCell>
                           <TableCell align="center">
                             {formatCurrency(booking?.total_price)}
