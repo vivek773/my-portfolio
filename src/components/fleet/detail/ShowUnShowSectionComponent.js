@@ -23,7 +23,7 @@ import { fetchPUTRequest } from "../../../utils/Services";
 
 const ShowUnshowSectionComponent = () => {
   const [showToCustomerChecked, setshowToCustomerChecked] = useState(false);
-
+  console.log(showToCustomerChecked,"showToCustomerChecked");
   const fleet = useSelector((state) => state.fleet);
   const { setToast } = useToast();
   const { isLoading, startLoading, stopLoading } = useLoader();
@@ -33,7 +33,6 @@ const ShowUnshowSectionComponent = () => {
   }, [fleet]);
 
   const handleshowToCustomerChange = async () => {
-    startLoading();
     const payload = {
       tail_number: fleet?.tail_number,
       is_show_to_customer: !showToCustomerChecked,
@@ -49,7 +48,7 @@ const ShowUnshowSectionComponent = () => {
         message: response?.message,
         severity: "success",
       });
-      stopLoading();
+
       setshowToCustomerChecked(response?.is_show_to_customer);
     } else {
       setToast({
@@ -58,14 +57,13 @@ const ShowUnshowSectionComponent = () => {
         severity: "error",
       });
     }
-    stopLoading();
   };
 
   return (
     <FleetDetailCardComponent
       component={
         <Box sx={{ position: "relative" }}>
-          {isLoading && (
+          {/* {isLoading && (
             <Box
               sx={{
                 position: "absolute",
@@ -77,7 +75,7 @@ const ShowUnshowSectionComponent = () => {
             >
               <SpinnerComponent size={20} show={isLoading} />
             </Box>
-          )}
+          )} */}
           <Box sx={{ opacity: isLoading ? 0.5 : 1 }}>
             <SwitchComponent
               label="Show to Customer"

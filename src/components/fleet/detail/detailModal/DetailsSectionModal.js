@@ -28,7 +28,7 @@ const DetailsSectionModal = ({ detailsItems, setDetailsItems }) => {
 
   const formik = useFormik({
     initialValues: {
-      tail_number: "",
+      tail_number: fleet?.details?.tail_number,
       cruise_speed_kts: "",
       year: "",
       make: "",
@@ -49,10 +49,9 @@ const DetailsSectionModal = ({ detailsItems, setDetailsItems }) => {
     },
     onSubmit: async (values) => {
       values["category"] = values["category"].value;
-
-      if (initialValues.tail_number !== formik.values.tail_number) {
+      if (fleet?.details?.tail_number !== formik.values.tail_number) {
         values["updated_tail_number"] = formik.values.tail_number;
-        values["tail_number"] = initialValues.tail_number;
+        values["tail_number"] = fleet?.details?.tail_number;
       }
       startLoading();
 
@@ -72,9 +71,6 @@ const DetailsSectionModal = ({ detailsItems, setDetailsItems }) => {
           ...fleet.details,
           category: response.data.category,
         };
-
-        dispatch(setFleetDetails(newObj));
-
         const updatedArray = detailsItems.map((item) => {
           if (response.data.hasOwnProperty(item.key)) {
             return {
@@ -86,7 +82,6 @@ const DetailsSectionModal = ({ detailsItems, setDetailsItems }) => {
         });
 
         setDetailsItems([...updatedArray]);
-
         formik.resetForm();
       } else {
         setToast({
@@ -129,7 +124,7 @@ const DetailsSectionModal = ({ detailsItems, setDetailsItems }) => {
         <Stack display={"flex"} flexDirection={"column"} gap={5}>
           <CustomInput
             name="tail_number"
-            value={formik.values.tail_number}
+            value={formik.values.tail_number || fleet?.details?.tail_number}
             label="Tail Number"
             onChange={formik.handleChange}
             formik={formik}
@@ -186,6 +181,7 @@ const DetailsSectionModal = ({ detailsItems, setDetailsItems }) => {
                 onChange={formik.handleChange}
                 formik={formik}
                 required={true}
+                type="number"
               />
             </Grid>
 

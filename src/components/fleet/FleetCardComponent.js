@@ -13,20 +13,11 @@ import Box from "@mui/material/Box";
 import CustomButton from "../../forms/button/CustomButton";
 
 // Context
-import { useLoader } from "../../context/LoaderContext";
 
 // Utils
 import { CHIP } from "../../utils/Color";
-import { fetchGETRequest } from "../../utils/Services";
 
-// Redux
-import {
-  setTailNumber,
-  setFleetDetails,
-  setMaintenanceLogs,
-  setAirworthinessDirectives,
-} from "../../store/features/FleetSlice";
-import { useDispatch } from "react-redux";
+
 
 const FleetCardComponent = ({
   tail_number,
@@ -42,8 +33,6 @@ const FleetCardComponent = ({
   sx,
 }) => {
   const navigate = useNavigate();
-  const dispatch = useDispatch();
-  const { isLoading, startLoading, stopLoading } = useLoader();
 
   const chipBgColor = (chipStatus) => {
     switch (chipStatus) {
@@ -53,27 +42,6 @@ const FleetCardComponent = ({
         return CHIP.danger;
       default:
         return CHIP.info;
-    }
-  };
-
-  const getPlanData = async () => {
-    startLoading();
-    const response = await fetchGETRequest(
-      `/fleet/owner/get-plane/${tail_number}`,
-      {}
-    );
-
-    if (response.statusCode === 200 && response) {
-      const { airworthiness_directives, maintenance_logs, ...rest } =
-        response?.data;
-      dispatch(setTailNumber(tail_number));
-      dispatch(setFleetDetails(rest));
-      dispatch(setMaintenanceLogs(maintenance_logs));
-      dispatch(setAirworthinessDirectives(airworthiness_directives));
-      stopLoading();
-      navigate(`/fleet/${tail_number}`);
-    } else {
-      stopLoading();
     }
   };
 
@@ -125,8 +93,7 @@ const FleetCardComponent = ({
 
       <Box sx={{ mt: 5 }}>
         <CustomButton
-          onClick={getPlanData}
-          isLoading={isLoading}
+          onClick={()=> navigate(`/fleet/${tail_number}`,{ state: tail_number })}
           size="large"
           label={"Details"}
           width={"fit-content"}

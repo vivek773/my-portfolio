@@ -111,7 +111,7 @@ const HobbsAndTachSectionModal = ({ hobbsItems, setHobbsItems }) => {
             onChange={formik.handleChange}
             formik={formik}
           />
-          {fleet?.details.category === "airplane_multi_engine_land" && (
+          {fleet?.details?.category === "airplane_multi_engine_land" && (
             <CustomInput
               name="tach_engine_two"
               label="Tach Engine Two"
