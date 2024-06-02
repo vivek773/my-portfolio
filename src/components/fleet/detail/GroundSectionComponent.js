@@ -33,7 +33,6 @@ const GroundSectionComponent = () => {
   }, [fleet]);
 
   const handleGroundedChange = async () => {
-    startLoading();
     const payload = {
       tail_number: fleet?.tail_number,
       is_grounded: !groundedChecked,
@@ -49,7 +48,6 @@ const GroundSectionComponent = () => {
         message: response?.message,
         severity: "success",
       });
-      stopLoading();
       setGroundedChecked(response?.is_grounded);
     } else {
       setToast({
@@ -58,14 +56,13 @@ const GroundSectionComponent = () => {
         severity: "error",
       });
     }
-    stopLoading();
   };
 
   return (
     <FleetDetailCardComponent
       component={
         <Box sx={{ position: "relative" }}>
-          {isLoading && (
+          {/* {isLoading && (
             <Box
               sx={{
                 position: "absolute",
@@ -77,7 +74,7 @@ const GroundSectionComponent = () => {
             >
               <SpinnerComponent size={20} show={isLoading} />
             </Box>
-          )}
+          )} */}
           <Box sx={{ opacity: isLoading ? 0.5 : 1 }}>
             <SwitchComponent
               label="Ground Plane"

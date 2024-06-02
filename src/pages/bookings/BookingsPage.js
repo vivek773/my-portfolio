@@ -98,15 +98,15 @@ const BookingsPage = () => {
     <>
       <HelmetComponent title={`${EDISPATCHED} | Bookings`} />
       <Container maxWidth="xl">
-        <Typography variant="h4" gutterBottom mb={5}>
+        <Typography variant="h4" gutterBottom  mb={5}>
           Bookings
         </Typography>
 
-        <Box mt={10}>
+        {/* <Box mt={10}>
           <SpinnerComponent show={isLoading} />
-        </Box>
+        </Box> */}
 
-        {!isLoading &&
+        {/* {!isLoading &&
           (state?.bookings?.length === 0 ? (
             <Box>
               <Typography
@@ -120,7 +120,7 @@ const BookingsPage = () => {
                 No data available
               </Typography>
             </Box>
-          ) : (
+          ) : ( */}
             <Card>
               <TableContainer sx={{ minWidth: 800 }}>
                 <Table>
@@ -135,6 +135,7 @@ const BookingsPage = () => {
                   </TableHead>
                   <TableBody>
                     {Array.isArray(state?.bookings) &&
+                    state?.bookings.length > 0 ? (
                       state?.bookings?.map((booking, index) => (
                         <TableRow hover key={booking.booking_id || index}>
                           <TableCell align="center">{index + 1}</TableCell>
@@ -178,21 +179,29 @@ const BookingsPage = () => {
                             />
                           </TableCell>
                         </TableRow>
-                      ))}
+                      ))
+                    ):
+                    (
+                      <TableRow>
+                        <TableCell colSpan={TABLE_HEAD.length} align="center">
+                          No data available.
+                        </TableCell>
+                      </TableRow>
+                    )}
                   </TableBody>
                 </Table>
               </TableContainer>
 
-              <TablePagination
+              {state?.bookings.length > 0 && <TablePagination
                 rowsPerPageOptions={[10]}
                 component="div"
                 count={state?.bookings?.length}
                 rowsPerPage={limit}
                 page={page}
                 onPageChange={(event, newPage) => setPage(newPage)}
-              />
+              />}
             </Card>
-          ))}
+          {/* ))} */}
       </Container>
     </>
   );

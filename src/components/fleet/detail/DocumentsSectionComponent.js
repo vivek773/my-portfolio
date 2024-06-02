@@ -121,7 +121,7 @@ const DocumentsSectionComponent = () => {
             columns={{ md: 12 }}
             style={{ position: "relative" }}
           >
-            <Box
+            {/* <Box
               sx={{
                 position: "absolute",
                 top: "50%",
@@ -134,13 +134,13 @@ const DocumentsSectionComponent = () => {
               }}
             >
               <SpinnerComponent show={isLoading} size={30}/>
-            </Box>
+            </Box> */}
             {itemArr.map((item, index) => (
               <Grid
                 item
                 key={index}
                 xs={6}
-                sx={{ opacity: isLoading ? 0.5 : 1 }}
+                // sx={{ opacity: isLoading ? 0.5 : 1 }}
               >
                 <Stack
                   direction="row"

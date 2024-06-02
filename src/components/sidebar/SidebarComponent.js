@@ -32,6 +32,9 @@ const SidebarComponent = ({ openNav, onCloseNav }) => {
   const isDesktop = useResponsive("up", "lg");
 
   useEffect(() => {
+    const path = pathname.split("/")[1];
+    const getIndex = ADMIN_CONFIG.findIndex((item)=>item.path === path);
+    setIsActive(getIndex)
     if (openNav) {
       onCloseNav();
     }

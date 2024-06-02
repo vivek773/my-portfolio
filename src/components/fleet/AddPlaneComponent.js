@@ -1,5 +1,6 @@
 import { useFormik } from "formik";
 import * as Yup from "yup";
+import { useNavigate } from "react-router-dom";
 
 // MUI components
 import Container from "@mui/material/Container";
@@ -19,6 +20,7 @@ import { fetchPOSTRequest } from "../../utils/Services";
 
 const AddPlaneComponent = () => {
   const { setToast } = useToast();
+  const navigate = useNavigate();
   const { isLoading, startLoading, stopLoading } = useLoader();
   const CATEGORY_OPTIONS = [
     { label: "ASEL", value: "airplane_single_engine_land" },
@@ -27,9 +29,6 @@ const AddPlaneComponent = () => {
 
   const validationSchema = Yup.object({
     tail_number: Yup.string().required("Tail number is required."),
-    home_based_airport: Yup.string().required(
-      "Home based airport is required."
-    ),
     year: Yup.string().required("Year is required."),
     make: Yup.string().required("Make is required."),
     model: Yup.string().required("Model is required."),
@@ -41,11 +40,6 @@ const AddPlaneComponent = () => {
     })
       .nullable()
       .required("Category is required"),
-    hobbs: Yup.string().required("Hobbs is required."),
-    tach_engine_one: Yup.string().required("Tach engine one is required."),
-    tach_engine_two: Yup.string()
-      .required("Tach engine two is required.")
-      .optional(),
     cruise_speed_kts: Yup.string().required("Cruise Speed kts is required."),
   });
 
@@ -83,6 +77,7 @@ const AddPlaneComponent = () => {
           severity: "success",
         });
         stopLoading();
+        navigate("/fleet");
         formik.resetForm();
       } else {
         setToast({
@@ -116,7 +111,7 @@ const AddPlaneComponent = () => {
               label="Home Based Airport"
               onChange={formik.handleChange}
               formik={formik}
-              required={true}
+              required={false}
             />
             <CustomInput
               name="year"
@@ -149,6 +144,7 @@ const AddPlaneComponent = () => {
               value={formik.values.number_of_seats}
               onChange={formik.handleChange}
               formik={formik}
+              required={true}
             />
             <CustomInput
               name="hourly_rate"
@@ -156,6 +152,7 @@ const AddPlaneComponent = () => {
               value={formik.values.hourly_rate}
               onChange={formik.handleChange}
               formik={formik}
+              required={true}
             />
             <CustomSelect
               name="category"
@@ -166,6 +163,7 @@ const AddPlaneComponent = () => {
               options={CATEGORY_OPTIONS}
               formik={formik}
               value={formik.values.category}
+              required={true}
             />
             <CustomInput
               name="hobbs"
@@ -200,6 +198,7 @@ const AddPlaneComponent = () => {
               value={formik.values.cruise_speed_kts}
               onChange={formik.handleChange}
               formik={formik}
+              required={true}
             />
 
             <CustomButton

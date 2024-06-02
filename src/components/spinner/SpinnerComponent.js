@@ -1,16 +1,16 @@
 // Spinner component
 
 // MUI component
-import Stack from "@mui/material/Stack";
 import CircularProgress from "@mui/material/CircularProgress";
+import { Box } from "@mui/material";
 
 const SpinnerComponent = ({ show, size = 40 }) => {
   return (
     <>
       {show && (
-        <Stack alignItems="center">
+        <Box justifyContent="center" display={"flex"} mt={10}>
           <CircularProgress size={size}/>
-        </Stack>
+        </Box>
       )}
     </>
   );
