@@ -21,25 +21,25 @@ import { useLoader } from "../../../context/LoaderContext";
 // Utils
 import { fetchPUTRequest } from "../../../utils/Services";
 
-const GroundSectionComponent = () => {
-  const [groundedChecked, setGroundedChecked] = useState(false);
+const ShowUnshowSectionComponent = () => {
+  const [showToCustomerChecked, setshowToCustomerChecked] = useState(false);
 
   const fleet = useSelector((state) => state.fleet);
   const { setToast } = useToast();
   const { isLoading, startLoading, stopLoading } = useLoader();
 
   useEffect(() => {
-    setGroundedChecked(fleet?.details?.is_grounded);
+    setshowToCustomerChecked(fleet?.details?.is_show_to_customer);
   }, [fleet]);
 
-  const handleGroundedChange = async () => {
+  const handleshowToCustomerChange = async () => {
     startLoading();
     const payload = {
       tail_number: fleet?.tail_number,
-      is_grounded: !groundedChecked,
+      is_show_to_customer: !showToCustomerChecked,
     };
     const response = await fetchPUTRequest(
-      `/fleet/owner/ground-unground-plane`,
+      `/fleet/owner/show-unshow-plane`,
       payload
     );
 
@@ -50,7 +50,7 @@ const GroundSectionComponent = () => {
         severity: "success",
       });
       stopLoading();
-      setGroundedChecked(response?.is_grounded);
+      setshowToCustomerChecked(response?.is_show_to_customer);
     } else {
       setToast({
         open: true,
@@ -80,9 +80,9 @@ const GroundSectionComponent = () => {
           )}
           <Box sx={{ opacity: isLoading ? 0.5 : 1 }}>
             <SwitchComponent
-              label="Ground Plane"
-              value={groundedChecked}
-              onChange={handleGroundedChange}
+              label="Show to Customer"
+              value={showToCustomerChecked}
+              onChange={handleshowToCustomerChange}
             />
           </Box>
         </Box>
@@ -91,4 +91,4 @@ const GroundSectionComponent = () => {
   );
 };
 
-export default GroundSectionComponent;
+export default ShowUnshowSectionComponent;

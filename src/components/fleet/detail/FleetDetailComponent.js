@@ -14,20 +14,29 @@ import Spinner from "../../../components/spinner/SpinnerComponent";
 
 // Redux
 import { useSelector } from "react-redux";
+import ShowUnshowSectionComponent from "./ShowUnShowSectionComponent";
+import { Grid } from "@mui/material";
 
 const FleetDetailComponent = () => {
-
-  const fleet = useSelector((state) => state.fleet)
+  const fleet = useSelector((state) => state.fleet);
 
   return (
     <Container maxWidth="lg">
       {!fleet.details ? (
         <Box mt={5}>
-          <Spinner show={!fleet.details}/>
+          <Spinner show={!fleet.details} />
         </Box>
       ) : (
         <>
-          <GroundSectionComponent />
+          <Grid container spacing={2}>
+            <Grid item xs={6}>
+              <ShowUnshowSectionComponent />
+            </Grid>
+            <Grid item xs={6}>
+              <GroundSectionComponent />
+            </Grid>
+          </Grid>
+
           <DetailsSectionComponent />
           <DocumentsSectionComponent />
           <HobbsAndTachSectionsComponent />

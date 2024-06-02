@@ -35,9 +35,9 @@ const DetailsSectionComponent = () => {
   useEffect(() => {
     const items = [
       {
-        key: "tail_number",
-        label: "Tail Number",
-        value: fleet?.details.tail_number,
+        key: "cruise_speed_kts",
+        label: "Cruise Speed (kts)",
+        value: `${fleet?.details.cruise_speed_kts}`,
       },
       {
         key: "year",

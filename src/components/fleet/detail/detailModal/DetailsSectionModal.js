@@ -1,28 +1,16 @@
-// Details Section Modal
-
-// Default
 import { useFormik } from "formik";
 import { useEffect, useState } from "react";
-
-// MUI components
+import Grid from "@mui/material/Grid";
 import Stack from "@mui/material/Stack";
-
-// Custom
 import Modal from "../../../modal/Modal";
 import CustomInput from "../../../../forms/input/CustomInput";
 import CustomButton from "../../../../forms/button/CustomButton";
 import CustomSelect from "../../../../forms/select/CustomSelect";
-
-// Context
 import { useModal } from "../../../../context/ModalContext";
 import { useToast } from "../../../../context/ToastContext";
 import { useLoader } from "../../../../context/LoaderContext";
-
-// Redux
 import { useDispatch, useSelector } from "react-redux";
 import { setFleetDetails } from "../../../../store/features/FleetSlice";
-
-// Utils
 import { fetchPUTRequest } from "../../../../utils/Services";
 
 const DetailsSectionModal = ({ detailsItems, setDetailsItems }) => {
@@ -41,6 +29,7 @@ const DetailsSectionModal = ({ detailsItems, setDetailsItems }) => {
   const formik = useFormik({
     initialValues: {
       tail_number: "",
+      cruise_speed_kts: "",
       year: "",
       make: "",
       model: "",
@@ -82,8 +71,8 @@ const DetailsSectionModal = ({ detailsItems, setDetailsItems }) => {
         const newObj = {
           ...fleet.details,
           category: response.data.category,
-        }
-        
+        };
+
         dispatch(setFleetDetails(newObj));
 
         const updatedArray = detailsItems.map((item) => {
@@ -97,10 +86,8 @@ const DetailsSectionModal = ({ detailsItems, setDetailsItems }) => {
         });
 
         setDetailsItems([...updatedArray]);
-        
+
         formik.resetForm();
-
-
       } else {
         setToast({
           open: true,
@@ -148,48 +135,6 @@ const DetailsSectionModal = ({ detailsItems, setDetailsItems }) => {
             formik={formik}
             required={true}
           />
-          <CustomInput
-            name="year"
-            label="Year"
-            value={formik.values.year}
-            onChange={formik.handleChange}
-            formik={formik}
-            required={true}
-          />
-          <CustomInput
-            name="make"
-            label="Make"
-            value={formik.values.make}
-            onChange={formik.handleChange}
-            formik={formik}
-            required={true}
-          />
-          <CustomInput
-            name="model"
-            label="Model"
-            value={formik.values.model}
-            onChange={formik.handleChange}
-            formik={formik}
-            required={true}
-          />
-          <CustomInput
-            name="passenger_seats"
-            label="Passenger Seats"
-            type="number"
-            value={formik.values.passenger_seats}
-            onChange={formik.handleChange}
-            formik={formik}
-            required={true}
-          />
-          <CustomInput
-            name="total_seats"
-            label="Total Seats"
-            type="number"
-            value={formik.values.total_seats}
-            onChange={formik.handleChange}
-            formik={formik}
-            required={true}
-          />
           <CustomSelect
             name="category"
             label="Category"
@@ -200,73 +145,166 @@ const DetailsSectionModal = ({ detailsItems, setDetailsItems }) => {
             formik={formik}
             value={formik.values.category}
           />
-          <CustomInput
-            name="icao_equipment"
-            value={formik.values.icao_equipment}
-            label="Icao Equipment"
-            onChange={formik.handleChange}
-            formik={formik}
-            required={true}
-          />
-          <CustomInput
-            name="icao_surveillance_codes"
-            value={formik.values.icao_surveillance_codes}
-            label="Icao Surveillance Codes"
-            onChange={formik.handleChange}
-            formik={formik}
-            required={true}
-          />
-          <CustomInput
-            name="serial_number"
-            value={formik.values.serial_number}
-            label="Serial Number"
-            onChange={formik.handleChange}
-            formik={formik}
-            required={true}
-          />
-          <CustomInput
-            name="faa_designator"
-            value={formik.values.faa_designator}
-            label="Faa Designator"
-            onChange={formik.handleChange}
-            formik={formik}
-            required={true}
-          />
-          <CustomInput
-            name="fuel_burn_rate"
-            value={formik.values.fuel_burn_rate}
-            type="number"
-            label="Fuel Burn Rate"
-            onChange={formik.handleChange}
-            formik={formik}
-            required={true}
-          />
-          <CustomInput
-            name="empty_weight"
-            value={formik.values.empty_weight}
-            type="number"
-            label="Empty Weight"
-            onChange={formik.handleChange}
-            formik={formik}
-            required={true}
-          />
-          <CustomInput
-            name="fuel_capacity"
-            value={formik.values.fuel_capacity}
-            type="number"
-            label="Fuel Capacity"
-            onChange={formik.handleChange}
-            formik={formik}
-            required={true}
-          />
-          <CustomInput
-            name="hourly_rate"
-            label="Hourly Rate"
-            type="number"
-            value={formik.values.hourly_rate}
-            onChange={formik.handleChange}
-            formik={formik}
-          />
+          <Grid container spacing={2}>
+            <Grid item xs={4}>
+              <CustomInput
+                name="year"
+                label="Year"
+                value={formik.values.year}
+                onChange={formik.handleChange}
+                formik={formik}
+                required={true}
+              />
+            </Grid>
+            <Grid item xs={4}>
+              <CustomInput
+                name="make"
+                label="Make"
+                value={formik.values.make}
+                onChange={formik.handleChange}
+                formik={formik}
+                required={true}
+              />
+            </Grid>
+            <Grid item xs={4}>
+              <CustomInput
+                name="model"
+                label="Model"
+                value={formik.values.model}
+                onChange={formik.handleChange}
+                formik={formik}
+                required={true}
+              />
+            </Grid>
+          </Grid>
+          <Grid container spacing={2}>
+            <Grid item xs={4}>
+              <CustomInput
+                name="cruise_speed_kts"
+                label="Cruise Speed (kts)"
+                value={formik.values.cruise_speed_kts}
+                onChange={formik.handleChange}
+                formik={formik}
+                required={true}
+              />
+            </Grid>
+
+            <Grid item xs={4}>
+              <CustomInput
+                name="hourly_rate"
+                label="Hourly Rate"
+                type="number"
+                value={formik.values.hourly_rate}
+                onChange={formik.handleChange}
+                formik={formik}
+              />
+            </Grid>
+
+            <Grid item xs={4}>
+              <CustomInput
+                name="passenger_seats"
+                label="Passenger Seats"
+                type="number"
+                value={formik.values.passenger_seats}
+                onChange={formik.handleChange}
+                formik={formik}
+                required={true}
+              />
+            </Grid>
+          </Grid>
+
+          <Grid container spacing={2}>
+            <Grid item xs={4}>
+              <CustomInput
+                name="serial_number"
+                value={formik.values.serial_number}
+                label="Serial Number"
+                onChange={formik.handleChange}
+                formik={formik}
+                required={true}
+              />
+            </Grid>
+            <Grid item xs={4}>
+              <CustomInput
+                name="fuel_capacity"
+                value={formik.values.fuel_capacity}
+                type="number"
+                label="Fuel Capacity"
+                onChange={formik.handleChange}
+                formik={formik}
+                required={true}
+              />
+            </Grid>
+            <Grid item xs={4}>
+              <CustomInput
+                name="total_seats"
+                label="Total Seats"
+                type="number"
+                value={formik.values.total_seats}
+                onChange={formik.handleChange}
+                formik={formik}
+                required={true}
+              />
+            </Grid>
+          </Grid>
+
+          <Grid container spacing={2}>
+            <Grid item xs={4}>
+              <CustomInput
+                name="faa_designator"
+                value={formik.values.faa_designator}
+                label="Faa Designator"
+                onChange={formik.handleChange}
+                formik={formik}
+                required={true}
+              />
+            </Grid>
+            <Grid item xs={4}>
+              <CustomInput
+                name="fuel_burn_rate"
+                value={formik.values.fuel_burn_rate}
+                type="number"
+                label="Fuel Burn Rate"
+                onChange={formik.handleChange}
+                formik={formik}
+                required={true}
+              />
+            </Grid>
+            <Grid item xs={4}>
+              <CustomInput
+                name="empty_weight"
+                value={formik.values.empty_weight}
+                type="number"
+                label="Empty Weight"
+                onChange={formik.handleChange}
+                formik={formik}
+                required={true}
+              />
+            </Grid>
+          </Grid>
+
+          <Grid container spacing={2}>
+            <Grid item xs={4}>
+              <CustomInput
+                name="icao_equipment"
+                value={formik.values.icao_equipment}
+                label="Icao Equipment"
+                onChange={formik.handleChange}
+                formik={formik}
+                required={true}
+              />
+            </Grid>
+            <Grid item xs={4}>
+              <CustomInput
+                name="icao_surveillance_codes"
+                value={formik.values.icao_surveillance_codes}
+                label="Icao Surveillance Codes"
+                onChange={formik.handleChange}
+                formik={formik}
+                required={true}
+              />
+            </Grid>
+          </Grid>
         </Stack>
       }
       action={

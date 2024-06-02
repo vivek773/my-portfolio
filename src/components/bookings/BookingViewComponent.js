@@ -36,11 +36,9 @@ const BookingViewComponent = () => {
           <ArrowBackIosNewIcon color="#000" />
         </IconButton>
         <Typography variant="h4">
-          {" "}
           Booking Reference -{location?.state?.booking_reference}
         </Typography>
       </div>
-
       <BookingDetailComponent />
       <BookingCustomerComponent />
       <BookingPassengersComponent />
