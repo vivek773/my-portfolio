@@ -99,7 +99,7 @@ const BookingsPage = () => {
     <>
       <HelmetComponent title={`${EDISPATCHED} | Bookings`} />
       <Container maxWidth="xl">
-        <Typography variant="h4" gutterBottom  mb={5}>
+        <Typography variant="h4" gutterBottom mb={5}>
           Bookings
         </Typography>
 
@@ -122,90 +122,89 @@ const BookingsPage = () => {
               </Typography>
             </Box>
           ) : ( */}
-            <Card>
-              <TableContainer sx={{ minWidth: 800 }}>
-                <Table>
-                  <TableHead>
-                    <TableRow>
-                      {TABLE_HEAD.map((header) => (
-                        <TableCell key={header.id} align="center">
-                          {header.label}
-                        </TableCell>
-                      ))}
+        <Card>
+          <TableContainer sx={{ minWidth: 800 }}>
+            <Table>
+              <TableHead>
+                <TableRow>
+                  {TABLE_HEAD.map((header) => (
+                    <TableCell key={header.id} align="center">
+                      {header.label}
+                    </TableCell>
+                  ))}
+                </TableRow>
+              </TableHead>
+              <TableBody>
+                {Array.isArray(state?.bookings) &&
+                state?.bookings.length > 0 ? (
+                  state?.bookings?.map((booking, index) => (
+                    <TableRow hover key={booking.booking_id || index}>
+                      <TableCell align="center">{index + 1}</TableCell>
+                      <TableCell align="center">
+                        {booking?.tail_number}
+                      </TableCell>
+                      <TableCell align="center">
+                        {getDepartureDate(booking?.flight_segments)}
+                      </TableCell>
+                      <TableCell align="center">
+                        {booking?.trip_departure_airport_code}
+                      </TableCell>
+                      <TableCell align="center">
+                        {booking?.trip_arrival_airport_code}
+                      </TableCell>
+                      <TableCell align="center">
+                        {`${booking?.customer?.first_name} ${booking?.customer?.last_name}`}
+                      </TableCell>
+                      <TableCell align="center">
+                        {booking?.booking_reference}
+                      </TableCell>
+                      <TableCell align="center">
+                        ${formatCurrency(booking?.total_price)}
+                      </TableCell>
+                      <TableCell align="center">
+                        ${formatCurrency(booking?.amount_paid)}
+                      </TableCell>
+                      <TableCell align="center">
+                        {booking?.number_of_passengers}
+                      </TableCell>
+                      <TableCell align="center">
+                        <Label color={renderChipColorByStatus(booking?.status)}>
+                          {booking?.status}
+                        </Label>
+                      </TableCell>
+                      <TableCell align="center">
+                        <CustomButton
+                          size={"small"}
+                          width={"fit-content"}
+                          onClick={() => handleView(booking)}
+                          label={"View"}
+                        />
+                      </TableCell>
                     </TableRow>
-                  </TableHead>
-                  <TableBody>
-                    {Array.isArray(state?.bookings) &&
-                    state?.bookings.length > 0 ? (
-                      state?.bookings?.map((booking, index) => (
-                        <TableRow hover key={booking.booking_id || index}>
-                          <TableCell align="center">{index + 1}</TableCell>
-                          <TableCell align="center">
-                            {booking?.tail_number}
-                          </TableCell>
-                          <TableCell align="center">
-                            {getDepartureDate(booking?.flight_segments)}
-                          </TableCell>
-                          <TableCell align="center">
-                            {booking?.trip_departure_airport_code}
-                          </TableCell>
-                          <TableCell align="center">
-                            {booking?.trip_arrival_airport_code}
-                          </TableCell>
-                          <TableCell align="center">
-                            {`${booking?.customer?.first_name} ${booking?.customer?.last_name}`}
-                          </TableCell>
-                          <TableCell align="center">
-                            {booking?.booking_reference}
-                          </TableCell>
-                          <TableCell align="center">
-                            {formatCurrency(booking?.total_price)}
-                          </TableCell>
-                          <TableCell align="center">
-                            {formatCurrency(booking?.amount_paid)}
-                          </TableCell>
-                          <TableCell align="center">
-                            {booking?.number_of_passengers}
-                          </TableCell>
-                          <TableCell align="center">
-                            <Label
-                              color={renderChipColorByStatus(booking?.status)}
-                            >
-                              {booking?.status}
-                            </Label>
-                          </TableCell>
-                          <TableCell align="center">
-                            <CustomButton
-                              size={"small"}
-                              width={"fit-content"}
-                              onClick={() => handleView(booking)}
-                              label={"View"}
-                            />
-                          </TableCell>
-                        </TableRow>
-                      ))
-                    ):
-                    (
-                      <TableRow>
-                        <TableCell colSpan={TABLE_HEAD.length} align="center">
-                          No data available.
-                        </TableCell>
-                      </TableRow>
-                    )}
-                  </TableBody>
-                </Table>
-              </TableContainer>
+                  ))
+                ) : (
+                  <TableRow>
+                    <TableCell colSpan={TABLE_HEAD.length} align="center">
+                      No data available.
+                    </TableCell>
+                  </TableRow>
+                )}
+              </TableBody>
+            </Table>
+          </TableContainer>
 
-              {state?.bookings.length > 0 && <TablePagination
-                rowsPerPageOptions={[10]}
-                component="div"
-                count={state?.bookings?.length}
-                rowsPerPage={limit}
-                page={page}
-                onPageChange={(event, newPage) => setPage(newPage)}
-              />}
-            </Card>
-          {/* ))} */}
+          {state?.bookings.length > 0 && (
+            <TablePagination
+              rowsPerPageOptions={[10]}
+              component="div"
+              count={state?.bookings?.length}
+              rowsPerPage={limit}
+              page={page}
+              onPageChange={(event, newPage) => setPage(newPage)}
+            />
+          )}
+        </Card>
+        {/* ))} */}
       </Container>
     </>
   );
