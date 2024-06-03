@@ -28,10 +28,14 @@ export const ADMIN_CONFIG = [
     path: "calendar",
     icon: <CalendarTodayIcon />,
   },
-
   {
     title: "Payments",
     path: "payments",
+    icon: <MonetizationOnIcon />,
+  },
+  {
+    title: "Schedule Payments",
+    path: "schedule-payments",
     icon: <MonetizationOnIcon />,
   },
   {

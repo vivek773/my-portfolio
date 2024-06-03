@@ -30,7 +30,7 @@ const BookingViewComponent = () => {
   const navigate = useNavigate();
 
   return (
-    <Container maxWidth="lg">
+    <Container maxWidth="xl">
       <div className={classes.header}>
         <IconButton onClick={() => navigate(-1)} aria-label="back">
           <ArrowBackIosNewIcon color="#000" />
@@ -43,6 +43,7 @@ const BookingViewComponent = () => {
       <BookingCustomerComponent />
       <BookingPassengersComponent />
       <BookingFlightSegmentsComponent />
+   
     </Container>
   );
 };

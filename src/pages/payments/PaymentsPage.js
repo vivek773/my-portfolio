@@ -2,62 +2,56 @@
 
 // Default
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
 
 // MUI components
-import Card from "@mui/material/Card";
 import Container from "@mui/material/Container";
 import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
-import Table from "@mui/material/Table";
-import TableBody from "@mui/material/TableBody";
-import TableCell from "@mui/material/TableCell";
-import TableContainer from "@mui/material/TableContainer";
-import TableHead from "@mui/material/TableHead";
-import TablePagination from "@mui/material/TablePagination";
-import TableRow from "@mui/material/TableRow";
 
 // Redux
 import { useDispatch, useSelector } from "react-redux";
 import { setPayments } from "../../store/features/PaymentsSlice";
 
 // Custom
-import CustomButton from "../../forms/button/CustomButton";
 import SpinnerComponent from "../../components/spinner/SpinnerComponent";
 import HelmetComponent from "../../components/helmet/HelmetComponent";
 
 // Utils
 import { fetchGETRequest } from "../../utils/Services";
 import { EDISPATCHED } from "../../utils/Constants";
-import { formatCurrency, formatDateTimeWithoutYear } from "../../utils/Helper";
 
 // Context
 import { useLoader } from "../../context/LoaderContext";
-
-const TABLE_HEAD = [
-  { id: "index", label: "#" },
-  { id: "name", label: "Customer Name" },
-  { id: "email", label: "Email" },
-  { id: "amount_paid", label: "Amount" },
-  { id: "transaction_date", label: "Date" },
-  { id: "action", label: "Action" },
-];
+import { Card, Tab, Table, TableBody, TableCell, TableContainer, TableHead, TablePagination, TableRow, Tabs } from "@mui/material";
+import { useNavigate } from "react-router-dom";
+import CustomButton from "../../forms/button/CustomButton";
+import Label from "../../components/label";
+import { formatCurrency, formatDateTimeWithoutYear, renderChipColorByStatus } from "../../utils/Helper";
 
 const PaymentsPage = () => {
+  const navigate = useNavigate();
+
+  const TABLE_HEAD = [
+    { id: "index", label: "#" },
+    { id: "name", label: "Customer Name" },
+    { id: "email", label: "Email" },
+    { id: "amount_paid", label: "Amount" },
+    { id: "transaction_date", label: "Date" },
+    { id: "status", label: "Status" },
+    { id: "action", label: "Action" },
+  ];
   const [page, setPage] = useState(0);
   const [limit, setLimit] = useState(10);
   const { isLoading, startLoading, stopLoading } = useLoader();
-
-  const navigate = useNavigate();
   const dispatch = useDispatch();
-
-  const { payments } = useSelector((state) => state.payments);
-
+  const { payments, } = useSelector((state) => state.payments);
+  const handleView = (data) => {
+    navigate(`/payments/${data?.payment_id}`, { state: data });
+  };
   useEffect(() => {
     const getPaymentsData = async () => {
       startLoading();
       const response = await fetchGETRequest(`/payment/owner/get-payments`, {});
-
       if (response?.statusCode === 200 && response) {
         dispatch(setPayments(response?.payments));
         stopLoading();
@@ -68,94 +62,79 @@ const PaymentsPage = () => {
     getPaymentsData();
 
     // eslint-disable-next-line
-  }, []);
-
-  const handleView = (data) => {
-    navigate(`/payments/${data?.payment_id}`, { state: data });
-  };
-
-  return (
+  }, []); return (
     <>
       <HelmetComponent title={`${EDISPATCHED} | Payments`} />
       <Container maxWidth="xl">
-        <Typography variant="h4" gutterBottom mb={5}>
-          Payments
-        </Typography>
-        {isLoading && (
+          <Typography variant="h4" gutterBottom mb={5}>
+            Payments
+          </Typography>
+    
+        {isLoading ? (
           <Box mt={10}>
             <SpinnerComponent show={isLoading} />
           </Box>
-        )}
-
-        {!isLoading &&
-          (payments?.length === 0 ? (
-            <Box>
-              <Typography
-                variant="h6"
-                gutterBottom
-                mt={10}
-                fontWeight={500}
-                textAlign={"center"}
-                color={"Gray"}
-              >
-                No data available
-              </Typography>
-            </Box>
-          ) : (
-            <Card>
-              <TableContainer sx={{ minWidth: 800 }}>
-                <Table>
-                  <TableHead>
-                    <TableRow>
-                      {TABLE_HEAD.map((header) => (
-                        <TableCell key={header.id} align="center">
-                          {header.label}
+        )
+          :
+          <Card>
+            <TableContainer sx={{ minWidth: 800 }}>
+              <Table>
+                <TableHead>
+                  <TableRow>
+                    {TABLE_HEAD.map((header) => (
+                      <TableCell key={header.id} align="center">
+                        {header.label}
+                      </TableCell>
+                    ))}
+                  </TableRow>
+                </TableHead>
+                <TableBody>
+                  {Array.isArray(payments) &&
+                    payments?.map((payment, index) => (
+                      <TableRow hover key={index}>
+                        <TableCell align="center">{index + 1}</TableCell>
+                        <TableCell align="center">{`${payment?.customer?.first_name} ${payment?.customer?.last_name}`}</TableCell>
+                        <TableCell align="center">
+                          {payment?.customer?.email}
                         </TableCell>
-                      ))}
-                    </TableRow>
-                  </TableHead>
-                  <TableBody>
-                    {Array.isArray(payments) &&
-                      payments?.map((payment, index) => (
-                        <TableRow hover key={index}>
-                          <TableCell align="center">{index + 1}</TableCell>
-                          <TableCell align="center">{`${payment?.customer?.first_name} ${payment?.customer?.last_name}`}</TableCell>
-                          <TableCell align="center">
-                            {payment?.customer?.email}
-                          </TableCell>
-                          <TableCell align="center">
-                            $
-                            {formatCurrency(
-                              payment?.processor_details?.amount_paid
-                            )}
-                          </TableCell>
-                          <TableCell align="center">
-                            {formatDateTimeWithoutYear(payment?.created_at)}
-                          </TableCell>
-                          <TableCell align="center">
-                            <CustomButton
-                              width={"fit-content"}
-                              onClick={() => handleView(payment)}
-                              label={"View"}
-                              size={"small"}
-                            />
-                          </TableCell>
-                        </TableRow>
-                      ))}
-                  </TableBody>
-                </Table>
-              </TableContainer>
+                        <TableCell align="center">
+                          $
+                          {formatCurrency(
+                            payment?.processor_details?.amount_paid
+                          )}
+                        </TableCell>
+                        <TableCell align="center">
+                          {formatDateTimeWithoutYear(payment?.created_at)}
+                        </TableCell>
+                        <TableCell align="center">
+                          <Label color={renderChipColorByStatus(payment?.status)}>
+                            {payment?.status}
+                          </Label>
+                        </TableCell>
+                        <TableCell align="center">
+                          <CustomButton
+                            width={"fit-content"}
+                            onClick={() => handleView(payment)}
+                            label={"View"}
+                            size={"small"}
+                          />
+                        </TableCell>
+                      </TableRow>
+                    ))}
+                </TableBody>
+              </Table>
+            </TableContainer>
 
-              <TablePagination
-                rowsPerPageOptions={[10]}
-                component="div"
-                count={payments?.length}
-                rowsPerPage={limit}
-                page={page}
-                onPageChange={(event, newPage) => setPage(newPage)}
-              />
-            </Card>
-          ))}
+            <TablePagination
+              rowsPerPageOptions={[10]}
+              component="div"
+              count={payments?.length}
+              rowsPerPage={limit}
+              page={page}
+              onPageChange={(event, newPage) => setPage(newPage)}
+            />
+          </Card>
+        }
       </Container>
     </>
   );

@@ -12,7 +12,7 @@ import Grid from "@mui/material/Grid";
 import BookingCardComponent from "./BookingCardComponent";
 
 // Utils
-import { formatCurrency } from "../../utils/Helper";
+import { formatCurrency, formatDateTime } from "../../utils/Helper";
 
 const BookingDetailComponent = () => {
   const params = useLocation();
@@ -49,7 +49,7 @@ const BookingDetailComponent = () => {
       {
         key: "base_price",
         label: "Base Price",
-        value: formatCurrency(params?.state?.base_price),
+        value: `$${formatCurrency(params?.state?.base_price)}`,
       },
       {
         key: "tax",
@@ -64,12 +64,12 @@ const BookingDetailComponent = () => {
       {
         key: "total_price",
         label: "Total Price",
-        value: formatCurrency(params?.state?.total_price),
+        value: `$${formatCurrency(params?.state?.total_price)}`,
       },
       {
         key: "amount_paid",
         label: "Amount Paid",
-        value: params?.state?.amount_paid,
+        value: `$${formatCurrency(params?.state?.amount_paid)}`,
       },
       {
         key: "status",
@@ -79,7 +79,7 @@ const BookingDetailComponent = () => {
       {
         key: "amount_due_at_time_of_booking",
         label: "Amount Due At Time Of Booking",
-        value: params?.state?.amount_due_at_time_of_booking,
+        value: `$${formatCurrency(params?.state?.amount_due_at_time_of_booking)}`,
       },
       {
         key: "amount_due_later",
@@ -89,7 +89,7 @@ const BookingDetailComponent = () => {
       {
         key: "amount_due_later_date",
         label: "Amount Due Later Date",
-        value: params?.state?.amount_due_later_date,
+        value: formatDateTime(params?.state?.amount_due_later_date),
       },
     ];
     setBookingDetails([...items]);

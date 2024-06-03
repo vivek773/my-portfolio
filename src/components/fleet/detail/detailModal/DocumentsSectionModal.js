@@ -10,7 +10,8 @@ import CustomButton from "../../../../forms/button/CustomButton";
 import CustomFileInput from "../../../../forms/fileInput/CustomFileInput";
 
 // Redux
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import { setFleetDetails } from "../../../../store/features/FleetSlice";
 
 // Context
 import { useModal } from "../../../../context/ModalContext";
@@ -23,6 +24,7 @@ import { DOCUMENTS_TYPES } from "../../../../utils/Constants";
 
 const DocumentsSectionModal = ({ documentModal }) => {
   const { isModal, closeModal } = useModal();
+  const dispatch = useDispatch();
   const { isLoading, startLoading, stopLoading } = useLoader();
   const { setToast } = useToast();
   const fleet = useSelector((state) => state.fleet);
@@ -83,7 +85,12 @@ const DocumentsSectionModal = ({ documentModal }) => {
           severity: "success",
         });
 
+        const updatedFleetDetails = { ...fleet?.details, documents: { ...fleet?.details?.documents, [getDocumentType(documentModal)]: response?.data?.uploadedFile?.key }}
+
+        dispatch(setFleetDetails(updatedFleetDetails))
+
         closeModal();
+        
         stopLoading();
 
         formik.resetForm();

@@ -2,7 +2,8 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-  payments: []
+  payments: [],
+  pendingPayments:[]
 };
 
 const payments = createSlice({
@@ -11,6 +12,9 @@ const payments = createSlice({
   reducers: {
     setPayments: (state, action) => {
       state.payments = action.payload;
+    },
+    setPendingPayments: (state, action) => {
+      state.pendingPayments = action.payload;
     },
     resetPayments: (state) => {
       state.payments = initialState.payments;
@@ -21,5 +25,6 @@ const payments = createSlice({
 export const {
   setPayments,
   resetPayments,
+  setPendingPayments
 } = payments.actions;
 export default payments.reducer;

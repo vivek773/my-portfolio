@@ -3,14 +3,14 @@
 import Container from "@mui/material/Container";
 
 // Custom
-import PaymentDetailComponent from "./PaymentDetailComponent";
+import PendingPaymentDetailComponent from "./PendingPaymentDetailComponent";
 import BackButton from "../backButton/BackButton";
 
 const PaymentViewComponent = () => {
   return (
     <Container maxWidth="xl">
-      <BackButton title={'Payment Details'} />
-      <PaymentDetailComponent />
+      <BackButton title={'Schedule Payment Details'} />
+      <PendingPaymentDetailComponent />
     </Container>
   );
 };
