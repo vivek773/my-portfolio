@@ -22,6 +22,7 @@ import { fetchGETRequest } from "../../utils/Services";
 // Context
 import { useLoader } from "../../context/LoaderContext";
 import {
+  formatCurrency,
   formatDate,
   formatDateTime,
   formatPhoneNumber,
@@ -88,6 +89,28 @@ const PaymentDetailComponent = () => {
                 {formatPhoneNumber(paymentDetails?.customer?.phone_number) ||
                   "-"}
               </Typography>
+            </Grid>
+            <Grid item xs={3}>
+              <Typography variant="subtitle1">Amount</Typography>
+              <Typography paragraph>
+                ${formatCurrency(paymentDetails?.amount) || "-"}
+              </Typography>
+            </Grid>
+            <Grid item xs={3}>
+              <Typography variant="subtitle1">Fee</Typography>
+              <Typography paragraph>
+                ${formatCurrency(paymentDetails?.platform_fee) || "-"}
+              </Typography>
+            </Grid>
+            <Grid item xs={3}>
+              <Typography variant="subtitle1">Net</Typography>
+              <Typography paragraph>
+                ${formatCurrency(paymentDetails?.net_amount_to_business) || "-"}
+              </Typography>
+            </Grid>
+            <Grid item xs={3}>
+              <Typography variant="subtitle1">Status</Typography>
+              <Typography paragraph>{paymentDetails?.status || "-"}</Typography>
             </Grid>
             <Grid item xs={3}>
               <Typography variant="subtitle1">Transaction Time</Typography>

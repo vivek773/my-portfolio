@@ -29,7 +29,7 @@ import HelmetComponent from "../../components/helmet/HelmetComponent";
 // Utils
 import { fetchGETRequest } from "../../utils/Services";
 import { EDISPATCHED } from "../../utils/Constants";
-import { formatCurrency } from "../../utils/Helper";
+import { formatCurrency, formatDateTimeWithoutYear } from "../../utils/Helper";
 
 // Context
 import { useLoader } from "../../context/LoaderContext";
@@ -38,9 +38,8 @@ const TABLE_HEAD = [
   { id: "index", label: "#" },
   { id: "name", label: "Customer Name" },
   { id: "email", label: "Email" },
-  { id: "amount", label: "Amount" },
-  { id: "tax", label: "Tax" },
-  { id: "amount_paid", label: "Total" },
+  { id: "amount_paid", label: "Amount" },
+  { id: "transaction_date", label: "Date" },
   { id: "action", label: "Action" },
 ];
 
@@ -125,16 +124,13 @@ const PaymentsPage = () => {
                             {payment?.customer?.email}
                           </TableCell>
                           <TableCell align="center">
-                            ${formatCurrency(payment?.amount)}
-                          </TableCell>
-                          <TableCell align="center">
-                            ${formatCurrency(payment?.tax)}
-                          </TableCell>
-                          <TableCell align="center">
                             $
                             {formatCurrency(
                               payment?.processor_details?.amount_paid
                             )}
+                          </TableCell>
+                          <TableCell align="center">
+                            {formatDateTimeWithoutYear(payment?.created_at)}
                           </TableCell>
                           <TableCell align="center">
                             <CustomButton

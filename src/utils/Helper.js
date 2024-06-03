@@ -18,6 +18,13 @@ export const formatDateTime = (date, format = "MM/DD/YYYY hh:mm A") => {
   return null;
 };
 
+export const formatDateTimeWithoutYear = (date, format = "MMM D, h:mm A") => {
+  if (date) {
+    return moment(date).format(format);
+  }
+  return null;
+};
+
 // FormatCurrency
 
 export const formatCurrency = (amountInCents) =>
