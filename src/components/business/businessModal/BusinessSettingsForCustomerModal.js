@@ -39,8 +39,11 @@ const DocumentsSectionModal = ({
       const payload = { [editable?.key]: values[editable?.key] };
       startLoading();
 
+
+      const urlEndPoint = editable?.key === "tax_rate" ? "update-sales-tax-rate " : "update-business-settings-for-customer";
+
       const response = await fetchPUTRequest(
-        `/business/owner/update-business-settings-for-customer`,
+        `/business/owner/${urlEndPoint}`,
         payload
       );
 
@@ -54,16 +57,19 @@ const DocumentsSectionModal = ({
         closeModal();
         stopLoading();
 
+        const updateApiKey = editable?.key === "tax_rate" ? "tax" : "business_settings_for_customer"
 
         const updatedArray = businessSettingsCustomer.map((item) => {
-          if (response?.updatedBusiness?.business_settings_for_customer.hasOwnProperty(item.key)) {
+          if (response?.updatedBusiness?.[updateApiKey].hasOwnProperty(item.key)) {
             return {
               ...item,
-              value: response?.updatedBusiness?.business_settings_for_customer[item.key],
+              value: response?.updatedBusiness?.[updateApiKey][item.key],
             };
           }
           return item;
         });
+
+
         setBusinessSettingsCustomer([...updatedArray]);
         formik.resetForm();
       } else {

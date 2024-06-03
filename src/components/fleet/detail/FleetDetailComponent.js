@@ -37,7 +37,7 @@ const FleetDetailComponent = () => {
         `/fleet/owner/get-plane/${tailNumber}`,
         {}
       );
-      if (response.statusCode === 200 && response) {
+      if (response?.statusCode === 200 && response) {
         const { airworthiness_directives, maintenance_logs, ...rest } =
           response?.data;
         dispatch(setTailNumber(tailNumber));

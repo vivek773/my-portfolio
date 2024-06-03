@@ -1,7 +1,7 @@
 // Document section
 
 // Default
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 // MUI components
 import Grid from "@mui/material/Grid";
@@ -37,40 +37,47 @@ const DocumentsSectionComponent = () => {
   const { isLoading, startLoading, stopLoading } = useLoader();
 
   const [documentModal, setDocumentModal] = useState("");
+  const [document, setDocument] = useState([])
   const [fileUrl, setFileUrl] = useState("");
 
-  const itemArr = [
-    {
-      key: DOCUMENTS_TYPES[0],
-      label: "Pilot Operating Handbook",
-      value: fleet?.details?.documents?.[DOCUMENTS_TYPES[0]],
-    },
-    {
-      key: DOCUMENTS_TYPES[1],
-      label: "Checklist",
-      value: fleet?.details?.documents?.[DOCUMENTS_TYPES[1]],
-    },
-    {
-      key: DOCUMENTS_TYPES[2],
-      label: "Weight and Balance",
-      value: fleet?.details?.documents?.[DOCUMENTS_TYPES[2]],
-    },
-    {
-      key: DOCUMENTS_TYPES[3],
-      label: "Airworthiness Certificate",
-      value: fleet?.details?.documents?.[DOCUMENTS_TYPES[3]],
-    },
-    {
-      key: DOCUMENTS_TYPES[4],
-      label: "Registration",
-      value: fleet?.details?.documents?.[DOCUMENTS_TYPES[4]],
-    },
-    {
-      key: DOCUMENTS_TYPES[5],
-      label: "Insurance",
-      value: fleet?.details?.documents?.[DOCUMENTS_TYPES[5]],
-    },
-  ];
+  useEffect(() => {
+    const itemArr = [
+      {
+        key: DOCUMENTS_TYPES[0],
+        label: "Pilot Operating Handbook",
+        value: fleet?.details?.documents?.[DOCUMENTS_TYPES[0]],
+      },
+      {
+        key: DOCUMENTS_TYPES[1],
+        label: "Checklist",
+        value: fleet?.details?.documents?.[DOCUMENTS_TYPES[1]],
+      },
+      {
+        key: DOCUMENTS_TYPES[2],
+        label: "Weight and Balance",
+        value: fleet?.details?.documents?.[DOCUMENTS_TYPES[2]],
+      },
+      {
+        key: DOCUMENTS_TYPES[3],
+        label: "Airworthiness Certificate",
+        value: fleet?.details?.documents?.[DOCUMENTS_TYPES[3]],
+      },
+      {
+        key: DOCUMENTS_TYPES[4],
+        label: "Registration",
+        value: fleet?.details?.documents?.[DOCUMENTS_TYPES[4]],
+      },
+      {
+        key: DOCUMENTS_TYPES[5],
+        label: "Insurance",
+        value: fleet?.details?.documents?.[DOCUMENTS_TYPES[5]],
+      },
+    ];
+
+    setDocument([...itemArr])
+
+  },[fleet])
+
 
   const downloadDocuments = async (payload) => {
     startLoading();
@@ -135,7 +142,7 @@ const DocumentsSectionComponent = () => {
             >
               <SpinnerComponent show={isLoading} size={30}/>
             </Box> */}
-            {itemArr.map((item, index) => (
+            {document?.map((item, index) => (
               <Grid
                 item
                 key={index}
@@ -190,7 +197,7 @@ const DocumentsSectionComponent = () => {
           </Grid>
         }
       />
-      <DocumentsSectionModal documentModal={documentModal} />
+      <DocumentsSectionModal documentModal={documentModal} document={document} setDocument={setDocument}/>
       {fileUrl && <PdfViewer fileUrl={fileUrl} setFileUrl={setFileUrl}/>}
     </>
   );

@@ -32,6 +32,7 @@ import SpinnerComponent from "../../components/spinner/SpinnerComponent";
 // Utils
 import { EDISPATCHED } from "../../utils/Constants";
 import { fetchGETRequest } from "../../utils/Services";
+import EmbedCustomer from "../../components/business/EmbedCustomer";
 
 function SettingsPage() {
   const dispatch = useDispatch();
@@ -119,10 +120,13 @@ function SettingsPage() {
               <BusinessMerchantAccountDetailsComponent
                 merchantAccountDetails={business?.merchant_account_details}
               />
+              <EmbedCustomer /> 
+
               <BusinessSettingsForCustomerComponent
                 settings={business?.business_settings_for_customer}
+                tax={business?.tax}
               />
-              <BusinessTaxComponent tax={business?.tax} />
+              {/* <BusinessTaxComponent tax={business?.tax} /> */}
               <BusinessSettingsForEmployeeComponent
                 settings={business?.business_settings_for_employee}
               />

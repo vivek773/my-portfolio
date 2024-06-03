@@ -22,7 +22,8 @@ import { useToast } from "../../context/ToastContext";
 // Utils
 import { fetchPUTRequest } from "../../utils/Services";
 
-const BusinessSettingsForCustomerComponent = ({ settings }) => {
+const BusinessSettingsForCustomerComponent = ({ settings, tax }) => {
+  console.log(settings, "settings");
   const [businessSettingsCustomer, setBusinessSettingsCustomer] =
     useState(null);
   const [editable, setEditable] = useState(null);
@@ -98,8 +99,12 @@ const BusinessSettingsForCustomerComponent = ({ settings }) => {
         label: "Calculate Tax",
         value: settings.is_calculate_tax,
       },
-
-      
+      {
+        show: true,
+        key: "tax_rate",
+        label: "Tax Rate",
+        value: tax?.tax_rate,
+      }
     ];
     setBusinessSettingsCustomer([...items]);
   }, [settings]);
@@ -138,7 +143,7 @@ const BusinessSettingsForCustomerComponent = ({ settings }) => {
                 .pay_in_full_at_time_of_booking,
               value:
                 response?.updatedBusiness?.business_settings_for_customer[
-                  item.key
+                item.key
                 ],
             };
           } else if (
@@ -150,7 +155,7 @@ const BusinessSettingsForCustomerComponent = ({ settings }) => {
                 .one_way_customer_pays_for_return,
               value:
                 response?.updatedBusiness?.business_settings_for_customer[
-                  item.key
+                item.key
                 ],
             };
           } else {
@@ -158,7 +163,7 @@ const BusinessSettingsForCustomerComponent = ({ settings }) => {
               ...item,
               value:
                 response?.updatedBusiness?.business_settings_for_customer[
-                  item.key
+                item.key
                 ],
             };
           }
@@ -257,7 +262,7 @@ const BusinessSettingsForCustomerComponent = ({ settings }) => {
                     label="Edit"
                     size="small"
                     disabled={false}
-                    bgColor="#479DE1"
+                    bgColor="#47  DE1"
                     sx={{
                       width: "fit-content",
                     }}
@@ -440,6 +445,44 @@ const BusinessSettingsForCustomerComponent = ({ settings }) => {
                     )
                   }
                 />
+              </Grid>
+            )}
+            {businessSettingsCustomer?.[10]?.show && (
+              <Grid
+                item
+                xs={12}
+                sx={{
+                  display: "flex",
+                  justifyContent: "space-between",
+                  alignItems: "center",
+                  opacity: isLoading ? 0.5 : 1,
+                }}
+              >
+                <Box sx={{ flexGrow: 1 }}>
+                  <Typography variant="subtitle1">
+                    {businessSettingsCustomer?.[10]?.label}
+                  </Typography>
+                  <Typography paragraph>
+                    {businessSettingsCustomer?.[10]?.value
+                      ? businessSettingsCustomer?.[10]?.value
+                      : "N/A"}
+                  </Typography>
+                </Box>
+                <Box sx={{ display: "flex", justifyContent: "flex-end" }}>
+                  <CustomButton
+                    label="Edit"
+                    size="small"
+                    disabled={false}
+                    bgColor="#479DE1"
+                    sx={{
+                      width: "fit-content",
+                    }}
+                    onClick={() => {
+                      setEditable(businessSettingsCustomer?.[10]);
+                      openModal("businessSettingsForCustomer");
+                    }}
+                  />
+                </Box>
               </Grid>
             )}
           </Grid>

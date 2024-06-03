@@ -26,9 +26,10 @@ const DetailsSectionModal = ({ detailsItems, setDetailsItems }) => {
     { label: "AMEL", value: "airplane_multi_engine_land" },
   ];
 
+  
   const formik = useFormik({
     initialValues: {
-      tail_number: fleet?.details?.tail_number,
+      tail_number: "",
       cruise_speed_kts: "",
       year: "",
       make: "",
@@ -48,14 +49,16 @@ const DetailsSectionModal = ({ detailsItems, setDetailsItems }) => {
       hourly_rate: "",
     },
     onSubmit: async (values) => {
-      values["category"] = values["category"].value;
+
+      const newPayload = { ...values }
+      newPayload["category"] = newPayload["category"].value;
       if (fleet?.details?.tail_number !== formik.values.tail_number) {
-        values["updated_tail_number"] = formik.values.tail_number;
-        values["tail_number"] = fleet?.details?.tail_number;
+        newPayload["updated_tail_number"] = formik.values.tail_number;
+        newPayload["tail_number"] = fleet?.details?.tail_number;
       }
       startLoading();
 
-      const response = await fetchPUTRequest(`/fleet/owner/edit-plane`, values);
+      const response = await fetchPUTRequest(`/fleet/owner/edit-plane`, newPayload);
 
       if (response?.statusCode === 200 && response) {
         setToast({
@@ -67,10 +70,10 @@ const DetailsSectionModal = ({ detailsItems, setDetailsItems }) => {
         closeModal();
         stopLoading();
 
-        const newObj = {
-          ...fleet.details,
-          category: response.data.category,
-        };
+        const newObj = {...fleet.details };
+
+       Object.assign(newObj, response?.data);
+        
         const updatedArray = detailsItems.map((item) => {
           if (response.data.hasOwnProperty(item.key)) {
             return {
@@ -81,6 +84,7 @@ const DetailsSectionModal = ({ detailsItems, setDetailsItems }) => {
           return item;
         });
 
+        dispatch(setFleetDetails(newObj));
         setDetailsItems([...updatedArray]);
         formik.resetForm();
       } else {

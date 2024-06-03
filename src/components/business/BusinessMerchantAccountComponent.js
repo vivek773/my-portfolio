@@ -6,6 +6,7 @@ import Typography from "@mui/material/Typography";
 // Custom
 import BusinessCardComponent from "./BusinessCardComponent";
 import CustomButton from "../../forms/button/CustomButton";
+import { Grid } from "@mui/material";
 
 const BusinessMerchantAccountDetailsComponent = ({
   merchantAccountDetails,
@@ -13,19 +14,22 @@ const BusinessMerchantAccountDetailsComponent = ({
   return (
     <BusinessCardComponent
       title={"Merchant Account Details"}
-      action={
-        <CustomButton
-          label={"Edit"}
-          size={"medium"}
-          disabled={false}
-          bgColor={"#479DE1"}
-        />
-      }
       component={
         <Typography variant="body2">
-          {merchantAccountDetails
-            ? JSON.stringify(merchantAccountDetails)
-            : "No merchant account details available"}
+          <Grid container spacing={{ xs: 5, md: 3 }} columns={{ md: 12 }}>
+            <Grid item xs={3}>
+              <Typography variant="subtitle1">Account ID:</Typography>
+              <Typography paragraph>
+                {merchantAccountDetails?.account_id}
+              </Typography>
+            </Grid>
+            <Grid item xs={3}>
+              <Typography variant="subtitle1">Provider Name:</Typography>
+              <Typography paragraph>
+                {merchantAccountDetails?.provider_name}
+              </Typography>
+            </Grid>
+          </Grid>
         </Typography>
       }
     />

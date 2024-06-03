@@ -42,72 +42,72 @@ const DetailsSectionComponent = () => {
       {
         key: "year",
         label: "Year",
-        value: fleet?.details.year,
+        value: fleet?.details?.year,
       },
       {
         key: "make",
         label: "Make",
-        value: fleet?.details.make,
+        value: fleet?.details?.make,
       },
       {
         key: "model",
         label: "Model",
-        value: fleet?.details.model,
+        value: fleet?.details?.model,
       },
       {
         key: "passenger_seats",
         label: "Passenger Seats",
-        value: fleet?.details.passenger_seats,
+        value: fleet?.details?.passenger_seats,
       },
       {
         key: "total_seats",
         label: "Total Seats",
-        value: fleet?.details.total_seats,
+        value: fleet?.details?.total_seats,
       },
       {
         key: "category",
         label: "Category",
-        value: fleet?.details.category,
+        value: fleet?.details?.category,
       },
       {
         key: "icao_equipment",
         label: "Icao Equipment",
-        value: fleet?.details.icao_equipment,
+        value: fleet?.details?.icao_equipment,
       },
       {
         key: "icao_surveillance_codes",
         label: "Icao Surveillance Codes",
-        value: fleet?.details.icao_surveillance_codes,
+        value: fleet?.details?.icao_surveillance_codes,
       },
       {
         key: "serial_number",
         label: "Serial Number",
-        value: fleet?.details.serial_number,
+        value: fleet?.details?.serial_number,
       },
       {
         key: "faa_designator",
         label: "Faa Designator",
-        value: fleet?.details.faa_designator,
+        value: fleet?.details?.faa_designator,
       },
       {
         key: "fuel_burn_rate",
         label: "Fuel Burn Rate",
-        value: fleet?.details.fuel_burn_rate,
+        value: fleet?.details?.fuel_burn_rate,
       },
       {
         key: "empty_weight",
         label: "Empty Weight",
-        value: fleet?.details.empty_weight,
+        value: fleet?.details?.empty_weight,
       },
       {
         key: "fuel_capacity",
         label: "Fuel Capacity",
-        value: fleet?.details.fuel_capacity,
+        value: fleet?.details?.fuel_capacity,
       },
       {
         key: "hourly_rate",
         label: "Hourly Rate",
-        value: formatCurrency(fleet?.details.hourly_rate),
+        value: formatCurrency(fleet?.details?.hourly_rate),
       },
     ];
     setDetailsItems([...items]);
