@@ -32,7 +32,7 @@ import HelmetComponent from "../../components/helmet/HelmetComponent";
 
 // Utils
 import { fetchGETRequest } from "../../utils/Services";
-import { EDISPATCHED } from "../../utils/Constants";
+import { EDISPATCHED, STATUS } from "../../utils/Constants";
 import { formatCurrency, renderChipColorByStatus } from "../../utils/Helper";
 
 const BookingsPage = () => {
@@ -169,7 +169,7 @@ const BookingsPage = () => {
                       </TableCell>
                       <TableCell align="center">
                         <Label color={renderChipColorByStatus(booking?.status)}>
-                          {booking?.status}
+                          {STATUS(booking?.status)}
                         </Label>
                       </TableCell>
                       <TableCell align="center">

@@ -11,6 +11,14 @@ export const formatDate = (date, format = "MM/DD/YYYY") => {
   return null;
 };
 
+export const formatDateLong = (date, format = "MMM DD, YYYY") => {
+  if (date) {
+    // return moment(date).utc().format(format)
+    return moment(date).format(format);
+  }
+  return null;
+};
+
 export const formatDateTime = (date, format = "MM/DD/YYYY hh:mm A") => {
   if (date) {
     return moment(date).format(format);
@@ -42,6 +50,12 @@ export const renderChipColorByStatus = (status) => {
     return "error";
   } else if (status === "inactive") {
     return "warning";
+  } else if (status === "confirmed_with_balance_due") {
+    return "info";
+  } else if (status === "confirmed") {
+    return "success";
+  } else if (status === "completed") {
+    return "success";
   }
 };
 

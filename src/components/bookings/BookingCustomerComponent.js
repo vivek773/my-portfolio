@@ -1,18 +1,8 @@
-// Business customers
-
-// Default
 import { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
-
-// MUI components
 import Typography from "@mui/material/Typography";
 import Grid from "@mui/material/Grid";
-
-// Custom
 import BookingCardComponent from "./BookingCardComponent";
-
-// Redux
-import { useSelector } from "react-redux";
 import { formatDateTime } from "../../utils/Helper";
 
 const BookingCustomerComponent = () => {
@@ -60,7 +50,7 @@ const BookingCustomerComponent = () => {
       {
         key: "date_of_birth",
         label: "Date Of Birth",
-      value: formatDateTime(params?.state?.customer?.date_of_birth),
+        value: formatDateTime(params?.state?.customer?.date_of_birth),
       },
       {
         key: "address",
@@ -87,17 +77,24 @@ const BookingCustomerComponent = () => {
         title={"Booking Customer"}
         component={
           <Grid container spacing={{ xs: 5, md: 3 }} columns={{ md: 12 }}>
-            {bookingCustomer?.map((element, i) => {
-              console.log(element,"element");
-              return (
-                <Grid item key={i} xs={3}>
-                  <Typography variant="subtitle1">{element.label}</Typography>
-                  <Typography paragraph>
-                    {element?.value ? element.value : "-"}
-                  </Typography>
-                </Grid>
-              )
-            })}
+            {bookingCustomer?.map((element, i) => (
+              <Grid
+                item
+                key={i}
+                xs={3}
+                display="flex"
+                flexDirection="column"
+                alignItems="center"
+                justifyContent="center"
+              >
+                <Typography variant="subtitle1" align="center">
+                  {element.label}
+                </Typography>
+                <Typography paragraph align="center">
+                  {element?.value ? element.value : "-"}
+                </Typography>
+              </Grid>
+            ))}
           </Grid>
         }
       />

@@ -97,3 +97,27 @@ export const TIME_ZONE = [
 
 export const SYNC_FUSION_SCHEDULER_KEY =
   "Ngo9BigBOggjHTQxAR8/V1NBaF5cXmZCf1FpRmJGdld5fUVHYVZUTXxaS00DNHVRdkdnWXtdcHRURGhZVUZ1WUQ=";
+
+export const STATUS = (status) => {
+  if (status === "mx_merchant") {
+    return "MX Merchant";
+  } else if (status === "active") {
+    return "Active";
+  } else if (status === "invited") {
+    return "Invited";
+  } else if (status === "banned") {
+    return "Banned";
+  } else if (status === "inactive") {
+    return "Inactive";
+  } else if (status === "confirmed_with_balance_due") {
+    return "Confirmed - Balance Due";
+  } else if (status === "confirmed") {
+    return "Confirmed";
+  } else if (status === "completed") {
+    return "Completed";
+  } else if (status === "one_way") {
+    return "One Way";
+  } else if (status === "round_trip") {
+    return "Round Trip";
+  }
+};

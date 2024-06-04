@@ -22,11 +22,26 @@ import { EDISPATCHED } from "../../utils/Constants";
 
 // Context
 import { useLoader } from "../../context/LoaderContext";
-import { Card, Tab, Table, TableBody, TableCell, TableContainer, TableHead, TablePagination, TableRow, Tabs } from "@mui/material";
+import {
+  Card,
+  Tab,
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TablePagination,
+  TableRow,
+  Tabs,
+} from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import CustomButton from "../../forms/button/CustomButton";
 import Label from "../../components/label";
-import { formatCurrency, formatDateTimeWithoutYear, renderChipColorByStatus } from "../../utils/Helper";
+import {
+  formatCurrency,
+  formatDateTimeWithoutYear,
+  renderChipColorByStatus,
+} from "../../utils/Helper";
 
 const PaymentsPage = () => {
   const navigate = useNavigate();
@@ -44,7 +59,7 @@ const PaymentsPage = () => {
   const [limit, setLimit] = useState(10);
   const { isLoading, startLoading, stopLoading } = useLoader();
   const dispatch = useDispatch();
-  const { payments, } = useSelector((state) => state.payments);
+  const { payments } = useSelector((state) => state.payments);
   const handleView = (data) => {
     navigate(`/payments/${data?.payment_id}`, { state: data });
   };
@@ -62,20 +77,20 @@ const PaymentsPage = () => {
     getPaymentsData();
 
     // eslint-disable-next-line
-  }, []); return (
+  }, []);
+  return (
     <>
       <HelmetComponent title={`${EDISPATCHED} | Payments`} />
       <Container maxWidth="xl">
-          <Typography variant="h4" gutterBottom mb={5}>
-            Payments
-          </Typography>
-    
+        <Typography variant="h4" gutterBottom mb={5}>
+          Payments
+        </Typography>
+
         {isLoading ? (
           <Box mt={10}>
             <SpinnerComponent show={isLoading} />
           </Box>
-        )
-          :
+        ) : (
           <Card>
             <TableContainer sx={{ minWidth: 800 }}>
               <Table>
@@ -107,7 +122,9 @@ const PaymentsPage = () => {
                           {formatDateTimeWithoutYear(payment?.created_at)}
                         </TableCell>
                         <TableCell align="center">
-                          <Label color={renderChipColorByStatus(payment?.status)}>
+                          <Label
+                            color={renderChipColorByStatus(payment?.status)}
+                          >
                             {payment?.status}
                           </Label>
                         </TableCell>
@@ -134,7 +151,7 @@ const PaymentsPage = () => {
               onPageChange={(event, newPage) => setPage(newPage)}
             />
           </Card>
-        }
+        )}
       </Container>
     </>
   );
