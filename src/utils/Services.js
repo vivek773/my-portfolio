@@ -63,6 +63,28 @@ export const pdfDownloadRequest = async (URL, body = {}) => {
       method: "GET",
       responseType: "blob",
       headers: {
+        "Content-Type": "application/pdf",
+        Authorization: `Bearer ${webAccessToken}`,
+        tenant_id: tenant_id,
+        user_id: user_id
+      },
+    });
+
+    return response?.data;
+  } catch (error) {
+    return error?.response?.data;
+  }
+};
+
+export const jpegDownloadRequest = async (URL, body = {}) => {
+  try {
+    const { webAccessToken, tenant_id, user_id } = getStoreData();
+
+    const response = await axios({
+      url: BASE_API_URL + URL,
+      method: "GET",
+      responseType: "blob",
+      headers: {
         "Content-Type": "application/jpeg",
         Authorization: `Bearer ${webAccessToken}`,
         tenant_id: tenant_id,

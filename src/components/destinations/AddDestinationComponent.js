@@ -2,6 +2,7 @@
 
 // Default
 import { useFormik } from "formik";
+import { useNavigate } from "react-router-dom";
 import * as Yup from "yup";
 
 // MUI components
@@ -24,6 +25,7 @@ import { TIME_ZONE } from "../../utils/Constants";
 
 const AddDestinationComponent = () => {
   const { setToast } = useToast();
+  const navigate = useNavigate();
   const { isLoading, startLoading, stopLoading } = useLoader();
 
   const validationSchema = Yup.object({
@@ -60,6 +62,10 @@ const AddDestinationComponent = () => {
       startLoading();
       values["airport_timezone"] = values.airport_timezone.value;
 
+      if (!values.destination_specific_cost) {
+        delete values.destination_specific_cost
+      }
+
       const response = await fetchPOSTRequest(
         `/destination/owner/add-destination`,
         values
@@ -71,6 +77,7 @@ const AddDestinationComponent = () => {
           severity: "success",
         });
         stopLoading();
+        navigate(-1)
         formik.resetForm();
       } else {
         setToast({

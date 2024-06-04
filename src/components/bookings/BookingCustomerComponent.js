@@ -9,33 +9,54 @@ import Box from "@mui/material/Box";
 import Stack from "@mui/material/Stack";
 import IconButton from "@mui/material/IconButton";
 import VisibilityIcon from "@mui/icons-material/Visibility";
+import DownloadIcon from "@mui/icons-material/Download";
 
-import { pdfDownloadRequest } from "../../utils/Services";
-import PdfViewer from "../pdfViewer/PdfViewer";
+import { jpegDownloadRequest } from "../../utils/Services";
+import ImageModal from "../imageModal/ImageModal";
+import SpinnerComponent from "../spinner/SpinnerComponent";
 
 const BookingCustomerComponent = () => {
   const params = useLocation();
   const [bookingCustomer, setBookingCustomer] = useState(null);
-  const [fileUrl, setFileUrl] = useState("");
+  const [imageUrl, setImageUrl] = useState(null);
+  const [isLoading, setIsLoading] = useState(false)
 
 
-  const viewPDF = async () => {
-    const response = await pdfDownloadRequest(
+  const viewImage = async () => {
+    setIsLoading(true)
+    const response = await jpegDownloadRequest(
       `/document/owner/customer/download-customer-document/${params?.state?.customer?.customer_id}/passport`,
       {}
     );
-    console.log(response, "1221321312312");
     if (response) {
-
       const file = new Blob([response], { type: "application/jpeg" });
       const fileURL = URL.createObjectURL(file);
-
-
-      console.log(fileURL, "asdsdsadsad");
-      console.log(file, "filet")
-      // setFileUrl(fileURL);
+      setImageUrl(fileURL);
+      setIsLoading(false)
 
     } else {
+      setIsLoading(false)
+    }
+  }
+
+  const downloadImage = async () => {
+    setIsLoading(true)
+    const response = await jpegDownloadRequest(
+      `/document/owner/customer/download-customer-document/${params?.state?.customer?.customer_id}/passport`,
+      {}
+    );
+
+    if (response) {
+      const url = window.URL.createObjectURL(new Blob([response]));
+      const link = document.createElement('a');
+      link.href = url;
+      link.setAttribute('download', 'image.jpg');
+      document.body.appendChild(link);
+      link.click();
+      link.parentNode.removeChild(link);
+      setIsLoading(false)
+    } else {
+      setIsLoading(false)
     }
   };
 
@@ -104,12 +125,12 @@ const BookingCustomerComponent = () => {
       },
       {
         key: "date_of_issue",
-        label: " Passport Date Of Issue",
+        label: "Passport Date Of Issue",
         value: params?.state?.customer?.documents?.passport?.date_of_issue,
       },
       {
         key: "",
-        label: " Passport View",
+        label: "Passport View",
         value: "",
       },
     ];
@@ -121,237 +142,265 @@ const BookingCustomerComponent = () => {
       <BookingCardComponent
         title={"Booking Customer"}
         component={
-          <Grid container spacing={{ xs: 5, md: 3 }} columns={{ md: 12 }}>
 
-            <Grid
-              item
-              xs={3}
-              display="flex"
-              flexDirection="column"
-              alignItems="center"
-              justifyContent="center"
-            >
-              <Typography variant="subtitle1" align="center">
-                {bookingCustomer?.[0]?.label}
-              </Typography>
-              <Typography paragraph align="center">
-                {bookingCustomer?.[0]?.value ? bookingCustomer?.[0]?.value : "-"}
-              </Typography>
-            </Grid>
+          <>
+            <Grid container spacing={{ xs: 5, md: 3 }} columns={{ md: 12 }} style={{ position: "relative" }}>
 
-            <Grid
-              item
-              xs={3}
-              display="flex"
-              flexDirection="column"
-              alignItems="center"
-              justifyContent="center"
-            >
-              <Typography variant="subtitle1" align="center">
-                {bookingCustomer?.[0]?.label}
-              </Typography>
-              <Typography paragraph align="center">
-                {bookingCustomer?.[0]?.value ? bookingCustomer[0]?.value : "-"}
-              </Typography>
-            </Grid>
-
-            <Grid
-              item
-              xs={3}
-              display="flex"
-              flexDirection="column"
-              alignItems="center"
-              justifyContent="center"
-            >
-              <Typography variant="subtitle1" align="center">
-                {bookingCustomer?.[1]?.label}
-              </Typography>
-              <Typography paragraph align="center">
-                {bookingCustomer?.[1]?.value ? bookingCustomer?.[1]?.value : "-"}
-              </Typography>
-            </Grid>
-
-            <Grid
-              item
-              xs={3}
-              display="flex"
-              flexDirection="column"
-              alignItems="center"
-              justifyContent="center"
-            >
-              <Typography variant="subtitle1" align="center">
-                {bookingCustomer?.[2]?.label}
-              </Typography>
-              <Typography paragraph align="center">
-                {bookingCustomer?.[2]?.value ? bookingCustomer?.[2]?.value : "-"}
-              </Typography>
-            </Grid>
-
-            <Grid
-              item
-              xs={3}
-              display="flex"
-              flexDirection="column"
-              alignItems="center"
-              justifyContent="center"
-            >
-              <Typography variant="subtitle1" align="center">
-                {bookingCustomer?.[3]?.label}
-              </Typography>
-              <Typography paragraph align="center">
-                {bookingCustomer?.[3]?.value ? bookingCustomer?.[3]?.value : "-"}
-              </Typography>
-            </Grid>
-
-
-            <Grid
-              item
-              xs={3}
-              display="flex"
-              flexDirection="column"
-              alignItems="center"
-              justifyContent="center"
-            >
-              <Typography variant="subtitle1" align="center">
-                {bookingCustomer?.[4]?.label}
-              </Typography>
-              <Typography paragraph align="center">
-                {bookingCustomer?.[4]?.value ? bookingCustomer?.[4]?.value : "-"}
-              </Typography>
-            </Grid>
-
-
-            <Grid
-              item
-              xs={3}
-              display="flex"
-              flexDirection="column"
-              alignItems="center"
-              justifyContent="center"
-            >
-              <Typography variant="subtitle1" align="center">
-                {bookingCustomer?.[5]?.label}
-              </Typography>
-              <Typography paragraph align="center">
-                {bookingCustomer?.[5]?.value ? bookingCustomer?.[5]?.value : "-"}
-              </Typography>
-            </Grid>
-
-            <Grid
-              item
-              xs={3}
-              display="flex"
-              flexDirection="column"
-              alignItems="center"
-              justifyContent="center"
-            >
-              <Typography variant="subtitle1" align="center">
-                {bookingCustomer?.[6]?.label}
-              </Typography>
-              <Typography paragraph align="center">
-                {bookingCustomer?.[6]?.value ? bookingCustomer?.[6]?.value : "-"}
-              </Typography>
-            </Grid>
-
-            <Grid
-              item
-              xs={3}
-              display="flex"
-              flexDirection="column"
-              alignItems="center"
-              justifyContent="center"
-            >
-              <Typography variant="subtitle1" align="center">
-                {bookingCustomer?.[7]?.label}
-              </Typography>
-              <Typography paragraph align="center">
-                {bookingCustomer?.[7]?.value ? bookingCustomer?.[7]?.value : "-"}
-              </Typography>
-            </Grid>
-
-
-            <Grid
-              item
-              xs={3}
-              display="flex"
-              flexDirection="column"
-              alignItems="center"
-              justifyContent="center"
-            >
-              <Typography variant="subtitle1" align="center">
-                {bookingCustomer?.[8]?.label}
-              </Typography>
-              <Typography paragraph align="center">
-                {bookingCustomer?.[8]?.value ? bookingCustomer?.[8]?.value : "-"}
-              </Typography>
-            </Grid>
-
-
-            <Grid
-              item
-              xs={3}
-              display="flex"
-              flexDirection="column"
-              alignItems="center"
-              justifyContent="center"
-            >
-              <Typography variant="subtitle1" align="center">
-                {bookingCustomer?.[9]?.label}
-              </Typography>
-              <Typography paragraph align="center">
-                {bookingCustomer?.[9]?.value ? bookingCustomer?.[9]?.value : "-"}
-              </Typography>
-            </Grid>
-
-
-            <Grid
-              item
-              xs={3}
-              display="flex"
-              flexDirection="column"
-              alignItems="center"
-              justifyContent="center"
-            >
-              <Typography variant="subtitle1" align="center">
-                {bookingCustomer?.[10]?.label}
-              </Typography>
-              <Typography paragraph align="center">
-                {bookingCustomer?.[10]?.value ? bookingCustomer?.[10]?.value : "-"}
-              </Typography>
-            </Grid>
-
-            <Grid xs={3}>
-              <Stack
-                direction="row"
-                justifyContent="space-between"
-                alignItems="center"
-                margin="0px 10px"
+              <Box
+                sx={{
+                  position: "absolute",
+                  top: "50%",
+                  left: "50%",
+                  transform: "translate(-50%, -50%)",
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                  zIndex: 1,
+                }}
               >
-                <Typography variant="subtitle1" noWrap>
-                {bookingCustomer?.[11]?.label}
+                <SpinnerComponent show={isLoading} size={30} />
+              </Box>
+
+              <Grid
+                item
+                xs={3}
+                display="flex"
+                flexDirection="column"
+                alignItems="center"
+                justifyContent="center"
+                sx={{ opacity: isLoading ? 0.5 : 1 }}
+              >
+                <Typography variant="subtitle1" align="center">
+                  {bookingCustomer?.[0]?.label}
                 </Typography>
-                <Box
-                  direction="row"
-                  justifyContent="space-between"
-                  alignItems="center"
-                >
+                <Typography paragraph align="center">
+                  {bookingCustomer?.[0]?.value ? bookingCustomer?.[0]?.value : "-"}
+                </Typography>
+              </Grid>
+
+              <Grid
+                item
+                xs={3}
+                display="flex"
+                flexDirection="column"
+                alignItems="center"
+                justifyContent="center"
+                sx={{ opacity: isLoading ? 0.5 : 1 }}
+              >
+                <Typography variant="subtitle1" align="center">
+                  {bookingCustomer?.[0]?.label}
+                </Typography>
+                <Typography paragraph align="center">
+                  {bookingCustomer?.[0]?.value ? bookingCustomer[0]?.value : "-"}
+                </Typography>
+              </Grid>
+
+              <Grid
+                item
+                xs={3}
+                display="flex"
+                flexDirection="column"
+                alignItems="center"
+                justifyContent="center"
+                sx={{ opacity: isLoading ? 0.5 : 1 }}
+              >
+                <Typography variant="subtitle1" align="center">
+                  {bookingCustomer?.[1]?.label}
+                </Typography>
+                <Typography paragraph align="center">
+                  {bookingCustomer?.[1]?.value ? bookingCustomer?.[1]?.value : "-"}
+                </Typography>
+              </Grid>
+
+              <Grid
+                item
+                xs={3}
+                display="flex"
+                flexDirection="column"
+                alignItems="center"
+                justifyContent="center"
+                sx={{ opacity: isLoading ? 0.5 : 1 }}
+              >
+                <Typography variant="subtitle1" align="center">
+                  {bookingCustomer?.[2]?.label}
+                </Typography>
+                <Typography paragraph align="center">
+                  {bookingCustomer?.[2]?.value ? bookingCustomer?.[2]?.value : "-"}
+                </Typography>
+              </Grid>
+
+              <Grid
+                item
+                xs={3}
+                display="flex"
+                flexDirection="column"
+                alignItems="center"
+                justifyContent="center"
+                sx={{ opacity: isLoading ? 0.5 : 1 }}
+              >
+                <Typography variant="subtitle1" align="center">
+                  {bookingCustomer?.[3]?.label}
+                </Typography>
+                <Typography paragraph align="center">
+                  {bookingCustomer?.[3]?.value ? bookingCustomer?.[3]?.value : "-"}
+                </Typography>
+              </Grid>
+
+              <Grid
+                item
+                xs={3}
+                display="flex"
+                flexDirection="column"
+                alignItems="center"
+                justifyContent="center"
+                sx={{ opacity: isLoading ? 0.5 : 1 }}
+              >
+                <Typography variant="subtitle1" align="center">
+                  {bookingCustomer?.[4]?.label}
+                </Typography>
+                <Typography paragraph align="center">
+                  {bookingCustomer?.[4]?.value ? bookingCustomer?.[4]?.value : "-"}
+                </Typography>
+              </Grid>
+
+              <Grid
+                item
+                xs={3}
+                display="flex"
+                flexDirection="column"
+                alignItems="center"
+                justifyContent="center"
+                sx={{ opacity: isLoading ? 0.5 : 1 }}
+              >
+                <Typography variant="subtitle1" align="center">
+                  {bookingCustomer?.[5]?.label}
+                </Typography>
+                <Typography paragraph align="center">
+                  {bookingCustomer?.[5]?.value ? bookingCustomer?.[5]?.value : "-"}
+                </Typography>
+              </Grid>
+
+              <Grid
+                item
+                xs={3}
+                display="flex"
+                flexDirection="column"
+                alignItems="center"
+                justifyContent="center"
+                sx={{ opacity: isLoading ? 0.5 : 1 }}
+              >
+                <Typography variant="subtitle1" align="center">
+                  {bookingCustomer?.[6]?.label}
+                </Typography>
+                <Typography paragraph align="center">
+                  {bookingCustomer?.[6]?.value ? bookingCustomer?.[6]?.value : "-"}
+                </Typography>
+              </Grid>
+
+              <Grid
+                item
+                xs={3}
+                display="flex"
+                flexDirection="column"
+                alignItems="center"
+                justifyContent="center"
+                sx={{ opacity: isLoading ? 0.5 : 1 }}
+              >
+                <Typography variant="subtitle1" align="center">
+                  {bookingCustomer?.[7]?.label}
+                </Typography>
+                <Typography paragraph align="center">
+                  {bookingCustomer?.[7]?.value ? bookingCustomer?.[7]?.value : "-"}
+                </Typography>
+              </Grid>
+
+              <Grid
+                item
+                xs={3}
+                display="flex"
+                flexDirection="column"
+                alignItems="center"
+                justifyContent="center"
+                sx={{ opacity: isLoading ? 0.5 : 1 }}
+              >
+                <Typography variant="subtitle1" align="center">
+                  {bookingCustomer?.[8]?.label}
+                </Typography>
+                <Typography paragraph align="center">
+                  {bookingCustomer?.[8]?.value ? bookingCustomer?.[8]?.value : "-"}
+                </Typography>
+              </Grid>
+
+              <Grid
+                item
+                xs={3}
+                display="flex"
+                flexDirection="column"
+                alignItems="center"
+                justifyContent="center"
+                sx={{ opacity: isLoading ? 0.5 : 1 }}
+              >
+                <Typography variant="subtitle1" align="center">
+                  {bookingCustomer?.[9]?.label}
+                </Typography>
+                <Typography paragraph align="center">
+                  {bookingCustomer?.[9]?.value ? bookingCustomer?.[9]?.value : "-"}
+                </Typography>
+              </Grid>
+
+              <Grid
+                item
+                xs={3}
+                display="flex"
+                flexDirection="column"
+                alignItems="center"
+                justifyContent="center"
+                sx={{ opacity: isLoading ? 0.5 : 1 }}
+              >
+                <Typography variant="subtitle1" align="center">
+                  {bookingCustomer?.[10]?.label}
+                </Typography>
+                <Typography paragraph align="center">
+                  {bookingCustomer?.[10]?.value ? bookingCustomer?.[10]?.value : "-"}
+                </Typography>
+              </Grid>
+
+              <Grid
+                item
+                xs={3}
+                display="flex"
+                flexDirection="column"
+                alignItems="center"
+                sx={{ opacity: isLoading ? 0.5 : 1 }}
+              >
+                <Typography variant="subtitle1" align="center">
+                  {bookingCustomer?.[11]?.label}
+                </Typography>
+                <Box>
                   <IconButton
                     color="primary"
-                    onClick={viewPDF}
+                    onClick={viewImage}
+                    sx={{ padding: 0 }}
                   >
                     <VisibilityIcon />
                   </IconButton>
 
+                  <IconButton
+                    color="primary"
+                    onClick={downloadImage}
+                  >
+                    <DownloadIcon />
+                  </IconButton>
+
                 </Box>
-              </Stack>
+              </Grid>
             </Grid>
 
-          </Grid>
+          </>
 
         }
       />
-
-    {fileUrl && <PdfViewer fileUrl={fileUrl} setFileUrl={setFileUrl}/>}
+      <ImageModal imageUrl={imageUrl} setImageUrl={setImageUrl} />
     </>
   );
 };
