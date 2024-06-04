@@ -3,7 +3,7 @@ import { useLocation } from "react-router-dom";
 import Typography from "@mui/material/Typography";
 import Grid from "@mui/material/Grid";
 import BookingCardComponent from "./BookingCardComponent";
-import { formatDateTime } from "../../utils/Helper";
+import { formatDate, formatDateTime } from "../../utils/Helper";
 
 import Box from "@mui/material/Box";
 import Stack from "@mui/material/Stack";
@@ -19,11 +19,10 @@ const BookingCustomerComponent = () => {
   const params = useLocation();
   const [bookingCustomer, setBookingCustomer] = useState(null);
   const [imageUrl, setImageUrl] = useState(null);
-  const [isLoading, setIsLoading] = useState(false)
-
+  const [isLoading, setIsLoading] = useState(false);
 
   const viewImage = async () => {
-    setIsLoading(true)
+    setIsLoading(true);
     const response = await jpegDownloadRequest(
       `/document/owner/customer/download-customer-document/${params?.state?.customer?.customer_id}/passport`,
       {}
@@ -32,15 +31,14 @@ const BookingCustomerComponent = () => {
       const file = new Blob([response], { type: "application/jpeg" });
       const fileURL = URL.createObjectURL(file);
       setImageUrl(fileURL);
-      setIsLoading(false)
-
+      setIsLoading(false);
     } else {
-      setIsLoading(false)
+      setIsLoading(false);
     }
-  }
+  };
 
   const downloadImage = async () => {
-    setIsLoading(true)
+    setIsLoading(true);
     const response = await jpegDownloadRequest(
       `/document/owner/customer/download-customer-document/${params?.state?.customer?.customer_id}/passport`,
       {}
@@ -48,15 +46,15 @@ const BookingCustomerComponent = () => {
 
     if (response) {
       const url = window.URL.createObjectURL(new Blob([response]));
-      const link = document.createElement('a');
+      const link = document.createElement("a");
       link.href = url;
-      link.setAttribute('download', 'image.jpg');
+      link.setAttribute("download", "image.jpg");
       document.body.appendChild(link);
       link.click();
       link.parentNode.removeChild(link);
-      setIsLoading(false)
+      setIsLoading(false);
     } else {
-      setIsLoading(false)
+      setIsLoading(false);
     }
   };
 
@@ -121,12 +119,16 @@ const BookingCustomerComponent = () => {
       {
         key: "expiration",
         label: "Passport Expiration",
-        value: params?.state?.customer?.documents?.passport?.expiration,
+        value: `${formatDate(
+          params?.state?.customer?.documents?.passport?.expiration
+        )}`,
       },
       {
         key: "date_of_issue",
         label: "Passport Date Of Issue",
-        value: params?.state?.customer?.documents?.passport?.date_of_issue,
+        value: `${formatDate(
+          params?.state?.customer?.documents?.passport?.date_of_issue
+        )}`,
       },
       {
         key: "",
@@ -142,10 +144,13 @@ const BookingCustomerComponent = () => {
       <BookingCardComponent
         title={"Booking Customer"}
         component={
-
           <>
-            <Grid container spacing={{ xs: 5, md: 3 }} columns={{ md: 12 }} style={{ position: "relative" }}>
-
+            <Grid
+              container
+              spacing={{ xs: 5, md: 3 }}
+              columns={{ md: 12 }}
+              style={{ position: "relative" }}
+            >
               <Box
                 sx={{
                   position: "absolute",
@@ -174,7 +179,9 @@ const BookingCustomerComponent = () => {
                   {bookingCustomer?.[0]?.label}
                 </Typography>
                 <Typography paragraph align="center">
-                  {bookingCustomer?.[0]?.value ? bookingCustomer?.[0]?.value : "-"}
+                  {bookingCustomer?.[0]?.value
+                    ? bookingCustomer?.[0]?.value
+                    : "-"}
                 </Typography>
               </Grid>
 
@@ -191,7 +198,9 @@ const BookingCustomerComponent = () => {
                   {bookingCustomer?.[0]?.label}
                 </Typography>
                 <Typography paragraph align="center">
-                  {bookingCustomer?.[0]?.value ? bookingCustomer[0]?.value : "-"}
+                  {bookingCustomer?.[0]?.value
+                    ? bookingCustomer[0]?.value
+                    : "-"}
                 </Typography>
               </Grid>
 
@@ -208,7 +217,9 @@ const BookingCustomerComponent = () => {
                   {bookingCustomer?.[1]?.label}
                 </Typography>
                 <Typography paragraph align="center">
-                  {bookingCustomer?.[1]?.value ? bookingCustomer?.[1]?.value : "-"}
+                  {bookingCustomer?.[1]?.value
+                    ? bookingCustomer?.[1]?.value
+                    : "-"}
                 </Typography>
               </Grid>
 
@@ -225,7 +236,9 @@ const BookingCustomerComponent = () => {
                   {bookingCustomer?.[2]?.label}
                 </Typography>
                 <Typography paragraph align="center">
-                  {bookingCustomer?.[2]?.value ? bookingCustomer?.[2]?.value : "-"}
+                  {bookingCustomer?.[2]?.value
+                    ? bookingCustomer?.[2]?.value
+                    : "-"}
                 </Typography>
               </Grid>
 
@@ -242,7 +255,9 @@ const BookingCustomerComponent = () => {
                   {bookingCustomer?.[3]?.label}
                 </Typography>
                 <Typography paragraph align="center">
-                  {bookingCustomer?.[3]?.value ? bookingCustomer?.[3]?.value : "-"}
+                  {bookingCustomer?.[3]?.value
+                    ? bookingCustomer?.[3]?.value
+                    : "-"}
                 </Typography>
               </Grid>
 
@@ -259,7 +274,9 @@ const BookingCustomerComponent = () => {
                   {bookingCustomer?.[4]?.label}
                 </Typography>
                 <Typography paragraph align="center">
-                  {bookingCustomer?.[4]?.value ? bookingCustomer?.[4]?.value : "-"}
+                  {bookingCustomer?.[4]?.value
+                    ? bookingCustomer?.[4]?.value
+                    : "-"}
                 </Typography>
               </Grid>
 
@@ -276,7 +293,9 @@ const BookingCustomerComponent = () => {
                   {bookingCustomer?.[5]?.label}
                 </Typography>
                 <Typography paragraph align="center">
-                  {bookingCustomer?.[5]?.value ? bookingCustomer?.[5]?.value : "-"}
+                  {bookingCustomer?.[5]?.value
+                    ? bookingCustomer?.[5]?.value
+                    : "-"}
                 </Typography>
               </Grid>
 
@@ -293,7 +312,9 @@ const BookingCustomerComponent = () => {
                   {bookingCustomer?.[6]?.label}
                 </Typography>
                 <Typography paragraph align="center">
-                  {bookingCustomer?.[6]?.value ? bookingCustomer?.[6]?.value : "-"}
+                  {bookingCustomer?.[6]?.value
+                    ? bookingCustomer?.[6]?.value
+                    : "-"}
                 </Typography>
               </Grid>
 
@@ -310,7 +331,9 @@ const BookingCustomerComponent = () => {
                   {bookingCustomer?.[7]?.label}
                 </Typography>
                 <Typography paragraph align="center">
-                  {bookingCustomer?.[7]?.value ? bookingCustomer?.[7]?.value : "-"}
+                  {bookingCustomer?.[7]?.value
+                    ? bookingCustomer?.[7]?.value
+                    : "-"}
                 </Typography>
               </Grid>
 
@@ -327,7 +350,9 @@ const BookingCustomerComponent = () => {
                   {bookingCustomer?.[8]?.label}
                 </Typography>
                 <Typography paragraph align="center">
-                  {bookingCustomer?.[8]?.value ? bookingCustomer?.[8]?.value : "-"}
+                  {bookingCustomer?.[8]?.value
+                    ? bookingCustomer?.[8]?.value
+                    : "-"}
                 </Typography>
               </Grid>
 
@@ -344,7 +369,9 @@ const BookingCustomerComponent = () => {
                   {bookingCustomer?.[9]?.label}
                 </Typography>
                 <Typography paragraph align="center">
-                  {bookingCustomer?.[9]?.value ? bookingCustomer?.[9]?.value : "-"}
+                  {bookingCustomer?.[9]?.value
+                    ? bookingCustomer?.[9]?.value
+                    : "-"}
                 </Typography>
               </Grid>
 
@@ -361,7 +388,9 @@ const BookingCustomerComponent = () => {
                   {bookingCustomer?.[10]?.label}
                 </Typography>
                 <Typography paragraph align="center">
-                  {bookingCustomer?.[10]?.value ? bookingCustomer?.[10]?.value : "-"}
+                  {bookingCustomer?.[10]?.value
+                    ? bookingCustomer?.[10]?.value
+                    : "-"}
                 </Typography>
               </Grid>
 
@@ -385,19 +414,13 @@ const BookingCustomerComponent = () => {
                     <VisibilityIcon />
                   </IconButton>
 
-                  <IconButton
-                    color="primary"
-                    onClick={downloadImage}
-                  >
+                  <IconButton color="primary" onClick={downloadImage}>
                     <DownloadIcon />
                   </IconButton>
-
                 </Box>
               </Grid>
             </Grid>
-
           </>
-
         }
       />
       <ImageModal imageUrl={imageUrl} setImageUrl={setImageUrl} />
