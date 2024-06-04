@@ -63,12 +63,13 @@ const SignupPage = () => {
     //   .oneOf([Yup.ref("password"), null], "Passwords must match"),
     business_name: Yup.string().required("Business name is required."),
     business_phone: Yup.string().required("Phone number is required."),
-    street_address: Yup.string().required("Business street is required."),
+    street: Yup.string().required("Business Street is required."),
     // business_unit: Yup.string().required("Business Unit is required."),
     business_city: Yup.string().required("Business City is required."),
     business_state: Yup.string().required("Business State is required."),
     business_zip: Yup.string().required("Business zip code is required."),
     primary_airport_code: Yup.string().required("Airport code is required."),
+    business_timezone: Yup.string().required("Time zone is required."),
   });
 
   const formik = useFormik({
@@ -80,12 +81,13 @@ const SignupPage = () => {
       // confirm_password: "",
       business_name: "",
       business_phone: "",
-      street_address: "",
+      street: "",
       // business_unit: "",
       business_city: "",
       business_state: "",
       business_zip: "",
       primary_airport_code: "",
+      business_timezone: "America/New_York"
     },
     validationSchema: validationSchema,
     onSubmit: async (values) => {
@@ -199,9 +201,9 @@ const SignupPage = () => {
               helperText="123-456-7890"
             />
             <CustomInput
-              name="street_address"
+              name="street"
               label="Business Street"
-              value={formik.values.street_address}
+              value={formik.values.street}
               onChange={formik.handleChange}
               formik={formik}
             />
