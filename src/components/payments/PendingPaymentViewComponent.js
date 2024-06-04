@@ -1,4 +1,3 @@
-
 // MUI components
 import Container from "@mui/material/Container";
 
@@ -9,7 +8,7 @@ import BackButton from "../backButton/BackButton";
 const PaymentViewComponent = () => {
   return (
     <Container maxWidth="xl">
-      <BackButton title={'Schedule Payment Details'} />
+      <BackButton title={"Scheduled Payments Details"} />
       <PendingPaymentDetailComponent />
     </Container>
   );

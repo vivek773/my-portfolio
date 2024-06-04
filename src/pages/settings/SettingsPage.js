@@ -120,7 +120,6 @@ function SettingsPage() {
               <BusinessMerchantAccountDetailsComponent
                 merchantAccountDetails={business?.merchant_account_details}
               />
-              <EmbedCustomer /> 
 
               <BusinessSettingsForCustomerComponent
                 settings={business?.business_settings_for_customer}
@@ -130,6 +129,7 @@ function SettingsPage() {
               <BusinessSettingsForEmployeeComponent
                 settings={business?.business_settings_for_employee}
               />
+              <EmbedCustomer />
             </>
           )}
         </Container>

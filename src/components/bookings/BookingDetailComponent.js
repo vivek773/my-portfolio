@@ -1,22 +1,15 @@
-// Business details
-
-// Default
 import { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
-
-// MUI components
 import Typography from "@mui/material/Typography";
 import Grid from "@mui/material/Grid";
-
-// Custom
 import BookingCardComponent from "./BookingCardComponent";
-
-// Utils
 import { formatCurrency, formatDateTime } from "../../utils/Helper";
 
 const BookingDetailComponent = () => {
   const params = useLocation();
   const [bookingDetails, setBookingDetails] = useState(null);
+
+  console.log(params);
 
   useEffect(() => {
     const items = [
@@ -51,16 +44,8 @@ const BookingDetailComponent = () => {
         label: "Base Price",
         value: `$${formatCurrency(params?.state?.base_price)}`,
       },
-      {
-        key: "tax",
-        label: "Tax",
-        value: params?.state?.tax,
-      },
-      {
-        key: "discount",
-        label: "Discount",
-        value: params?.state?.discount,
-      },
+      { key: "tax", label: "Tax", value: params?.state?.tax },
+      { key: "discount", label: "Discount", value: params?.state?.discount },
       {
         key: "total_price",
         label: "Total Price",
@@ -71,15 +56,13 @@ const BookingDetailComponent = () => {
         label: "Amount Paid",
         value: `$${formatCurrency(params?.state?.amount_paid)}`,
       },
-      {
-        key: "status",
-        label: "Status",
-        value: params?.state?.status,
-      },
+      { key: "status", label: "Status", value: params?.state?.status },
       {
         key: "amount_due_at_time_of_booking",
         label: "Amount Due At Time Of Booking",
-        value: `$${formatCurrency(params?.state?.amount_due_at_time_of_booking)}`,
+        value: `$${formatCurrency(
+          params?.state?.amount_due_at_time_of_booking
+        )}`,
       },
       {
         key: "amount_due_later",
@@ -102,9 +85,19 @@ const BookingDetailComponent = () => {
         component={
           <Grid container spacing={{ xs: 5, md: 3 }} columns={{ md: 12 }}>
             {bookingDetails?.map((element, i) => (
-              <Grid item key={i} xs={3}>
-                <Typography variant="subtitle1">{element.label}</Typography>
-                <Typography paragraph>
+              <Grid
+                item
+                key={i}
+                xs={3}
+                display="flex"
+                flexDirection="column"
+                alignItems="center"
+                justifyContent="center"
+              >
+                <Typography variant="subtitle1" align="center">
+                  {element.label}
+                </Typography>
+                <Typography paragraph align="center">
                   {element?.value ? element.value : "-"}
                 </Typography>
               </Grid>

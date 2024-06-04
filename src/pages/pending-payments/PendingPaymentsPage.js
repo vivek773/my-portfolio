@@ -10,7 +10,10 @@ import Box from "@mui/material/Box";
 
 // Redux
 import { useDispatch, useSelector } from "react-redux";
-import { setPayments, setPendingPayments } from "../../store/features/PaymentsSlice";
+import {
+  setPayments,
+  setPendingPayments,
+} from "../../store/features/PaymentsSlice";
 
 // Custom
 import SpinnerComponent from "../../components/spinner/SpinnerComponent";
@@ -22,122 +25,142 @@ import { EDISPATCHED } from "../../utils/Constants";
 
 // Context
 import { useLoader } from "../../context/LoaderContext";
-import { Card, Tab, Table, TableBody, TableCell, TableContainer, TableHead, TablePagination, TableRow, Tabs } from "@mui/material";
+import {
+  Card,
+  Tab,
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TablePagination,
+  TableRow,
+  Tabs,
+} from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import CustomButton from "../../forms/button/CustomButton";
 import Label from "../../components/label";
-import { formatCurrency, formatDateTimeWithoutYear, renderChipColorByStatus } from "../../utils/Helper";
+import {
+  formatCurrency,
+  formatDateLong,
+  renderChipColorByStatus,
+} from "../../utils/Helper";
 
 const PendingPaymentsPage = () => {
-    const navigate = useNavigate();
+  const navigate = useNavigate();
 
-    const TABLE_HEAD = [
-        { id: "index", label: "#" },
-        { id: "name", label: "Customer Name" },
-        { id: "email", label: "Email" },
-        { id: "amount_paid", label: "Amount" },
-        { id: "transaction_date", label: "Date" },
-        { id: "status", label: "Status" },
-        { id: "action", label: "Action" },
-    ];
-    const [page, setPage] = useState(0);
-    const [limit, setLimit] = useState(10);
-    const { isLoading, startLoading, stopLoading } = useLoader();
-    const dispatch = useDispatch();
-    const { pendingPayments } = useSelector((state) => state.payments);
-    const handleView = (data) => {
-        navigate(`/schedule-payments/${data?.pending_payment_id}`, { state: data });
+  const TABLE_HEAD = [
+    { id: "index", label: "#" },
+    { id: "name", label: "Customer Name" },
+    { id: "email", label: "Customer Email" },
+    { id: "booking_reference", label: "Booking Reference" },
+    { id: "amount_paid", label: "Amount" },
+    { id: "due_date", label: "Scheduled For" },
+    { id: "status", label: "Status" },
+    { id: "action", label: "Action" },
+  ];
+  const [page, setPage] = useState(0);
+  const [limit, setLimit] = useState(10);
+  const { isLoading, startLoading, stopLoading } = useLoader();
+  const dispatch = useDispatch();
+  const { pendingPayments } = useSelector((state) => state.payments);
+  const handleView = (data) => {
+    navigate(`/schedule-payments/${data?.pending_payment_id}`, { state: data });
+  };
+  useEffect(() => {
+    const getPaymentsData = async () => {
+      startLoading();
+      const response = await fetchGETRequest(
+        `/payment/owner/get-pending-payments`,
+        {}
+      );
+      if (response?.statusCode === 200 && response) {
+        dispatch(setPendingPayments(response?.pendingPayments));
+        stopLoading();
+      } else {
+        stopLoading();
+      }
     };
-    useEffect(() => {
-        const getPaymentsData = async () => {
-            startLoading();
-            const response = await fetchGETRequest(`/payment/owner/get-pending-payments`, {});
-            if (response?.statusCode === 200 && response) {
-                dispatch(setPendingPayments(response?.pendingPayments));
-                stopLoading();
-            } else {
-                stopLoading();
-            }
-        };
-        getPaymentsData();
+    getPaymentsData();
 
-        // eslint-disable-next-line
-    }, []); return (
-        <>
-            <HelmetComponent title={`${EDISPATCHED} | Payments`} />
-            <Container maxWidth="xl">
-                <Typography variant="h4" gutterBottom mb={5}>
-                    Schedule Payments
-                </Typography>
+    // eslint-disable-next-line
+  }, []);
+  return (
+    <>
+      <HelmetComponent title={`${EDISPATCHED} | Payments`} />
+      <Container maxWidth="xl">
+        <Typography variant="h4" gutterBottom mb={5}>
+          Scheduled Payments
+        </Typography>
 
-                {isLoading ? (
-                    <Box mt={10}>
-                        <SpinnerComponent show={isLoading} />
-                    </Box>
-                )
-                    :
-                    <Card>
-                        <TableContainer sx={{ minWidth: 800 }}>
-                            <Table>
-                                <TableHead>
-                                    <TableRow>
-                                        {TABLE_HEAD.map((header) => (
-                                            <TableCell key={header.id} align="center">
-                                                {header.label}
-                                            </TableCell>
-                                        ))}
-                                    </TableRow>
-                                </TableHead>
-                                <TableBody>
-                                    {Array.isArray(pendingPayments) &&
-                                        pendingPayments?.map((payment, index) => (
-                                            <TableRow hover key={index}>
-                                                <TableCell align="center">{index + 1}</TableCell>
-                                                <TableCell align="center">{`${payment?.customer?.first_name} ${payment?.customer?.last_name}`}</TableCell>
-                                                <TableCell align="center">
-                                                    {payment?.customer?.email}
-                                                </TableCell>
-                                                <TableCell align="center">
-                                                    $
-                                                    {formatCurrency(
-                                                        payment?.amount
-                                                    )}
-                                                </TableCell>
-                                                <TableCell align="center">
-                                                    {formatDateTimeWithoutYear(payment?.due_date)}
-                                                </TableCell>
-                                                <TableCell align="center">
-                                                    <Label color={renderChipColorByStatus(payment?.status)}>
-                                                        {payment?.status}
-                                                    </Label>
-                                                </TableCell>
-                                                <TableCell align="center">
-                                                    <CustomButton
-                                                        width={"fit-content"}
-                                                        onClick={() => handleView(payment)}
-                                                        label={"View"}
-                                                        size={"small"}
-                                                    />
-                                                </TableCell>
-                                            </TableRow>
-                                        ))}
-                                </TableBody>
-                            </Table>
-                        </TableContainer>
+        {isLoading ? (
+          <Box mt={10}>
+            <SpinnerComponent show={isLoading} />
+          </Box>
+        ) : (
+          <Card>
+            <TableContainer sx={{ minWidth: 800 }}>
+              <Table>
+                <TableHead>
+                  <TableRow>
+                    {TABLE_HEAD.map((header) => (
+                      <TableCell key={header.id} align="center">
+                        {header.label}
+                      </TableCell>
+                    ))}
+                  </TableRow>
+                </TableHead>
+                <TableBody>
+                  {Array.isArray(pendingPayments) &&
+                    pendingPayments?.map((payment, index) => (
+                      <TableRow hover key={index}>
+                        <TableCell align="center">{index + 1}</TableCell>
+                        <TableCell align="center">{`${payment?.customer?.first_name} ${payment?.customer?.last_name}`}</TableCell>
+                        <TableCell align="center">
+                          {payment?.customer?.email}
+                        </TableCell>
+                        <TableCell align="center">
+                          {payment?.booking.booking_reference}
+                        </TableCell>
+                        <TableCell align="center">
+                          ${formatCurrency(payment?.amount)}
+                        </TableCell>
+                        <TableCell align="center">
+                          {formatDateLong(payment?.due_date)}
+                        </TableCell>
+                        <TableCell align="center">
+                          <Label
+                            color={renderChipColorByStatus(payment?.status)}
+                          >
+                            {payment?.status}
+                          </Label>
+                        </TableCell>
+                        <TableCell align="center">
+                          <CustomButton
+                            width={"fit-content"}
+                            onClick={() => handleView(payment)}
+                            label={"View"}
+                            size={"small"}
+                          />
+                        </TableCell>
+                      </TableRow>
+                    ))}
+                </TableBody>
+              </Table>
+            </TableContainer>
 
-                        <TablePagination
-                            rowsPerPageOptions={[10]}
-                            component="div"
-                            count={pendingPayments?.length}
-                            rowsPerPage={limit}
-                            page={page}
-                            onPageChange={(event, newPage) => setPage(newPage)}
-                        />
-                    </Card>
-                }
-            </Container>
-        </>
-    );
+            <TablePagination
+              rowsPerPageOptions={[10]}
+              component="div"
+              count={pendingPayments?.length}
+              rowsPerPage={limit}
+              page={page}
+              onPageChange={(event, newPage) => setPage(newPage)}
+            />
+          </Card>
+        )}
+      </Container>
+    </>
+  );
 };
 export default PendingPaymentsPage;
-
