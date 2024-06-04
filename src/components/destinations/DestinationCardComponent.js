@@ -4,7 +4,7 @@
 import CardHeader from "@mui/material/CardHeader";
 import Typography from "@mui/material/Typography";
 import Card from "@mui/material/Card";
-import CardContent from "@mui/material/CardContent"
+import CardContent from "@mui/material/CardContent";
 
 // MUI styles
 import { makeStyles } from "@mui/styles";
@@ -43,7 +43,9 @@ const DestinationCardComponent = ({
           }
         />
       )}
-      <CardContent sx={{ "&:last-child": { paddingBottom: "16px" } }}>{component}</CardContent>
+      <CardContent sx={{ "&:last-child": { paddingBottom: "16px" } }}>
+        {component}
+      </CardContent>
     </Card>
   );
 };
