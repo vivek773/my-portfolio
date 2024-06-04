@@ -63,7 +63,7 @@ export const pdfDownloadRequest = async (URL, body = {}) => {
       method: "GET",
       responseType: "blob",
       headers: {
-        "Content-Type": "application/pdf",
+        "Content-Type": "application/jpeg",
         Authorization: `Bearer ${webAccessToken}`,
         tenant_id: tenant_id,
         user_id: user_id

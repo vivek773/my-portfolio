@@ -83,7 +83,7 @@ const BookingsPage = () => {
   }, []);
 
   const getDepartureDate = (payload) => {
-    const flightSegment = payload.find(
+    const flightSegment = payload?.find(
       (segment) => segment.trip_leg_number === 1
     );
     return flightSegment

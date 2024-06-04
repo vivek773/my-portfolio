@@ -25,6 +25,7 @@ import AddPeopleComponent from "./components/people/AddPeopleComponent";
 import PeopleViewComponent from "./components/people/PeopleViewComponent";
 import ProfilePage from "./pages/profile/ProfilePage";
 import DestinationViewComponent from "./components/destinations/DestinationViewComponent";
+import SchedulePaymentViewComponent from "./components/schedulePayments/SchedulePaymentViewComponent"
 
 // Protected Routes
 import ProtectedRoute from "./protectedroute/ProtectedRoute";
@@ -93,7 +94,7 @@ const MainRouter = () => {
         />
         <Route
           path="/schedule-payments/:id/"
-          element={wrapWithProtectedRoute(<PendingPaymentViewComponent />)}
+          element={wrapWithProtectedRoute(<SchedulePaymentViewComponent />)}
         />
         <Route path={"/calendar"} element={<CalendarPage />} />
         <Route
