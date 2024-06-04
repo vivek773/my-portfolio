@@ -41,7 +41,7 @@ const PeopleDocumentsComponent = () => {
   return (
     <>
       <PeopleCardComponent
-        title="People Documents"
+        title="Documents"
         component={
           <Grid
             container

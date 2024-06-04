@@ -1,32 +1,20 @@
-// Payments details
-
-// Default
 import { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-
-// MUI components
 import Typography from "@mui/material/Typography";
 import Grid from "@mui/material/Grid";
-
-// Redux
 import { useDispatch } from "react-redux";
 import { setBookings } from "../../store/features/BookingsSlice";
-
-// Custom
 import PaymentCardComponent from "./PaymentCardComponent";
 import CustomButton from "../../forms/button/CustomButton";
-
-// Utils
 import { fetchGETRequest } from "../../utils/Services";
-
-// Context
 import { useLoader } from "../../context/LoaderContext";
 import {
   formatCurrency,
   formatDate,
-  formatDateTime,
+  formatDateTimeLong,
   formatPhoneNumber,
 } from "../../utils/Helper";
+import { STATUS } from "../../utils/Constants";
 
 const PaymentDetailComponent = () => {
   const params = useLocation();
@@ -65,61 +53,153 @@ const PaymentDetailComponent = () => {
         title={"Detail"}
         component={
           <Grid container spacing={{ xs: 5, md: 3 }} columns={{ md: 12 }}>
-            <Grid item xs={3}>
-              <Typography variant="subtitle1">Customer Name</Typography>
-              <Typography paragraph>
+            <Grid
+              item
+              xs={3}
+              display="flex"
+              flexDirection="column"
+              alignItems="center"
+              justifyContent="center"
+            >
+              <Typography variant="subtitle1" align="center">
+                Customer Name
+              </Typography>
+              <Typography paragraph align="center">
                 {`${paymentDetails?.customer?.first_name} ${paymentDetails?.customer?.last_name}`}
               </Typography>
             </Grid>
-            <Grid item xs={3}>
-              <Typography variant="subtitle1">Email</Typography>
-              <Typography paragraph>
+            <Grid
+              item
+              xs={3}
+              display="flex"
+              flexDirection="column"
+              alignItems="center"
+              justifyContent="center"
+            >
+              <Typography variant="subtitle1" align="center">
+                Email
+              </Typography>
+              <Typography paragraph align="center">
                 {paymentDetails?.customer?.email || "-"}
               </Typography>
             </Grid>
-            <Grid item xs={3}>
-              <Typography variant="subtitle1">Card Number</Typography>
-              <Typography paragraph>
+            <Grid
+              item
+              xs={3}
+              display="flex"
+              flexDirection="column"
+              alignItems="center"
+              justifyContent="center"
+            >
+              <Typography variant="subtitle1" align="center">
+                Card Number
+              </Typography>
+              <Typography paragraph align="center">
                 {` **** ${paymentDetails?.processor_details?.card_last_four}`}
               </Typography>
             </Grid>
-            <Grid item xs={3}>
-              <Typography variant="subtitle1">Phone Number</Typography>
-              <Typography paragraph>
+            <Grid
+              item
+              xs={3}
+              display="flex"
+              flexDirection="column"
+              alignItems="center"
+              justifyContent="center"
+            >
+              <Typography variant="subtitle1" align="center">
+                Phone Number
+              </Typography>
+              <Typography paragraph align="center">
                 {formatPhoneNumber(paymentDetails?.customer?.phone_number) ||
                   "-"}
               </Typography>
             </Grid>
-            <Grid item xs={3}>
-              <Typography variant="subtitle1">Amount</Typography>
-              <Typography paragraph>
+            <Grid
+              item
+              xs={3}
+              display="flex"
+              flexDirection="column"
+              alignItems="center"
+              justifyContent="center"
+            >
+              <Typography variant="subtitle1" align="center">
+                Amount
+              </Typography>
+              <Typography paragraph align="center">
                 ${formatCurrency(paymentDetails?.amount) || "-"}
               </Typography>
             </Grid>
-            <Grid item xs={3}>
-              <Typography variant="subtitle1">Fee</Typography>
-              <Typography paragraph>
+            <Grid
+              item
+              xs={3}
+              display="flex"
+              flexDirection="column"
+              alignItems="center"
+              justifyContent="center"
+            >
+              <Typography variant="subtitle1" align="center">
+                Fee
+              </Typography>
+              <Typography paragraph align="center">
                 ${formatCurrency(paymentDetails?.platform_fee) || "-"}
               </Typography>
             </Grid>
-            <Grid item xs={3}>
-              <Typography variant="subtitle1">Net</Typography>
-              <Typography paragraph>
+            <Grid
+              item
+              xs={3}
+              display="flex"
+              flexDirection="column"
+              alignItems="center"
+              justifyContent="center"
+            >
+              <Typography variant="subtitle1" align="center">
+                Net
+              </Typography>
+              <Typography paragraph align="center">
                 ${formatCurrency(paymentDetails?.net_amount_to_business) || "-"}
               </Typography>
             </Grid>
-            <Grid item xs={3}>
-              <Typography variant="subtitle1">Status</Typography>
-              <Typography paragraph>{paymentDetails?.status || "-"}</Typography>
-            </Grid>
-            <Grid item xs={3}>
-              <Typography variant="subtitle1">Transaction Time</Typography>
-              <Typography paragraph>
-                {formatDateTime(paymentDetails?.created_at) || "-"}
+            <Grid
+              item
+              xs={3}
+              display="flex"
+              flexDirection="column"
+              alignItems="center"
+              justifyContent="center"
+            >
+              <Typography variant="subtitle1" align="center">
+                Status
+              </Typography>
+              <Typography paragraph align="center">
+                {STATUS(paymentDetails?.status) || "-"}
               </Typography>
             </Grid>
-            <Grid item xs={3}>
-              <Typography variant="subtitle1">Booking Details</Typography>
+            <Grid
+              item
+              xs={3}
+              display="flex"
+              flexDirection="column"
+              alignItems="center"
+              justifyContent="center"
+            >
+              <Typography variant="subtitle1" align="center">
+                Transaction Time
+              </Typography>
+              <Typography paragraph align="center">
+                {formatDateTimeLong(paymentDetails?.created_at) || "-"}
+              </Typography>
+            </Grid>
+            <Grid
+              item
+              xs={3}
+              display="flex"
+              flexDirection="column"
+              alignItems="center"
+              justifyContent="center"
+            >
+              <Typography variant="subtitle1" align="center">
+                Booking Details
+              </Typography>
               <CustomButton
                 width={"fit-content"}
                 onClick={getBookingsData}
