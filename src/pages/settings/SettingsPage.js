@@ -32,7 +32,7 @@ import SpinnerComponent from "../../components/spinner/SpinnerComponent";
 // Utils
 import { EDISPATCHED } from "../../utils/Constants";
 import { fetchGETRequest } from "../../utils/Services";
-import EmbedCustomer from "../../components/business/EmbedCustomer";
+import EmbedCustomerAppCard from "../../components/business/EmbedCustomer";
 
 function SettingsPage() {
   const dispatch = useDispatch();
@@ -129,7 +129,7 @@ function SettingsPage() {
               <BusinessSettingsForEmployeeComponent
                 settings={business?.business_settings_for_employee}
               />
-              <EmbedCustomer />
+              <EmbedCustomerAppCard />
             </>
           )}
         </Container>
