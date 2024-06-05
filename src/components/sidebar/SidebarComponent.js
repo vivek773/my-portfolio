@@ -33,8 +33,8 @@ const SidebarComponent = ({ openNav, onCloseNav }) => {
 
   useEffect(() => {
     const path = pathname.split("/")[1];
-    const getIndex = ADMIN_CONFIG.findIndex((item)=>item.path === path);
-    setIsActive(getIndex)
+    const getIndex = ADMIN_CONFIG.findIndex((item) => item.path === path);
+    setIsActive(getIndex);
     if (openNav) {
       onCloseNav();
     }
@@ -57,7 +57,7 @@ const SidebarComponent = ({ openNav, onCloseNav }) => {
       >
         <img src={LOGO} alt="Logo" style={{ width: "50px", height: "50px" }} />
         <Typography sx={{ fontWeight: 500, paddingLeft: 1.5 }}>
-          eDispatched
+          eDispatched-135
         </Typography>
       </Box>
 
