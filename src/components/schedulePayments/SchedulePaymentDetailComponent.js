@@ -14,12 +14,12 @@ import {
   formatDateLong,
   formatPhoneNumber,
 } from "../../utils/Helper";
-import { STATUS } from "../../utils/Constants";
+import { readableStatus } from "../../utils/Constants";
 
-import SchedulePaymentCard from "./SchedulePaymentCard"
+import SchedulePaymentCard from "./SchedulePaymentCard";
 import SchedulePaymentDetailModal from "./scheduleModal/SchedulePaymentDetailModal";
 
-import { useModal }  from "../../context/ModalContext";
+import { useModal } from "../../context/ModalContext";
 
 const SchedulePaymentDetailComponent = () => {
   const params = useLocation();
@@ -30,7 +30,7 @@ const SchedulePaymentDetailComponent = () => {
 
   console.log(params?.state, "ststatatte");
 
-  const { openModal } = useModal()
+  const { openModal } = useModal();
 
   const getBookingsData = async () => {
     startLoading();
@@ -66,13 +66,15 @@ const SchedulePaymentDetailComponent = () => {
     <>
       <SchedulePaymentCard
         title={"Detail"}
-        action={<CustomButton
-          label={"Edit"}
-          size={"small"}
-          onClick={ () => openModal("schedulePaymentDetail") }
-          disabled={false}
-          bgColor={"#479DE1"}
-        />}
+        action={
+          <CustomButton
+            label={"Edit"}
+            size={"small"}
+            onClick={() => openModal("schedulePaymentDetail")}
+            disabled={false}
+            bgColor={"#479DE1"}
+          />
+        }
         component={
           <Grid container spacing={{ xs: 5, md: 3 }} columns={{ md: 12 }}>
             <Grid
@@ -133,7 +135,7 @@ const SchedulePaymentDetailComponent = () => {
                 Status
               </Typography>
               <Typography paragraph align="center">
-                {STATUS(paymentDetails?.status) || "-"}
+                {readableStatus(paymentDetails?.status) || "-"}
               </Typography>
             </Grid>
             <Grid

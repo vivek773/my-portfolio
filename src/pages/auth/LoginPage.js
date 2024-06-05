@@ -53,7 +53,7 @@ const LoginPage = () => {
   const [showPassword, setShowPassword] = useState(false);
   const { setToast } = useToast();
   const { isLoading, startLoading, stopLoading } = useLoader();
-  const { business } = useSelector((state) => state.business)
+  const { business } = useSelector((state) => state.business);
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -81,7 +81,12 @@ const LoginPage = () => {
         });
         stopLoading();
         dispatch(loginUser(response));
-        dispatch(setBusinessDetails({ ...business?.business_details, name: response?.business_name}));
+        dispatch(
+          setBusinessDetails({
+            ...business?.business_details,
+            name: response?.business_name,
+          })
+        );
         navigate(`/fleet`);
         formik.resetForm();
       } else {
@@ -114,7 +119,7 @@ const LoginPage = () => {
           </Box>
 
           <Typography variant="h4" gutterBottom>
-            Sign in to eDispatched
+            Sign in to eDispatched-135
           </Typography>
 
           <Typography variant="body2" sx={{ mb: 5 }}>

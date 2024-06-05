@@ -13,7 +13,7 @@ import {
   formatDateLong,
   formatPhoneNumber,
 } from "../../utils/Helper";
-import { STATUS } from "../../utils/Constants";
+import { readableStatus } from "../../utils/Constants";
 
 const PaymentDetailComponent = () => {
   const params = useLocation();
@@ -116,7 +116,7 @@ const PaymentDetailComponent = () => {
                 Status
               </Typography>
               <Typography paragraph align="center">
-                {STATUS(paymentDetails?.status) || "-"}
+                {readableStatus(paymentDetails?.status) || "-"}
               </Typography>
             </Grid>
             <Grid

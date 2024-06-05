@@ -62,12 +62,13 @@ const SignupPage = () => {
     //   .required("Confirm password is required.")
     //   .oneOf([Yup.ref("password"), null], "Passwords must match"),
     business_name: Yup.string().required("Business name is required."),
-    business_phone: Yup.string().required("Phone number is required."),
+    phone_number: Yup.string().required("Phone number is required."),
+    country_code: Yup.string().required("Country code is required."),
     street: Yup.string().required("Business Street is required."),
     // business_unit: Yup.string().required("Business Unit is required."),
-    business_city: Yup.string().required("Business City is required."),
-    business_state: Yup.string().required("Business State is required."),
-    business_zip: Yup.string().required("Business zip code is required."),
+    city: Yup.string().required("Business City is required."),
+    state: Yup.string().required("Business State is required."),
+    zip: Yup.string().required("Business zip code is required."),
     primary_airport_code: Yup.string().required("Airport code is required."),
     business_timezone: Yup.string().required("Time zone is required."),
   });
@@ -80,14 +81,15 @@ const SignupPage = () => {
       password: "",
       // confirm_password: "",
       business_name: "",
-      business_phone: "",
+      phone_country_code: "",
+      phone_number: "",
       street: "",
       // business_unit: "",
-      business_city: "",
-      business_state: "",
-      business_zip: "",
+      city: "",
+      state: "",
+      zip: "",
       primary_airport_code: "",
-      business_timezone: "America/New_York"
+      business_timezone: "America/New_York",
     },
     validationSchema: validationSchema,
     onSubmit: async (values) => {
@@ -193,9 +195,17 @@ const SignupPage = () => {
               formik={formik}
             />
             <CustomInput
-              name="business_phone"
+              name="country_code"
+              label="Country Code"
+              value={formik.values.country_code}
+              onChange={formik.handleChange}
+              formik={formik}
+              helperText="+1"
+            />
+            <CustomInput
+              name="phone_number"
               label="Phone Number"
-              value={formik.values.business_phone}
+              value={formik.values.phone_number}
               onChange={formik.handleChange}
               formik={formik}
               helperText="123-456-7890"
@@ -215,26 +225,26 @@ const SignupPage = () => {
               formik={formik}
             /> */}
             <CustomInput
-              name="business_city"
+              name="city"
               label="Business City"
-              value={formik.values.business_city}
+              value={formik.values.city}
               onChange={formik.handleChange}
               formik={formik}
             />
             <CustomSelect
-              name="business_state"
+              name="state"
               label="Business State"
               onChange={(_, newValue) => {
-                formik.setFieldValue("business_state", newValue);
+                formik.setFieldValue("state", newValue);
               }}
               options={US_STATES}
               formik={formik}
-              value={formik.values.business_state}
+              value={formik.values.state}
             />
             <CustomInput
-              name="business_zip"
+              name="zip"
               label="Business Zip Code"
-              value={formik.values.business_zip}
+              value={formik.values.zip}
               onChange={formik.handleChange}
               formik={formik}
             />

@@ -7,7 +7,7 @@ import Typography from "@mui/material/Typography";
 import BusinessCardComponent from "./BusinessCardComponent";
 import CustomButton from "../../forms/button/CustomButton";
 import { Grid } from "@mui/material";
-import { STATUS } from "../../utils/Constants";
+import { readableStatus } from "../../utils/Constants";
 
 const BusinessMerchantAccountDetailsComponent = ({
   merchantAccountDetails,
@@ -27,7 +27,7 @@ const BusinessMerchantAccountDetailsComponent = ({
             <Grid item xs={3}>
               <Typography variant="subtitle1">Provider Name:</Typography>
               <Typography paragraph>
-                {STATUS(merchantAccountDetails?.provider_name)}
+                {readableStatus(merchantAccountDetails?.provider_name)}
               </Typography>
             </Grid>
           </Grid>

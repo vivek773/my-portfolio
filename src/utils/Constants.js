@@ -5,7 +5,7 @@ export const BASE_API_URL = process.env.REACT_APP_BASE_API_URL;
 export const WEB_PORTAL_URL = process.env.REACT_APP_WEB_PORTAL_URL;
 
 // Helmet title
-export const EDISPATCHED = "eDispatched";
+export const EDISPATCHED = "eDispatched-135";
 
 // US States
 export const US_STATES = [
@@ -98,7 +98,7 @@ export const TIME_ZONE = [
 export const SYNC_FUSION_SCHEDULER_KEY =
   "Ngo9BigBOggjHTQxAR8/V1NBaF5cXmZCf1FpRmJGdld5fUVHYVZUTXxaS00DNHVRdkdnWXtdcHRURGhZVUZ1WUQ=";
 
-export const STATUS = (status) => {
+export const readableStatus = (status) => {
   if (status === "mx_merchant") {
     return "MX Merchant";
   } else if (status === "active") {
