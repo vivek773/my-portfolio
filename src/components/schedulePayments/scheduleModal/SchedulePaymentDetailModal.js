@@ -1,3 +1,6 @@
+// Details Modal
+
+// Default
 import { useFormik, FormikProvider, Form } from "formik";
 import { useEffect } from "react";
 
@@ -27,7 +30,7 @@ import { setPayments } from "../../../store/features/PaymentsSlice";
 import { fetchPUTRequest } from "../../../utils/Services";
 import { formatCurrency } from "../../../utils/Helper";
 
-const PaymentPendingModal = ({ data, paymentData }) => {
+const SchedulePaymentDetailModal = ({ data, paymentData }) => {
   const { isModal, closeModal } = useModal();
   const { setToast } = useToast();
   const dispatch = useDispatch();
@@ -106,7 +109,7 @@ const PaymentPendingModal = ({ data, paymentData }) => {
   return (
     <Modal
       title={"Update Pending Payment"}
-      open={isModal.open && isModal.type === "scheduledPayment"}
+      open={isModal.open && isModal.type === "schedulePaymentDetail"}
       content={
         <FormikProvider value={formik}>
           <Form>
@@ -160,4 +163,4 @@ const PaymentPendingModal = ({ data, paymentData }) => {
   );
 };
 
-export default PaymentPendingModal;
+export default SchedulePaymentDetailModal;

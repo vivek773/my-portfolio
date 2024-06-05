@@ -15,7 +15,7 @@ const PeopleViewComponent = () => {
   return (
     <Container maxWidth="lg">
        <PeopleDetailComponent />
-       <PeopleDocumentsComponent />
+       {/* <PeopleDocumentsComponent /> */}
     </Container>
   );
 };
