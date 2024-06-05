@@ -3,7 +3,7 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
   payments: [],
-  pendingPayments:[]
+  scheduledPayments: [],
 };
 
 const payments = createSlice({
@@ -13,8 +13,8 @@ const payments = createSlice({
     setPayments: (state, action) => {
       state.payments = action.payload;
     },
-    setPendingPayments: (state, action) => {
-      state.pendingPayments = action.payload;
+    setScheduledPayments: (state, action) => {
+      state.scheduledPayments = action.payload;
     },
     resetPayments: (state) => {
       state.payments = initialState.payments;
@@ -22,9 +22,6 @@ const payments = createSlice({
   },
 });
 
-export const {
-  setPayments,
-  resetPayments,
-  setPendingPayments
-} = payments.actions;
+export const { setPayments, resetPayments, setScheduledPayments } =
+  payments.actions;
 export default payments.reducer;

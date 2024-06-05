@@ -48,13 +48,13 @@ const SchedulePaymentDetailModal = ({ data, paymentData }) => {
     onSubmit: async (values) => {
       const newPayload = { ...values };
 
-      newPayload["pending_payment_id"] = paymentData?.pending_payment_id;
+      newPayload["scheduled_payment_id"] = paymentData?.scheduled_payment_id;
       newPayload["amount"] = values["amount"] * 100;
 
       startLoading();
 
       const response = await fetchPUTRequest(
-        `/payment/owner/edit-pending-payment`,
+        `/payment/owner/edit-scheduled-payment`,
         newPayload
       );
 
@@ -67,7 +67,7 @@ const SchedulePaymentDetailModal = ({ data, paymentData }) => {
 
         const newData = {
           ...data,
-          pending_payments: response?.pendingPayment[1],
+          scheduled_payments: response?.scheduledPayment[1],
         };
 
         const updatedPayment = payments.map((payment) => {

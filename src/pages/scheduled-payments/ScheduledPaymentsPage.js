@@ -12,7 +12,7 @@ import Box from "@mui/material/Box";
 import { useDispatch, useSelector } from "react-redux";
 import {
   setPayments,
-  setPendingPayments,
+  setScheduledPayments,
 } from "../../store/features/PaymentsSlice";
 
 // Custom
@@ -46,7 +46,7 @@ import {
   renderChipColorByStatus,
 } from "../../utils/Helper";
 
-const PendingPaymentsPage = () => {
+const ScheduledPaymentsPage = () => {
   const navigate = useNavigate();
 
   const TABLE_HEAD = [
@@ -63,19 +63,21 @@ const PendingPaymentsPage = () => {
   const [limit, setLimit] = useState(10);
   const { isLoading, startLoading, stopLoading } = useLoader();
   const dispatch = useDispatch();
-  const { pendingPayments } = useSelector((state) => state.payments);
+  const { scheduledPayments } = useSelector((state) => state.payments);
   const handleView = (data) => {
-    navigate(`/schedule-payments/${data?.pending_payment_id}`, { state: data });
+    navigate(`/schedule-payments/${data?.scheduled_payment_id}`, {
+      state: data,
+    });
   };
   useEffect(() => {
     const getPaymentsData = async () => {
       startLoading();
       const response = await fetchGETRequest(
-        `/payment/owner/get-pending-payments`,
+        `/payment/owner/get-scheduled-payments`,
         {}
       );
       if (response?.statusCode === 200 && response) {
-        dispatch(setPendingPayments(response?.pendingPayments));
+        dispatch(setScheduledPayments(response?.scheduledPayments));
         stopLoading();
       } else {
         stopLoading();
@@ -111,8 +113,8 @@ const PendingPaymentsPage = () => {
                   </TableRow>
                 </TableHead>
                 <TableBody>
-                  {Array.isArray(pendingPayments) &&
-                    pendingPayments?.map((payment, index) => (
+                  {Array.isArray(scheduledPayments) &&
+                    scheduledPayments?.map((payment, index) => (
                       <TableRow hover key={index}>
                         <TableCell align="center">{index + 1}</TableCell>
                         <TableCell align="center">{`${payment?.customer?.first_name} ${payment?.customer?.last_name}`}</TableCell>
@@ -152,7 +154,7 @@ const PendingPaymentsPage = () => {
             <TablePagination
               rowsPerPageOptions={[10]}
               component="div"
-              count={pendingPayments?.length}
+              count={scheduledPayments?.length}
               rowsPerPage={limit}
               page={page}
               onPageChange={(event, newPage) => setPage(newPage)}
@@ -163,4 +165,4 @@ const PendingPaymentsPage = () => {
     </>
   );
 };
-export default PendingPaymentsPage;
+export default ScheduledPaymentsPage;

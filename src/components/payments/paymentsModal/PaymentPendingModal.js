@@ -45,13 +45,13 @@ const PaymentPendingModal = ({ data, paymentData }) => {
     onSubmit: async (values) => {
       const newPayload = { ...values };
 
-      newPayload["pending_payment_id"] = paymentData?.pending_payment_id;
+      newPayload["scheduled_payment_id"] = paymentData?.scheduled_payment_id;
       newPayload["amount"] = values["amount"] * 100;
 
       startLoading();
 
       const response = await fetchPUTRequest(
-        `/payment/owner/edit-pending-payment`,
+        `/payment/owner/edit-scheduled-payment`,
         newPayload
       );
 
@@ -64,7 +64,7 @@ const PaymentPendingModal = ({ data, paymentData }) => {
 
         const newData = {
           ...data,
-          pending_payments: response?.pendingPayment[1],
+          scheduled_payments: response?.scheduledPayment[1],
         };
 
         const updatedPayment = payments.map((payment) => {
@@ -106,7 +106,7 @@ const PaymentPendingModal = ({ data, paymentData }) => {
   return (
     <Modal
       title={"Update Pending Payment"}
-      open={isModal.open && isModal.type === "pendingPayment"}
+      open={isModal.open && isModal.type === "scheduledPayment"}
       content={
         <FormikProvider value={formik}>
           <Form>
