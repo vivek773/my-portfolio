@@ -5,7 +5,7 @@ import CustomButton from "../../forms/button/CustomButton";
 import { useToast } from "../../context/ToastContext";
 import { useSelector } from "react-redux";
 
-export default function EmbedCustomer() {
+export default function EmbedCustomerAppCard() {
   const iframeCodeRef = useRef(null);
   const { setToast } = useToast();
   const tenantId = useSelector((state) => state.auth.tenant_id);
