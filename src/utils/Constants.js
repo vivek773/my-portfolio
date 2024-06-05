@@ -98,7 +98,7 @@ export const TIME_ZONE = [
 export const SYNC_FUSION_SCHEDULER_KEY =
   "Ngo9BigBOggjHTQxAR8/V1NBaF5cXmZCf1FpRmJGdld5fUVHYVZUTXxaS00DNHVRdkdnWXtdcHRURGhZVUZ1WUQ=";
 
-export const STATUS = (status) => {
+export const readableStatus = (status) => {
   if (status === "mx_merchant") {
     return "MX Merchant";
   } else if (status === "active") {

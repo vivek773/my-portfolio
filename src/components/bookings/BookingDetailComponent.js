@@ -3,7 +3,15 @@ import { useLocation } from "react-router-dom";
 import Typography from "@mui/material/Typography";
 import Grid from "@mui/material/Grid";
 import BookingCardComponent from "./BookingCardComponent";
-import { formatCurrency, formatDateTime } from "../../utils/Helper";
+import {
+  formatCurrency,
+  formatDate,
+  formatDateLong,
+  formatDateTime,
+  renderChipColorByStatus,
+} from "../../utils/Helper";
+import { readableStatus } from "../../utils/Constants";
+import Label from "../../components/label";
 
 const BookingDetailComponent = () => {
   const params = useLocation();
@@ -56,7 +64,15 @@ const BookingDetailComponent = () => {
         label: "Amount Paid",
         value: `$${formatCurrency(params?.state?.amount_paid)}`,
       },
-      { key: "status", label: "Status", value: params?.state?.status },
+      {
+        key: "status",
+        label: "Status",
+        value: (
+          <Label color={renderChipColorByStatus(params?.state?.status)}>
+            {readableStatus(params?.state?.status)}
+          </Label>
+        ),
+      },
       {
         key: "amount_due_at_time_of_booking",
         label: "Amount Due At Time Of Booking",
@@ -72,7 +88,7 @@ const BookingDetailComponent = () => {
       {
         key: "amount_due_later_date",
         label: "Amount Due Later Date",
-        value: formatDateTime(params?.state?.amount_due_later_date),
+        value: formatDateLong(params?.state?.amount_due_later_date),
       },
     ];
     setBookingDetails([...items]);
