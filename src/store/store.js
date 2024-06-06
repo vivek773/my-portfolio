@@ -12,7 +12,7 @@ import businessReducer from "./features/BusinessSlice";
 import destinationsReducer from "./features/DestinationsSlice";
 import bookingsReducer from "./features/BookingsSlice";
 import paymentsReducer from "./features/PaymentsSlice";
-import peopleReducer from "./features/PeopleSlice";
+import UserReducer from "./features/UserSlice";
 
 const rootReducer = combineReducers({
   auth: authReducer,
@@ -21,7 +21,7 @@ const rootReducer = combineReducers({
   destinations: destinationsReducer,
   bookings: bookingsReducer,
   payments: paymentsReducer,
-  people: peopleReducer
+  User: UserReducer,
 });
 
 const persistConfig = {

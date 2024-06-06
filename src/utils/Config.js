@@ -61,8 +61,8 @@ export const ADMIN_CONFIG = [
     icon: <BuildIcon />,
   },
   {
-    title: "People",
-    path: "people",
+    title: "User",
+    path: "users",
     icon: <GroupIcon />,
   },
   {

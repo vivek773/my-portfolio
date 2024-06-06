@@ -1,4 +1,4 @@
-// Add People
+// Add User
 
 // Default
 import { useFormik } from "formik";
@@ -18,7 +18,7 @@ import { useToast } from "../../context/ToastContext";
 import { useLoader } from "../../context/LoaderContext";
 import { fetchPOSTRequest } from "../../utils/Services";
 
-const AddPeopleComponent = () => {
+const AddUserComponent = () => {
   const { setToast } = useToast();
   const { isLoading, startLoading, stopLoading } = useLoader();
 
@@ -67,7 +67,7 @@ const AddPeopleComponent = () => {
 
   return (
     <Container maxWidth="sm">
-      <h2 style={{ justifyContent: "center" }}>Add People</h2>
+      <h2 style={{ justifyContent: "center" }}>Add User</h2>
 
       <form>
         <Stack spacing={3}>
@@ -113,7 +113,7 @@ const AddPeopleComponent = () => {
           />
 
           <CustomButton
-            label={"Add People"}
+            label={"Add User"}
             size={"large"}
             onClick={formik.handleSubmit}
             disabled={false}
@@ -126,4 +126,4 @@ const AddPeopleComponent = () => {
   );
 };
 
-export default AddPeopleComponent;
+export default AddUserComponent;

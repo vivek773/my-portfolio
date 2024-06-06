@@ -14,7 +14,7 @@ import {
 } from "@syncfusion/ej2-react-schedule";
 import { Typography, CircularProgress } from "@mui/material";
 import HelmetComponent from "../../components/helmet/HelmetComponent";
-import { EDISPATCHED } from "../../utils/Constants";
+import { EDISPATCHED_HELMET } from "../../utils/Constants";
 import "./timeline-resource-grouping.css";
 import { fetchGETRequest } from "../../utils/Services";
 import { COLOR_OBJECT } from "../../utils/Color";
@@ -114,7 +114,7 @@ const CalendarPage = () => {
 
   return (
     <>
-      <HelmetComponent title={`${EDISPATCHED} | Calendar`} />
+      <HelmetComponent title={`${EDISPATCHED_HELMET} Calendar`} />
       <Typography variant="h4" gutterBottom>
         Calendar
       </Typography>

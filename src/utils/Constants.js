@@ -6,6 +6,7 @@ export const WEB_PORTAL_URL = process.env.REACT_APP_WEB_PORTAL_URL;
 
 // Helmet title
 export const EDISPATCHED = "eDispatched-135";
+export const EDISPATCHED_HELMET = "eDispatched-135 |";
 
 // US States
 export const US_STATES = [

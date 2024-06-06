@@ -1,3 +1,5 @@
+// Schedule payment card
+
 // MUI components
 import Container from "@mui/material/Container";
 
@@ -5,7 +7,7 @@ import Container from "@mui/material/Container";
 import ScheduledPaymentDetailComponent from "./ScheduledPaymentDetailComponent";
 import BackButton from "../backButton/BackButton";
 
-const PaymentViewComponent = () => {
+const ScheduledPaymentViewComponent = () => {
   return (
     <Container maxWidth="xl">
       <BackButton title={"Scheduled Payments Details"} />
@@ -14,4 +16,4 @@ const PaymentViewComponent = () => {
   );
 };
 
-export default PaymentViewComponent;
+export default ScheduledPaymentViewComponent;

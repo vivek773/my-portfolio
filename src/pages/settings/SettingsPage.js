@@ -30,7 +30,7 @@ import BusinessSettingsForEmployeeComponent from "../../components/business/Busi
 import SpinnerComponent from "../../components/spinner/SpinnerComponent";
 
 // Utils
-import { EDISPATCHED } from "../../utils/Constants";
+import { EDISPATCHED_HELMET } from "../../utils/Constants";
 import { fetchGETRequest } from "../../utils/Services";
 import EmbedCustomerAppCard from "../../components/business/EmbedCustomer";
 
@@ -96,7 +96,7 @@ function SettingsPage() {
 
   return (
     <div>
-      <HelmetComponent title={`${EDISPATCHED} | Settings`} />
+      <HelmetComponent title={`${EDISPATCHED_HELMET} Settings`} />
       <Container maxWidth="xl">
         <Box
           display={"flex"}

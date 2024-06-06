@@ -1,10 +1,10 @@
-//  People card
+//  Schedule card
 
 // MUI components
 import CardHeader from "@mui/material/CardHeader";
 import Typography from "@mui/material/Typography";
 import Card from "@mui/material/Card";
-import CardContent from "@mui/material/CardContent"
+import CardContent from "@mui/material/CardContent";
 
 // MUI styles
 import { makeStyles } from "@mui/styles";
@@ -24,11 +24,7 @@ const useStyles = makeStyles(() => ({
   },
 }));
 
-const PeopleCardComponent = ({
-  action = <></>,
-  title = "",
-  component,
-}) => {
+const ScheduledPaymentCard = ({ action = <></>, title = "", component }) => {
   const classes = useStyles();
   return (
     <Card className={classes.cardRoot}>
@@ -43,9 +39,11 @@ const PeopleCardComponent = ({
           }
         />
       )}
-      <CardContent sx={{ "&:last-child": { paddingBottom: "16px" } }}>{component}</CardContent>
+      <CardContent sx={{ "&:last-child": { paddingBottom: "16px" } }}>
+        {component}
+      </CardContent>
     </Card>
   );
 };
 
-export default PeopleCardComponent;
+export default ScheduledPaymentCard;
