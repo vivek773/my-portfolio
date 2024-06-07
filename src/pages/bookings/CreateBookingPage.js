@@ -17,7 +17,11 @@ import {
 } from "@mui/material";
 import { LocalizationProvider, DatePicker } from "@mui/x-date-pickers";
 import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
-import { formatCurrency, validateEmail, validatePhoneNumber } from "../../utils/Helper";
+import {
+  formatCurrency,
+  validateEmail,
+  validatePhoneNumber,
+} from "../../utils/Helper";
 import DeleteIcon from "@mui/icons-material/Delete";
 import PhoneInput from "react-phone-input-2";
 import PaymentFormComponent from "./PaymentFormComponent";
@@ -46,11 +50,8 @@ function CreateBookingPage() {
   const [isCustomerSaved, setIsCustomerSaved] = useState(false);
   const [isEditDisabled, setIsEditDisabled] = useState(false);
 
-
-
   const [priceData, setPriceData] = useState({});
   const navigate = useNavigate();
-
 
   useEffect(() => {
     const getDestinationsData = async () => {
@@ -420,7 +421,7 @@ function CreateBookingPage() {
                           style={{ textAlign: "left", paddingLeft: "10px" }}
                         >
                           <Typography>
-                            ${formatCurrency(data.basePrice)}
+                            {formatCurrency(data.basePrice)}
                           </Typography>
                         </Grid>
                         <Grid
@@ -438,7 +439,7 @@ function CreateBookingPage() {
                           style={{ textAlign: "left", paddingLeft: "10px" }}
                         >
                           <Typography>
-                            ${formatCurrency(data.amountAtTimeOfBooking)}
+                            {formatCurrency(data.amountAtTimeOfBooking)}
                           </Typography>
                         </Grid>
                         <Grid
@@ -455,7 +456,7 @@ function CreateBookingPage() {
                           xs={6}
                           style={{ textAlign: "left", paddingLeft: "10px" }}
                         >
-                          <Typography>${formatCurrency(data.tax)}</Typography>
+                          <Typography>{formatCurrency(data.tax)}</Typography>
                         </Grid>
                         <Grid
                           item
@@ -472,7 +473,7 @@ function CreateBookingPage() {
                           style={{ textAlign: "left", paddingLeft: "10px" }}
                         >
                           <Typography>
-                            ${formatCurrency(data.totalDueNow)}
+                            {formatCurrency(data.totalDueNow)}
                           </Typography>
                         </Grid>
                       </Grid>
@@ -576,11 +577,10 @@ function CreateBookingPage() {
         </Grid>
       )}
 
-
       <Card sx={{ marginTop: 3 }}>
         <CardHeader
           title="Customer Details"
-          style={{ backgroundColor: "#f5f5f5",padding:16 }}
+          style={{ backgroundColor: "#f5f5f5", padding: 16 }}
         />
         <CardContent>
           <Grid container spacing={2}>
@@ -647,7 +647,7 @@ function CreateBookingPage() {
                   height: "56px", // Ensure this matches the height of TextField inputs
                   borderRadius: "4px",
                   borderColor:
-                  phoneNumber && !validatePhoneNumber(phoneNumber)
+                    phoneNumber && !validatePhoneNumber(phoneNumber)
                       ? "red"
                       : "",
                 }}
@@ -680,9 +680,7 @@ function CreateBookingPage() {
               variant="contained"
               color="primary"
               onClick={
-                isCustomerEditDisabled
-                  ? handleEditCustomer
-                  : handleSaveCustomer
+                isCustomerEditDisabled ? handleEditCustomer : handleSaveCustomer
               }
               disabled={
                 !firstName ||
@@ -705,7 +703,7 @@ function CreateBookingPage() {
       <Card sx={{ marginTop: 3 }}>
         <CardHeader
           title="Add any extra Passengers"
-          style={{ backgroundColor: "#f5f5f5",padding:16  }}
+          style={{ backgroundColor: "#f5f5f5", padding: 16 }}
           action={
             <Button
               onClick={handleAddPassenger}
@@ -719,22 +717,13 @@ function CreateBookingPage() {
         />
         <CardContent>
           {extraPassengers.map((passenger, index) => (
-            <Grid
-              container
-              spacing={2}
-              key={index}
-              sx={{ marginBottom: 2 }}
-            >
+            <Grid container spacing={2} key={index} sx={{ marginBottom: 2 }}>
               <Grid item xs={12} sm={4}>
                 <TextField
                   label="First Name"
                   value={passenger.firstName}
                   onChange={(e) =>
-                    handlePassengerChange(
-                      index,
-                      "firstName",
-                      e.target.value
-                    )
+                    handlePassengerChange(index, "firstName", e.target.value)
                   }
                   fullWidth
                   disabled={isEditDisabled && !passenger.isNew}
@@ -758,11 +747,7 @@ function CreateBookingPage() {
                   label="Nationality"
                   value={passenger.nationality}
                   onChange={(e) =>
-                    handlePassengerChange(
-                      index,
-                      "nationality",
-                      e.target.value
-                    )
+                    handlePassengerChange(index, "nationality", e.target.value)
                   }
                   fullWidth
                   disabled={isEditDisabled && !passenger.isNew}
@@ -785,9 +770,7 @@ function CreateBookingPage() {
                 variant="contained"
                 color="primary"
                 onClick={
-                  isEditDisabled
-                    ? handleEditPassengers
-                    : handleSavePassengers
+                  isEditDisabled ? handleEditPassengers : handleSavePassengers
                 }
                 disabled={extraPassengers.some(
                   (passenger) =>
@@ -804,7 +787,7 @@ function CreateBookingPage() {
       </Card>
 
       <PaymentFormComponent
-       // handleSubmit={handleSubmit}
+        // handleSubmit={handleSubmit}
         isParentFormValid={isFormValid}
       />
     </Container>

@@ -17,8 +17,6 @@ import CustomButton from "../../forms/button/CustomButton";
 // Utils
 import { CHIP } from "../../utils/Color";
 
-
-
 const FleetCardComponent = ({
   tail_number,
   year,
@@ -88,12 +86,14 @@ const FleetCardComponent = ({
         </Typography>
       )}
       <Typography variant="subtitle2" sx={{ opacity: 0.72, paddingTop: 1 }}>
-        <b>Rate:</b> ${standard_hourly_rate}/hr
+        <b>Rate:</b> {standard_hourly_rate}/hr
       </Typography>
 
       <Box sx={{ mt: 5 }}>
         <CustomButton
-          onClick={()=> navigate(`/fleet/${tail_number}`,{ state: tail_number })}
+          onClick={() =>
+            navigate(`/fleet/${tail_number}`, { state: tail_number })
+          }
           size="large"
           label={"Details"}
           width={"fit-content"}

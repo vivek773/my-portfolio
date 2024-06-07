@@ -113,7 +113,6 @@ const PaymentsPage = () => {
                           {payment?.customer?.email}
                         </TableCell>
                         <TableCell align="center">
-                          $
                           {formatCurrency(
                             payment?.processor_details?.amount_paid
                           )}
