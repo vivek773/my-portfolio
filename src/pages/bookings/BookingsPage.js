@@ -35,6 +35,7 @@ import { fetchGETRequest } from "../../utils/Services";
 import { EDISPATCHED_HELMET, readableStatus } from "../../utils/Constants";
 import { formatCurrency, renderChipColorByStatus } from "../../utils/Helper";
 import { Stack } from "@mui/material";
+import BookingsToolbar from "../../components/bookings/BookingsToolbar";
 
 const BookingsPage = () => {
   const dispatch = useDispatch();
@@ -110,18 +111,11 @@ const BookingsPage = () => {
           <Typography variant="h4" gutterBottom mb={0}>
             Bookings
           </Typography>
-          <CustomButton
-            label="Create Booking"
-            width={"fit-content"}
-            sx={{
-              width: "auto",
-              whiteSpace: "nowrap",
-            }}
-            onClick={() => navigate("/bookings/create-booking")}
-          />
+       
         </Stack>
 
         <Card>
+        <BookingsToolbar />
           <TableContainer sx={{ minWidth: 800 }}>
             <Table>
               <TableHead>
