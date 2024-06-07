@@ -44,6 +44,9 @@ const BookingsPage = () => {
   const [limit, setLimit] = useState(10);
   const { isLoading, startLoading, stopLoading } = useLoader();
   const state = useSelector((state) => state.bookings);
+  const [searchText,setSearchText] = useState("");
+  const [filteredBookings, setFilteredBookings] = useState([]);
+
 
   const TABLE_HEAD = [
     { id: "index", label: "#" },
@@ -84,6 +87,8 @@ const BookingsPage = () => {
     // eslint-disable-next-line
   }, []);
 
+  
+
   const getDepartureDate = (payload) => {
     const flightSegment = payload?.find(
       (segment) => segment.trip_leg_number === 1
@@ -96,7 +101,24 @@ const BookingsPage = () => {
   const handleView = (data) => {
     navigate(`/bookings/${data?.booking_id}`, { state: data });
   };
+  useEffect(() => {
+    const filterBookingData = () => {
+      if (!searchText) {
+        return state?.bookings || [];
+      }
+      return state?.bookings?.filter((item) => {
+        const customer = item?.customer;
+        if (typeof customer === 'object') {
+          const fullName = `${customer.first_name} ${customer.last_name}`.toLowerCase();
+          return fullName.includes(searchText.toLowerCase());
+        }
+        return false;
+      });
+    };
 
+    const result = filterBookingData();
+    setFilteredBookings(result);
+  }, [searchText, state?.bookings]);
   return (
     <>
       <HelmetComponent title={`${EDISPATCHED_HELMET} Bookings`} />
@@ -115,7 +137,7 @@ const BookingsPage = () => {
         </Stack>
 
         <Card>
-        <BookingsToolbar />
+        <BookingsToolbar searchValue={searchText} onChange={(e)=> setSearchText(e.target.value)} />
           <TableContainer sx={{ minWidth: 800 }}>
             <Table>
               <TableHead>
@@ -128,38 +150,23 @@ const BookingsPage = () => {
                 </TableRow>
               </TableHead>
               <TableBody>
-                {Array.isArray(state?.bookings) &&
-                state?.bookings.length > 0 ? (
-                  state?.bookings?.map((booking, index) => (
+                {Array.isArray(filteredBookings) && filteredBookings.length > 0 ? (
+                  filteredBookings.map((booking, index) => (
                     <TableRow hover key={booking.booking_id || index}>
                       <TableCell align="center">{index + 1}</TableCell>
-                      <TableCell align="center">
-                        {booking?.tail_number}
-                      </TableCell>
+                      <TableCell align="center">{booking?.tail_number}</TableCell>
                       <TableCell align="center">
                         {getDepartureDate(booking?.flight_segments)}
                       </TableCell>
-                      <TableCell align="center">
-                        {booking?.trip_departure_airport_code}
-                      </TableCell>
-                      <TableCell align="center">
-                        {booking?.trip_arrival_airport_code}
-                      </TableCell>
+                      <TableCell align="center">{booking?.trip_departure_airport_code}</TableCell>
+                      <TableCell align="center">{booking?.trip_arrival_airport_code}</TableCell>
                       <TableCell align="center">
                         {`${booking?.customer?.first_name} ${booking?.customer?.last_name}`}
                       </TableCell>
-                      <TableCell align="center">
-                        {booking?.booking_reference}
-                      </TableCell>
-                      <TableCell align="center">
-                        ${formatCurrency(booking?.total_price)}
-                      </TableCell>
-                      <TableCell align="center">
-                        ${formatCurrency(booking?.amount_paid)}
-                      </TableCell>
-                      <TableCell align="center">
-                        {booking?.number_of_passengers}
-                      </TableCell>
+                      <TableCell align="center">{booking?.booking_reference}</TableCell>
+                      <TableCell align="center">${formatCurrency(booking?.total_price)}</TableCell>
+                      <TableCell align="center">${formatCurrency(booking?.amount_paid)}</TableCell>
+                      <TableCell align="center">{booking?.number_of_passengers}</TableCell>
                       <TableCell align="center">
                         <Label color={renderChipColorByStatus(booking?.status)}>
                           {readableStatus(booking?.status)}
@@ -178,7 +185,7 @@ const BookingsPage = () => {
                 ) : (
                   <TableRow>
                     <TableCell colSpan={TABLE_HEAD.length} align="center">
-                      No data available.
+                      No bookings available.
                     </TableCell>
                   </TableRow>
                 )}

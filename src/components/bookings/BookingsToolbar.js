@@ -35,13 +35,13 @@ const StyledSearch = styled(OutlinedInput)(({ theme }) => ({
   },
 }));
 
-export default function BookingsToolbar() {
+export default function BookingsToolbar({onChange,searchValue}) {
   const navigate = useNavigate();
   return (
     <StyledRoot>
       <StyledSearch
-        //value={filterName}
-        //onChange={onFilterName}
+        value={searchValue}
+        onChange={onChange}
         placeholder="Search booking..."
         startAdornment={
           <InputAdornment position="start">

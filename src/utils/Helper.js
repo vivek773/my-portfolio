@@ -40,6 +40,13 @@ export const formatDateTimeWithoutYear = (date, format = "MMM D, h:mm A") => {
   return null;
 };
 
+export const validateEmail = (email) => {
+  return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+};
+export const validatePhoneNumber = (phoneNumber) => {
+  return /^\d{10,15}$/.test(phoneNumber);
+};
+
 // FormatCurrency
 
 export const formatCurrency = (amountInCents) =>
