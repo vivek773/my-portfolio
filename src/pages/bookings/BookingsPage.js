@@ -111,11 +111,10 @@ const BookingsPage = () => {
           <Typography variant="h4" gutterBottom mb={0}>
             Bookings
           </Typography>
-       
         </Stack>
 
         <Card>
-        <BookingsToolbar />
+          <BookingsToolbar />
           <TableContainer sx={{ minWidth: 800 }}>
             <Table>
               <TableHead>
@@ -152,10 +151,10 @@ const BookingsPage = () => {
                         {booking?.booking_reference}
                       </TableCell>
                       <TableCell align="center">
-                        ${formatCurrency(booking?.total_price)}
+                        {formatCurrency(booking?.total_price)}
                       </TableCell>
                       <TableCell align="center">
-                        ${formatCurrency(booking?.amount_paid)}
+                        {formatCurrency(booking?.amount_paid)}
                       </TableCell>
                       <TableCell align="center">
                         {booking?.number_of_passengers}

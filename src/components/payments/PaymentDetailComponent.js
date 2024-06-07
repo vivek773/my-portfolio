@@ -123,10 +123,10 @@ const PaymentDetailComponent = () => {
               justifyContent="center"
             >
               <Typography variant="subtitle1" align="center">
-                Amount
+                Base Amount
               </Typography>
               <Typography paragraph align="center">
-                ${formatCurrency(paymentDetails?.amount) || "-"}
+                {formatCurrency(paymentDetails?.amount) || "-"}
               </Typography>
             </Grid>
             <Grid
@@ -138,10 +138,41 @@ const PaymentDetailComponent = () => {
               justifyContent="center"
             >
               <Typography variant="subtitle1" align="center">
-                Fee
+                tax
               </Typography>
               <Typography paragraph align="center">
-                ${formatCurrency(paymentDetails?.platform_fee) || "-"}
+                {formatCurrency(paymentDetails?.tax) || "-"}
+              </Typography>
+            </Grid>
+            <Grid
+              item
+              xs={3}
+              display="flex"
+              flexDirection="column"
+              alignItems="center"
+              justifyContent="center"
+            >
+              <Typography variant="subtitle1" align="center">
+                Total Paid by Customer
+              </Typography>
+              <Typography paragraph align="center">
+                {formatCurrency(paymentDetails?.processor_details.amount) ||
+                  "-"}
+              </Typography>
+            </Grid>
+            <Grid
+              item
+              xs={3}
+              display="flex"
+              flexDirection="column"
+              alignItems="center"
+              justifyContent="center"
+            >
+              <Typography variant="subtitle1" align="center">
+                Platform Fee
+              </Typography>
+              <Typography paragraph align="center">
+                {formatCurrency(paymentDetails?.platform_fee) || "-"}
               </Typography>
             </Grid>
             <Grid
@@ -156,7 +187,7 @@ const PaymentDetailComponent = () => {
                 Net
               </Typography>
               <Typography paragraph align="center">
-                ${formatCurrency(paymentDetails?.net_amount_to_business) || "-"}
+                {formatCurrency(paymentDetails?.net_amount_to_business) || "-"}
               </Typography>
             </Grid>
             <Grid

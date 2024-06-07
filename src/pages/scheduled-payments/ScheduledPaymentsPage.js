@@ -125,7 +125,7 @@ const ScheduledPaymentsPage = () => {
                           {payment?.booking.booking_reference}
                         </TableCell>
                         <TableCell align="center">
-                          ${formatCurrency(payment?.amount)}
+                          {formatCurrency(payment?.amount)}
                         </TableCell>
                         <TableCell align="center">
                           {formatDateLong(payment?.due_date)}

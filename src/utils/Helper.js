@@ -42,8 +42,13 @@ export const formatDateTimeWithoutYear = (date, format = "MMM D, h:mm A") => {
 
 // FormatCurrency
 
-export const formatCurrency = (amountInCents) =>
-  (amountInCents / 100).toFixed(2);
+export const formatCurrency = (amountInCents) => {
+  return new Intl.NumberFormat("en-US", {
+    style: "currency",
+    currency: "USD",
+    minimumFractionDigits: 2,
+  }).format(amountInCents / 100);
+};
 
 // Chip
 export const renderChipColorByStatus = (status) => {
