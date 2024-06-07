@@ -25,7 +25,7 @@ import CustomSelect from "../../forms/select/CustomSelect";
 import HelmetComponent from "../../components/helmet/HelmetComponent";
 
 // Utils
-import { US_STATES, EDISPATCHED } from "../../utils/Constants";
+import { US_STATES, EDISPATCHED_HELMET } from "../../utils/Constants";
 import { fetchPOSTRequest } from "../../utils/Services";
 
 // Assets
@@ -117,7 +117,7 @@ const SignupPage = () => {
 
   return (
     <>
-      <HelmetComponent title={`${EDISPATCHED} | Register`} />
+      <HelmetComponent title={`${EDISPATCHED_HELMET} Register`} />
 
       <Container maxWidth="sm">
         <StyledContent>

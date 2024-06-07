@@ -66,7 +66,7 @@ export const pdfDownloadRequest = async (URL, body = {}) => {
         "Content-Type": "application/pdf",
         Authorization: `Bearer ${webAccessToken}`,
         tenant_id: tenant_id,
-        user_id: user_id
+        user_id: user_id,
       },
     });
 
@@ -88,7 +88,7 @@ export const jpegDownloadRequest = async (URL, body = {}) => {
         "Content-Type": "application/jpeg",
         Authorization: `Bearer ${webAccessToken}`,
         tenant_id: tenant_id,
-        user_id: user_id
+        user_id: user_id,
       },
     });
 

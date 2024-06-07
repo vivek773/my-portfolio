@@ -12,7 +12,7 @@ import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
 
 // Utils
-import { EDISPATCHED } from "../../utils/Constants";
+import { EDISPATCHED_HELMET } from "../../utils/Constants";
 
 // Custom
 import CustomButton from "../../forms/button/CustomButton";
@@ -34,10 +34,10 @@ const StyledContent = styled("div")(({ theme }) => ({
 }));
 
 const Page404 = () => {
-  const navigate =  useNavigate();
+  const navigate = useNavigate();
   return (
     <>
-      <HelmetComponent title={`${EDISPATCHED} | 404 Page Not Found`} />
+      <HelmetComponent title={`${EDISPATCHED_HELMET} 404 Page Not Found`} />
 
       <Container>
         <StyledContent>

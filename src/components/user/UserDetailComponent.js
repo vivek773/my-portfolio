@@ -2,11 +2,11 @@ import { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 import Typography from "@mui/material/Typography";
 import Grid from "@mui/material/Grid";
-import PeopleCardComponent from "./PeopleCardComponent";
+import UserCardComponent from "./UserCardComponent";
 
-const PeopleDetailComponent = () => {
+const UserDetailComponent = () => {
   const params = useLocation();
-  const [peopleDetails, setPeopleDetails] = useState(null);
+  const [UserDetails, setUserDetails] = useState(null);
 
   const getAddress = (payload) => {
     const addressParts = [
@@ -57,16 +57,16 @@ const PeopleDetailComponent = () => {
         value: params?.state?.user_tenant_profile[0]?.status,
       },
     ];
-    setPeopleDetails([...items]);
+    setUserDetails([...items]);
   }, [params]);
 
   return (
     <>
-      <PeopleCardComponent
-        title={"People Detail"}
+      <UserCardComponent
+        title={"User Detail"}
         component={
           <Grid container spacing={{ xs: 5, md: 3 }} columns={{ md: 12 }}>
-            {peopleDetails?.map((element, i) => (
+            {UserDetails?.map((element, i) => (
               <Grid
                 item
                 key={i}
@@ -91,4 +91,4 @@ const PeopleDetailComponent = () => {
   );
 };
 
-export default PeopleDetailComponent;
+export default UserDetailComponent;

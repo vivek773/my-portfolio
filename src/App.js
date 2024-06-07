@@ -5,11 +5,7 @@ import { HelmetProvider } from "react-helmet-async";
 import { BrowserRouter as Router } from "react-router-dom";
 
 // MUI theme
-import { ThemeProvider } from "@mui/material/styles";
-import { GlobalStyles } from "@mui/material";
-
-// Utils
-import theme from "./utils/Theme";
+import ThemeProvider from "./theme";
 
 // Custom
 import ToastAlertComponent from "./components/toast/ToastComponent";
@@ -38,17 +34,7 @@ registerLicense(SYNC_FUSION_SCHEDULER_KEY);
 function App() {
   return (
     <HelmetProvider>
-      <ThemeProvider theme={theme}>
-        <GlobalStyles
-          styles={{
-            body: {
-              fontFamily: theme.typography.fontFamily,
-              margin: 0,
-              padding: 0,
-              boxSizing: "border-box",
-            },
-          }}
-        />
+      <ThemeProvider >
         <ToastAlertComponent />
         <Router>
           <MainRouter />

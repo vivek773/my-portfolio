@@ -1,4 +1,4 @@
-// People Document
+// User Document
 
 // Default
 import { useState, useEffect } from "react";
@@ -15,12 +15,12 @@ import DownloadIcon from "@mui/icons-material/Download";
 import CloudUploadIcon from "@mui/icons-material/CloudUpload";
 
 // Custom
-import PeopleCardComponent from "./PeopleCardComponent";
-import SpinnerComponent from "../../components/spinner/SpinnerComponent";
+import UserCardComponent from "./UserCardComponent";
+import SpinnerComponent from "../spinner/SpinnerComponent";
 
-const PeopleDocumentsComponent = () => {
+const UserDocumentsComponent = () => {
   const params = useLocation();
-  const [peopleDocuments, setPeopleDocuments] = useState(null);
+  const [UserDocuments, setUserDocuments] = useState(null);
 
   useEffect(() => {
     const items = [
@@ -35,12 +35,12 @@ const PeopleDocumentsComponent = () => {
         value: params?.state?.details?.documents?.pilot_license,
       },
     ];
-    setPeopleDocuments([...items]);
+    setUserDocuments([...items]);
   }, [params]);
 
   return (
     <>
-      <PeopleCardComponent
+      <UserCardComponent
         title="Documents"
         component={
           <Grid
@@ -63,7 +63,7 @@ const PeopleDocumentsComponent = () => {
             >
               <SpinnerComponent show={false} size={30} />
             </Box>
-            {peopleDocuments?.map((item, index) => (
+            {UserDocuments?.map((item, index) => (
               <Grid item key={index} xs={6} sx={{ opacity: false ? 0.5 : 1 }}>
                 <Stack
                   direction="row"
@@ -117,4 +117,4 @@ const PeopleDocumentsComponent = () => {
   );
 };
 
-export default PeopleDocumentsComponent;
+export default UserDocumentsComponent;

@@ -32,8 +32,10 @@ import HelmetComponent from "../../components/helmet/HelmetComponent";
 
 // Utils
 import { fetchGETRequest } from "../../utils/Services";
-import { EDISPATCHED, readableStatus } from "../../utils/Constants";
+import { EDISPATCHED_HELMET, readableStatus } from "../../utils/Constants";
 import { formatCurrency, renderChipColorByStatus } from "../../utils/Helper";
+import { Stack } from "@mui/material";
+import BookingsToolbar from "../../components/bookings/BookingsToolbar";
 
 const BookingsPage = () => {
   const dispatch = useDispatch();
@@ -97,32 +99,23 @@ const BookingsPage = () => {
 
   return (
     <>
-      <HelmetComponent title={`${EDISPATCHED} | Bookings`} />
+      <HelmetComponent title={`${EDISPATCHED_HELMET} Bookings`} />
       <Container maxWidth="xl">
-        <Typography variant="h4" gutterBottom mb={5}>
-          Bookings
-        </Typography>
+        <Stack
+          direction="row"
+          alignItems="center"
+          justifyContent="space-between"
+          spacing={1}
+          mb={5}
+        >
+          <Typography variant="h4" gutterBottom mb={0}>
+            Bookings
+          </Typography>
+       
+        </Stack>
 
-        {/* <Box mt={10}>
-          <SpinnerComponent show={isLoading} />
-        </Box> */}
-
-        {/* {!isLoading &&
-          (state?.bookings?.length === 0 ? (
-            <Box>
-              <Typography
-                variant="h6"
-                gutterBottom
-                mt={10}
-                fontWeight={500}
-                textAlign={"center"}
-                color={"Gray"}
-              >
-                No data available
-              </Typography>
-            </Box>
-          ) : ( */}
         <Card>
+        <BookingsToolbar />
           <TableContainer sx={{ minWidth: 800 }}>
             <Table>
               <TableHead>

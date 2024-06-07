@@ -16,12 +16,12 @@ import {
 } from "../../utils/Helper";
 import { readableStatus } from "../../utils/Constants";
 
-import SchedulePaymentCard from "./SchedulePaymentCard";
-import SchedulePaymentDetailModal from "./scheduleModal/SchedulePaymentDetailModal";
+import ScheduledPaymentCard from "./ScheduledPaymentCard";
+import ScheduledPaymentDetailModal from "./scheduled-payments-modal/ScheduledPaymentDetailModal";
 
 import { useModal } from "../../context/ModalContext";
 
-const SchedulePaymentDetailComponent = () => {
+const ScheduledPaymentDetailComponent = () => {
   const params = useLocation();
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -64,7 +64,7 @@ const SchedulePaymentDetailComponent = () => {
 
   return (
     <>
-      <SchedulePaymentCard
+      <ScheduledPaymentCard
         title={"Detail"}
         action={
           <CustomButton
@@ -205,9 +205,9 @@ const SchedulePaymentDetailComponent = () => {
           </Grid>
         }
       />
-      <SchedulePaymentDetailModal data={params?.state} />
+      <ScheduledPaymentDetailModal data={params?.state} />
     </>
   );
 };
 
-export default SchedulePaymentDetailComponent;
+export default ScheduledPaymentDetailComponent;

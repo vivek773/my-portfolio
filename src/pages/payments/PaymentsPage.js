@@ -18,7 +18,7 @@ import HelmetComponent from "../../components/helmet/HelmetComponent";
 
 // Utils
 import { fetchGETRequest } from "../../utils/Services";
-import { EDISPATCHED } from "../../utils/Constants";
+import { EDISPATCHED_HELMET } from "../../utils/Constants";
 
 // Context
 import { useLoader } from "../../context/LoaderContext";
@@ -80,7 +80,7 @@ const PaymentsPage = () => {
   }, []);
   return (
     <>
-      <HelmetComponent title={`${EDISPATCHED} | Payments`} />
+      <HelmetComponent title={`${EDISPATCHED_HELMET} Payments`} />
       <Container maxWidth="xl">
         <Typography variant="h4" gutterBottom mb={5}>
           Payments

@@ -11,7 +11,7 @@ import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
 
 // Utils
-import { EDISPATCHED } from "../../utils/Constants";
+import { EDISPATCHED_HELMET } from "../../utils/Constants";
 
 // Custom
 import HelmetComponent from "../../components/helmet/HelmetComponent";
@@ -43,7 +43,7 @@ const FleetPage = () => {
 
   return (
     <>
-      <HelmetComponent title={`${EDISPATCHED} | Fleet`} />
+      <HelmetComponent title={`${EDISPATCHED_HELMET} Fleet`} />
 
       <Container maxWidth="xl">
         <Box

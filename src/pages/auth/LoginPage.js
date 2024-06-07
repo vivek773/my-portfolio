@@ -28,7 +28,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { loginUser } from "../../store/features/AuthSlice";
 
 // Utils
-import { EDISPATCHED } from "../../utils/Constants";
+import { EDISPATCHED_HELMET } from "../../utils/Constants";
 import { fetchPOSTRequest } from "../../utils/Services";
 
 // Assets
@@ -102,7 +102,7 @@ const LoginPage = () => {
 
   return (
     <>
-      <HelmetComponent title={`${EDISPATCHED} | Login`} />
+      <HelmetComponent title={`${EDISPATCHED_HELMET} Login`} />
 
       <Container maxWidth="sm">
         <StyledContent>

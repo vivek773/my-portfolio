@@ -30,7 +30,7 @@ import { setPayments } from "../../../store/features/PaymentsSlice";
 import { fetchPUTRequest } from "../../../utils/Services";
 import { formatCurrency } from "../../../utils/Helper";
 
-const SchedulePaymentDetailModal = ({ data, paymentData }) => {
+const ScheduledPaymentDetailModal = ({ data, paymentData }) => {
   const { isModal, closeModal } = useModal();
   const { setToast } = useToast();
   const dispatch = useDispatch();
@@ -163,4 +163,4 @@ const SchedulePaymentDetailModal = ({ data, paymentData }) => {
   );
 };
 
-export default SchedulePaymentDetailModal;
+export default ScheduledPaymentDetailModal;

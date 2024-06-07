@@ -19,18 +19,19 @@ import BookingsPage from "./pages/bookings/BookingsPage";
 import BookingViewComponent from "./components/bookings/BookingViewComponent";
 import PaymentsPage from "./pages/payments/PaymentsPage";
 import PaymentViewComponent from "./components/payments/PaymentViewComponent";
-import ScheduledPaymentViewComponent from "./components/payments/ScheduledPaymentViewComponent";
-import PeoplePage from "./pages/people/PeoplePage";
-import AddPeopleComponent from "./components/people/AddPeopleComponent";
-import PeopleViewComponent from "./components/people/PeopleViewComponent";
+
+import UserPage from "./pages/user/UserPage";
+import AddUserComponent from "./components/user/AddUserComponent";
+import UserViewComponent from "./components/user/UserViewComponent";
 import ProfilePage from "./pages/profile/ProfilePage";
 import DestinationViewComponent from "./components/destinations/DestinationViewComponent";
-import SchedulePaymentViewComponent from "./components/schedulePayments/SchedulePaymentViewComponent";
+import ScheduledPaymentViewComponent from "./components/scheduled-payments/ScheduledPaymentViewComponent";
 
 // Protected Routes
 import ProtectedRoute from "./protectedroute/ProtectedRoute";
 import CalendarPage from "./pages/calendar/CalendarPage";
 import ScheduledPaymentsPage from "./pages/scheduled-payments/ScheduledPaymentsPage";
+import CreateBookingPage from "./pages/bookings/CreateBookingPage";
 
 const MainRouter = () => {
   const wrapWithProtectedRoute = (children) => {
@@ -77,6 +78,10 @@ const MainRouter = () => {
           element={wrapWithProtectedRoute(<BookingsPage />)}
         />
         <Route
+          path="/bookings/create-booking"
+          element={wrapWithProtectedRoute(<CreateBookingPage />)}
+        />
+        <Route
           path="/bookings/:id/"
           element={wrapWithProtectedRoute(<BookingViewComponent />)}
         />
@@ -94,21 +99,18 @@ const MainRouter = () => {
         />
         <Route
           path="/schedule-payments/:id/"
-          element={wrapWithProtectedRoute(<SchedulePaymentViewComponent />)}
+          element={wrapWithProtectedRoute(<ScheduledPaymentViewComponent />)}
         />
         <Route path={"/calendar"} element={<CalendarPage />} />
+        <Route path={"/users"} element={wrapWithProtectedRoute(<UserPage />)} />
         <Route
-          path={"/people"}
-          element={wrapWithProtectedRoute(<PeoplePage />)}
-        />
-        <Route
-          path={"/people/add-people"}
-          element={wrapWithProtectedRoute(<AddPeopleComponent />)}
+          path={"/users/add-User"}
+          element={wrapWithProtectedRoute(<AddUserComponent />)}
         />
 
         <Route
-          path={"/people/:id/"}
-          element={wrapWithProtectedRoute(<PeopleViewComponent />)}
+          path={"/users/:id/"}
+          element={wrapWithProtectedRoute(<UserViewComponent />)}
         />
         <Route
           path={"/profile"}

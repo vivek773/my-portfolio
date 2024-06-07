@@ -9,7 +9,7 @@ import IconButton from "@mui/material/IconButton";
 
 // MUI styles
 import { styled } from "@mui/material/styles";
-import { bgBlur } from "../../utils/Theme";
+import { bgBlur } from "../../utils/cssStyles";
 
 // Redux
 import { useSelector } from "react-redux";
@@ -25,7 +25,7 @@ const HEADER_MOBILE = 64;
 const HEADER_DESKTOP = 92;
 
 const StyledRoot = styled(AppBar)(({ theme }) => ({
-  ...bgBlur({ color: "#ffffff" }),
+  ...bgBlur({ color: "#f9fafb" }),
   boxShadow: "none",
   [theme.breakpoints.up("lg")]: {
     width: `calc(100% - ${NAV_WIDTH + 1}px)`,

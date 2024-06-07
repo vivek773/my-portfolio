@@ -20,7 +20,7 @@ import TableRow from "@mui/material/TableRow";
 
 // Redux
 import { useDispatch, useSelector } from "react-redux";
-import { setDestinations } from "../../store/features/DestinationsSlice";
+import { setUser } from "../../store/features/UserSlice";
 
 // Custom
 import Label from "../../components/label";
@@ -37,19 +37,14 @@ import { renderChipColorByStatus } from "../../utils/Helper";
 import { useLoader } from "../../context/LoaderContext";
 
 const TABLE_HEAD = [
-  { id: "number", label: "#" },
-  { id: "city", label: "City" },
-  { id: "state", label: "State" },
-  { id: "country", label: "Country" },
-  { id: "airport_name", label: "Airport Name" },
-  { id: "airport_code", label: "Airport Code" },
-  { id: "airport_latitude", label: "Airport Latitude" },
-  { id: "airport_longitude", label: "Airport Longitude" },
+  { id: "name", label: "Name" },
+  { id: "email", label: "Email" },
+  { id: "role", label: "Role" },
   { id: "status", label: "Status" },
-  { id: "details", label: "Details" },
+  { id: "action", label: "Action" },
 ];
 
-export default function DestinationsPage() {
+const UserPage = () => {
   const [page, setPage] = useState(0);
   const [limit, setLimit] = useState(10);
   const { isLoading, startLoading, stopLoading } = useLoader();
@@ -57,35 +52,32 @@ export default function DestinationsPage() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  const { destinations } = useSelector((state) => state.destinations);
+  const { User } = useSelector((state) => state.User);
 
   useEffect(() => {
-    const getDestinationsData = async () => {
+    const getUserData = async () => {
       startLoading();
-      const response = await fetchGETRequest(
-        `/destination/owner/get-destinations`,
-        {}
-      );
+      const response = await fetchGETRequest(`/user/owner/get-users`, {});
 
-      if (response?.statusCode === 200 && response) {
-        dispatch(setDestinations(response?.destinations));
+      if (response?.statusCode === 201 && response) {
+        dispatch(setUser(response?.data));
         stopLoading();
       } else {
         stopLoading();
       }
     };
-    getDestinationsData();
+    getUserData();
 
     // eslint-disable-next-line
   }, []);
 
   const handleView = (data) => {
-    navigate(`/destinations/${data?.destination_id}`, { state: data });
+    navigate(`/users/${data?.user_id}`, { state: data });
   };
 
   return (
     <>
-      <HelmetComponent title={`${EDISPATCHED_HELMET} Destinations`} />
+      <HelmetComponent title={`${EDISPATCHED_HELMET} User `} />
       <Container maxWidth="xl">
         <Stack
           direction="row"
@@ -95,16 +87,16 @@ export default function DestinationsPage() {
           mb={5}
         >
           <Typography variant="h4" gutterBottom mb={0}>
-            Destinations
+            User
           </Typography>
           <CustomButton
-            label="Add Destination"
+            label="Add User"
             width={"fit-content"}
             sx={{
               width: "auto",
               whiteSpace: "nowrap",
             }}
-            onClick={() => navigate("/destinations/add-destination")}
+            onClick={() => navigate("/users/add-User")}
           />
         </Stack>
 
@@ -115,7 +107,7 @@ export default function DestinationsPage() {
         )}
 
         {!isLoading &&
-          (destinations?.length === 0 ? (
+          (User?.length === 0 ? (
             <Box>
               <Typography
                 variant="h6"
@@ -142,44 +134,30 @@ export default function DestinationsPage() {
                     </TableRow>
                   </TableHead>
                   <TableBody>
-                    {Array.isArray(destinations) &&
-                      destinations?.map((destination, index) => (
-                        <TableRow hover key={destination.destination_id}>
-                          <TableCell align="center">{index + 1}</TableCell>
+                    {Array.isArray(User) &&
+                      User?.map((user, index) => (
+                        <TableRow hover key={index}>
                           <TableCell align="center">
-                            {destination.city}
+                            {user?.first_name + " " + user?.last_name}
                           </TableCell>
+                          <TableCell align="center">{user?.email}</TableCell>
                           <TableCell align="center">
-                            {destination.state}
+                            {user?.user_tenant_profile[0]?.role}
                           </TableCell>
-                          <TableCell align="center">
-                            {destination.country}
-                          </TableCell>
-                          <TableCell align="center">
-                            {destination.airport_name}
-                          </TableCell>
-                          <TableCell align="center">
-                            {destination.airport_code}
-                          </TableCell>
-                          <TableCell align="center">
-                            {destination.airport_latitude}
-                          </TableCell>
-                          <TableCell align="center">
-                            {destination.airport_longitude}
-                          </TableCell>
+
                           <TableCell align="center">
                             <Label
                               color={renderChipColorByStatus(
-                                destination.status
+                                user?.user_tenant_profile[0]?.status
                               )}
                             >
-                              {destination.status}
+                              {user?.user_tenant_profile[0]?.status}
                             </Label>
                           </TableCell>
                           <TableCell align="center">
                             <CustomButton
                               width={"fit-content"}
-                              onClick={() => handleView(destination)}
+                              onClick={() => handleView(user)}
                               label={"View"}
                               size={"small"}
                             />
@@ -193,7 +171,7 @@ export default function DestinationsPage() {
               <TablePagination
                 rowsPerPageOptions={[10]}
                 component="div"
-                count={destinations?.length}
+                count={User?.length}
                 rowsPerPage={limit}
                 page={page}
                 onPageChange={(event, newPage) => setPage(newPage)}
@@ -203,4 +181,6 @@ export default function DestinationsPage() {
       </Container>
     </>
   );
-}
+};
+
+export default UserPage;
