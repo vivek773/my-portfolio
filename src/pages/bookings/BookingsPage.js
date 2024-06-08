@@ -104,13 +104,9 @@ const BookingsPage = () => {
         return state?.bookings || [];
       }
       return state?.bookings?.filter((item) => {
-        const customer = item?.customer;
-        if (typeof customer === "object") {
-          const fullName =
-            `${customer.first_name} ${customer.last_name}`.toLowerCase();
-          return fullName.includes(searchText.toLowerCase());
-        }
-        return false;
+        const booking = `${item.booking_reference}`.toLowerCase();
+
+        return booking.includes(searchText.toLowerCase());
       });
     };
 
