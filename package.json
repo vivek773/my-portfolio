@@ -8,7 +8,7 @@
     "@mui/icons-material": "^5.15.17",
     "@mui/lab": "^5.0.0-alpha.170",
     "@mui/material": "^5.15.17",
-    "@mui/styles": "^5.15.17",
+    "@mui/system": "^5.15.15",
     "@mui/x-data-grid": "^7.5.0",
     "@mui/x-date-pickers": "^5.0.0-beta.5",
     "@reduxjs/toolkit": "^2.2.4",
