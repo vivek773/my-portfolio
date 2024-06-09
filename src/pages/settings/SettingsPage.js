@@ -105,13 +105,10 @@ function SettingsPage() {
           {!isLoading && (
             <>
               <BusinessDetailsComponent details={business.business_details} />
-              <BusinessEmailsComponent emails={business.emails} />
-              <BusinessMerchantAccountDetailsComponent
-                merchantAccountDetails={business?.merchant_account_details}
-              />
+
               <BusinessTaxSettingsCardComponents />
               <BusinessTicketPaymentSettingsCardComponent />
-
+              <BusinessEmailsComponent emails={business.emails} />
               <EmbedCustomerAppCard />
             </>
           )}

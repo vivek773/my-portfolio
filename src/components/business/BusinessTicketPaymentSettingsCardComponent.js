@@ -251,14 +251,16 @@ const BusinessTicketPaymentSettingsCardComponent = () => {
                     {pay_in_full_at_time_of_booking ? "Yes" : "No"}
                   </Typography>
                 </Grid>
-                <Grid item xs={12} mt={1} mb={4}>
+                <Grid item xs={11} mt={1} mb={4}>
                   <Typography
                     variant="body2"
                     color="textSecondary"
                     align="left"
                   >
-                    We will charge the full amount from customer at the time of
-                    booking.
+                    Set whether to charge the full amount at the time of booking
+                    or partial. If set to "No", you can set the percentage to
+                    charge at the time of booking and the hours before the
+                    flight when the remaining payment is due.
                   </Typography>
                 </Grid>
               </Grid>
@@ -296,11 +298,6 @@ const BusinessTicketPaymentSettingsCardComponent = () => {
                     variant="body2"
                     color="textSecondary"
                     align="left"
-                    style={{
-                      color: pay_in_full_at_time_of_booking
-                        ? "#aaa"
-                        : "inherit",
-                    }}
                   >
                     Percentage of the total cost that must be paid at the time
                     of booking.
@@ -341,11 +338,6 @@ const BusinessTicketPaymentSettingsCardComponent = () => {
                     variant="body2"
                     color="textSecondary"
                     align="left"
-                    style={{
-                      color: pay_in_full_at_time_of_booking
-                        ? "#aaa"
-                        : "inherit",
-                    }}
                   >
                     Number of hours before the flight when the remaining payment
                     is due. We will automatically send a reminder email 24 hours

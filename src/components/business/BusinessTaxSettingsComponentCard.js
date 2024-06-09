@@ -14,7 +14,10 @@ import { fetchPUTRequest } from "../../utils/Services";
 import { useToast } from "../../context/ToastContext";
 import { useModal } from "../../context/ModalContext";
 import { useLoader } from "../../context/LoaderContext";
-import { setBusinessSettings } from "../../store/features/BusinessSlice";
+import {
+  setBusinessSettings,
+  setTax,
+} from "../../store/features/BusinessSlice";
 
 const StyledCard = styled(Card)(({ theme }) => ({
   border: "1px solid #ddd",
@@ -37,11 +40,12 @@ const headerTitleStyle = {
   display: "flex",
 };
 
-const BusinessTaxSettingsCardComponents = () => {
+const BusinessTaxSettingsCardComponent = () => {
   const businessSettings = useSelector(
     (state) => state.business.business_settings
   );
-  const taxRate = useSelector((state) => state.business.tax);
+  const taxSettings = useSelector((state) => state.business.tax);
+
   const dispatch = useDispatch();
   const { setToast } = useToast();
   const { isModal, closeModal, openModal } = useModal();
@@ -49,8 +53,7 @@ const BusinessTaxSettingsCardComponents = () => {
 
   // Destructure the properties with default values to avoid undefined errors
   const { is_calculate_tax = false } = businessSettings || {};
-
-  const { tax_rate = 0 } = taxRate || { tax_rate: 0 };
+  const { tax_rate = 0 } = taxSettings || {};
 
   const [formValues, setFormValues] = useState({
     is_calculate_tax,
@@ -76,11 +79,11 @@ const BusinessTaxSettingsCardComponents = () => {
   const handleChange = (event) => {
     const { name, value } = event.target;
     if (name === "is_calculate_tax") {
-      const isFullPayment = value === "true";
+      const isCalculateTax = value === "true";
       setFormValues((prevFormValues) => ({
         ...prevFormValues,
-        is_calculate_tax: isFullPayment,
-        tax_rate: isFullPayment ? 0 : previousValues.tax_rate,
+        is_calculate_tax: isCalculateTax,
+        tax_rate: isCalculateTax ? previousValues.tax_rate : 0,
       }));
     } else {
       setFormValues((prevFormValues) => {
@@ -96,31 +99,26 @@ const BusinessTaxSettingsCardComponents = () => {
   };
 
   const isFormValid = () => {
-    if (formValues.is_calculate_tax) {
+    if (!formValues.is_calculate_tax) {
       return true;
     }
-    if (formValues.tax_rate <= 0 || formValues.tax_rate >= 100) {
-      return false;
-    }
-    return true;
+    return formValues.tax_rate > 0 && formValues.tax_rate < 100;
   };
 
   const handleSubmit = async (event) => {
     event.preventDefault();
     const payload = { ...formValues };
-    if (payload.is_calculate_tax) {
-      payload.tax_rate = 0;
-    }
     startLoading();
     try {
       const response = await fetchPUTRequest(
-        "/business/owner/update-ticket-payment-settings",
+        "/business/owner/update-sales-tax-settings",
         payload
       );
       if (response.statusCode === 200) {
         dispatch(
           setBusinessSettings(response.updatedBusiness.business_settings)
         );
+        dispatch(setTax(response.updatedBusiness.tax));
         setToast({
           open: true,
           message: response.message,
@@ -170,10 +168,9 @@ const BusinessTaxSettingsCardComponents = () => {
         value={formValues.tax_rate}
         onChange={handleChange}
         type="number"
-        disabled={formValues.is_calculate_tax}
+        disabled={!formValues.is_calculate_tax}
         helperText="Must be > 0 and < 100"
       />
-
       <Box mt={2} display="flex" justifyContent="flex-end">
         <Button
           type="submit"
@@ -193,7 +190,7 @@ const BusinessTaxSettingsCardComponents = () => {
         <StyledCardHeader
           title={
             <Typography sx={headerTitleStyle} variant="h6">
-              Tax Settings
+              Sales Tax Settings
             </Typography>
           }
           action={
@@ -202,7 +199,6 @@ const BusinessTaxSettingsCardComponents = () => {
             </Button>
           }
         />
-
         <CardContent>
           <Grid container spacing={2} justifyContent="center">
             <Grid item xs={12}>
@@ -237,7 +233,7 @@ const BusinessTaxSettingsCardComponents = () => {
                     variant="subtitle1"
                     align="left"
                     style={{
-                      color: is_calculate_tax ? "#aaa" : "inherit",
+                      color: !is_calculate_tax ? "#aaa" : "inherit",
                     }}
                   >
                     Sales Tax Rate
@@ -248,7 +244,7 @@ const BusinessTaxSettingsCardComponents = () => {
                     variant="body1"
                     align="left"
                     style={{
-                      color: is_calculate_tax ? "#aaa" : "inherit",
+                      color: !is_calculate_tax ? "#aaa" : "inherit",
                     }}
                   >
                     {tax_rate}%
@@ -282,4 +278,4 @@ const BusinessTaxSettingsCardComponents = () => {
   );
 };
 
-export default BusinessTaxSettingsCardComponents;
+export default BusinessTaxSettingsCardComponent;
