@@ -10,8 +10,6 @@ export default function EmbedCustomerAppCard() {
   const { setToast } = useToast();
   const tenantId = useSelector((state) => state.auth.tenant_id);
 
-  console.log("tenantId", tenantId);
-
   const copyIframeCode = () => {
     const iframeCode = iframeCodeRef.current.innerText;
     navigator.clipboard

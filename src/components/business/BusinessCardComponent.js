@@ -2,7 +2,7 @@ import CardHeader from "@mui/material/CardHeader";
 import Typography from "@mui/material/Typography";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
-import { styled } from "@mui/system";
+import { Box, styled } from "@mui/system";
 
 const StyledCard = styled(Card)(({ theme }) => ({
   border: "1px solid #ddd",
@@ -29,9 +29,9 @@ const BusinessCardComponent = ({ action = <></>, title = "", component }) => {
         <StyledCardHeader
           action={action}
           title={
-            <Typography sx={headerTitleStyle} variant={"h6"}>
-              {title}
-            </Typography>
+            <Box sx={headerTitleStyle}>
+              <Typography variant="h6">{title}</Typography>
+            </Box>
           }
         />
       )}

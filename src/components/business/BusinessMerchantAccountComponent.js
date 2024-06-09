@@ -16,22 +16,20 @@ const BusinessMerchantAccountDetailsComponent = ({
     <BusinessCardComponent
       title={"Merchant Account Details"}
       component={
-        <Typography variant="body2">
-          <Grid container spacing={{ xs: 5, md: 3 }} columns={{ md: 12 }}>
-            <Grid item xs={3}>
-              <Typography variant="subtitle1">Account ID:</Typography>
-              <Typography paragraph>
-                {merchantAccountDetails?.account_id}
-              </Typography>
-            </Grid>
-            <Grid item xs={3}>
-              <Typography variant="subtitle1">Provider Name:</Typography>
-              <Typography paragraph>
-                {readableStatus(merchantAccountDetails?.provider_name)}
-              </Typography>
-            </Grid>
+        <Grid container spacing={{ xs: 5, md: 3 }} columns={{ md: 12 }}>
+          <Grid item xs={3}>
+            <Typography variant="subtitle1">Account ID:</Typography>
+            <Typography variant="body2">
+              {merchantAccountDetails?.account_id}
+            </Typography>
           </Grid>
-        </Typography>
+          <Grid item xs={3}>
+            <Typography variant="subtitle1">Provider Name:</Typography>
+            <Typography variant="body2">
+              {readableStatus(merchantAccountDetails?.provider_name)}
+            </Typography>
+          </Grid>
+        </Grid>
       }
     />
   );
