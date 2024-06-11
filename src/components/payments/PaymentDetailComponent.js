@@ -13,8 +13,10 @@ import {
   formatDate,
   formatDateTimeLong,
   formatPhoneNumber,
+  renderChipColorByStatus,
 } from "../../utils/Helper";
 import { readableStatus } from "../../utils/Constants";
+import Label from "../label";
 
 const PaymentDetailComponent = () => {
   const params = useLocation();
@@ -123,7 +125,7 @@ const PaymentDetailComponent = () => {
               justifyContent="center"
             >
               <Typography variant="subtitle1" align="center">
-                Base Amount
+                Base
               </Typography>
               <Typography paragraph align="center">
                 {formatCurrency(paymentDetails?.amount) || "-"}
@@ -138,7 +140,7 @@ const PaymentDetailComponent = () => {
               justifyContent="center"
             >
               <Typography variant="subtitle1" align="center">
-                tax
+                Tax
               </Typography>
               <Typography paragraph align="center">
                 {formatCurrency(paymentDetails?.tax) || "-"}
@@ -153,11 +155,43 @@ const PaymentDetailComponent = () => {
               justifyContent="center"
             >
               <Typography variant="subtitle1" align="center">
-                Total Paid by Customer
+                Total Amount
               </Typography>
               <Typography paragraph align="center">
                 {formatCurrency(paymentDetails?.processor_details.amount) ||
                   "-"}
+              </Typography>
+            </Grid>
+            <Grid
+              item
+              xs={3}
+              display="flex"
+              flexDirection="column"
+              alignItems="center"
+              justifyContent="center"
+            >
+              <Typography variant="subtitle1" align="center">
+                Status
+              </Typography>
+              <Typography paragraph align="center">
+                <Label color={renderChipColorByStatus(paymentDetails.status)}>
+                  {readableStatus(paymentDetails?.status)}
+                </Label>
+              </Typography>
+            </Grid>
+            <Grid
+              item
+              xs={3}
+              display="flex"
+              flexDirection="column"
+              alignItems="center"
+              justifyContent="center"
+            >
+              <Typography variant="subtitle1" align="center">
+                Transaction Time
+              </Typography>
+              <Typography paragraph align="center">
+                {formatDateTimeLong(paymentDetails?.created_at) || "-"}
               </Typography>
             </Grid>
             <Grid
@@ -190,36 +224,7 @@ const PaymentDetailComponent = () => {
                 {formatCurrency(paymentDetails?.net_amount_to_business) || "-"}
               </Typography>
             </Grid>
-            <Grid
-              item
-              xs={3}
-              display="flex"
-              flexDirection="column"
-              alignItems="center"
-              justifyContent="center"
-            >
-              <Typography variant="subtitle1" align="center">
-                Status
-              </Typography>
-              <Typography paragraph align="center">
-                {readableStatus(paymentDetails?.status) || "-"}
-              </Typography>
-            </Grid>
-            <Grid
-              item
-              xs={3}
-              display="flex"
-              flexDirection="column"
-              alignItems="center"
-              justifyContent="center"
-            >
-              <Typography variant="subtitle1" align="center">
-                Transaction Time
-              </Typography>
-              <Typography paragraph align="center">
-                {formatDateTimeLong(paymentDetails?.created_at) || "-"}
-              </Typography>
-            </Grid>
+
             <Grid
               item
               xs={3}

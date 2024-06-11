@@ -3,6 +3,7 @@
 // API url
 export const BASE_API_URL = process.env.REACT_APP_BASE_API_URL;
 export const WEB_PORTAL_URL = process.env.REACT_APP_WEB_PORTAL_URL;
+export const CHECKWX_API_KEY = process.env.REACT_APP_CHECKWX_API_KEY;
 
 // Helmet title
 export const EDISPATCHED = "eDispatched-135";

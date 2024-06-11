@@ -38,13 +38,13 @@ import { useLoader } from "../../context/LoaderContext";
 
 const TABLE_HEAD = [
   { id: "number", label: "#" },
+  { id: "airport_code", label: "ICAO Code" },
+  { id: "airport_name", label: "Name" },
   { id: "city", label: "City" },
   { id: "state", label: "State" },
   { id: "country", label: "Country" },
-  { id: "airport_name", label: "Airport Name" },
-  { id: "airport_code", label: "Airport Code" },
-  { id: "airport_latitude", label: "Airport Latitude" },
-  { id: "airport_longitude", label: "Airport Longitude" },
+  { id: "airport_latitude", label: "Latitude" },
+  { id: "airport_longitude", label: "Longitude" },
   { id: "status", label: "Status" },
   { id: "details", label: "Details" },
 ];
@@ -147,6 +147,12 @@ export default function DestinationsPage() {
                         <TableRow hover key={destination.destination_id}>
                           <TableCell align="center">{index + 1}</TableCell>
                           <TableCell align="center">
+                            {destination.airport_code}
+                          </TableCell>
+                          <TableCell align="center">
+                            {destination.airport_name}
+                          </TableCell>
+                          <TableCell align="center">
                             {destination.city}
                           </TableCell>
                           <TableCell align="center">
@@ -154,12 +160,6 @@ export default function DestinationsPage() {
                           </TableCell>
                           <TableCell align="center">
                             {destination.country}
-                          </TableCell>
-                          <TableCell align="center">
-                            {destination.airport_name}
-                          </TableCell>
-                          <TableCell align="center">
-                            {destination.airport_code}
                           </TableCell>
                           <TableCell align="center">
                             {destination.airport_latitude}
