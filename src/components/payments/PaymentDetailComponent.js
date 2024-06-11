@@ -174,7 +174,7 @@ const PaymentDetailComponent = () => {
                 Status
               </Typography>
               <Typography paragraph align="center">
-                <Label color={renderChipColorByStatus(paymentDetails.status)}>
+                <Label color={renderChipColorByStatus(paymentDetails?.status)}>
                   {readableStatus(paymentDetails?.status)}
                 </Label>
               </Typography>
