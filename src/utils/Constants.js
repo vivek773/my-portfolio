@@ -5,6 +5,13 @@ export const BASE_API_URL = process.env.REACT_APP_BASE_API_URL;
 export const WEB_PORTAL_URL = process.env.REACT_APP_WEB_PORTAL_URL;
 export const CHECKWX_API_KEY = process.env.REACT_APP_CHECKWX_API_KEY;
 
+// MX Merchant
+export const MX_PAYMENT_FORM_URL = process.env.REACT_APP_MX_PAYMENT_FORM_URL;
+export const MX_MERCHANT_CONNECTION_AIR_TPN_NUMBER =
+  process.env.REACT_APP_MX_MERCHANT_CONNECTION_AIR_TPN_NUMBER;
+export const MX_MERCHANT_CONNECTION_AIR_TOKEN =
+  process.env.REACT_APP_MX_MERCHANT_CONNECTION_AIR_TOKEN;
+
 // Helmet title
 export const EDISPATCHED = "eDispatched-135";
 export const EDISPATCHED_HELMET = "eDispatched-135 |";
