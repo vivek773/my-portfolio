@@ -35,14 +35,14 @@ const StyledSearch = styled(OutlinedInput)(({ theme }) => ({
   },
 }));
 
-export default function BookingsToolbar() {
+export default function BookingsToolbar({ onChange, searchValue }) {
   const navigate = useNavigate();
   return (
     <StyledRoot>
       <StyledSearch
-        //value={filterName}
-        //onChange={onFilterName}
-        placeholder="Search booking..."
+        value={searchValue}
+        onChange={onChange}
+        placeholder="Search bookings - (Booking Reference)"
         startAdornment={
           <InputAdornment position="start">
             <CustomIconComponent icon="eva:search-fill" />

@@ -50,19 +50,19 @@ const BookingDetailComponent = () => {
       {
         key: "base_price",
         label: "Base Price",
-        value: `$${formatCurrency(params?.state?.base_price)}`,
+        value: `${formatCurrency(params?.state?.base_price)}`,
       },
       { key: "tax", label: "Tax", value: params?.state?.tax },
       { key: "discount", label: "Discount", value: params?.state?.discount },
       {
         key: "total_price",
         label: "Total Price",
-        value: `$${formatCurrency(params?.state?.total_price)}`,
+        value: `${formatCurrency(params?.state?.total_price)}`,
       },
       {
         key: "amount_paid",
         label: "Amount Paid",
-        value: `$${formatCurrency(params?.state?.amount_paid)}`,
+        value: `${formatCurrency(params?.state?.amount_paid)}`,
       },
       {
         key: "status",
@@ -76,14 +76,14 @@ const BookingDetailComponent = () => {
       {
         key: "amount_due_at_time_of_booking",
         label: "Amount Due At Time Of Booking",
-        value: `$${formatCurrency(
+        value: `${formatCurrency(
           params?.state?.amount_due_at_time_of_booking
         )}`,
       },
       {
         key: "amount_due_later",
         label: "Amount Due Later",
-        value: `$${formatCurrency(params?.state?.amount_due_later)}`,
+        value: `${formatCurrency(params?.state?.amount_due_later)}`,
       },
       {
         key: "amount_due_later_date",

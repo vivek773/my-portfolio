@@ -12,10 +12,20 @@ import {
   Card,
   CardContent,
   Box,
+  CardHeader,
+  IconButton,
 } from "@mui/material";
 import { LocalizationProvider, DatePicker } from "@mui/x-date-pickers";
 import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
-import { formatCurrency } from "../../utils/Helper";
+import {
+  formatCurrency,
+  validateEmail,
+  validatePhoneNumber,
+} from "../../utils/Helper";
+import DeleteIcon from "@mui/icons-material/Delete";
+import PhoneInput from "react-phone-input-2";
+import "react-phone-input-2/lib/style.css";
+import PaymentFormComponent from "./PaymentFormComponent";
 
 function CreateBookingPage() {
   const [destinations, setDestinations] = useState([]);
@@ -29,8 +39,20 @@ function CreateBookingPage() {
   const [loading, setLoading] = useState(false);
   const [selectedPlane, setSelectedPlane] = useState(null);
 
-  const [priceData, setPriceData] = useState({});
+  // customer details
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
+  const [email, setEmail] = useState("");
+  const [confirmEmail, setConfirmEmail] = useState("");
+  const [phoneCountryCode, setPhoneCountryCode] = useState("");
+  const [phoneNumber, setPhoneNumber] = useState("");
+  const [nationality, setNationality] = useState("");
+  const [extraPassengers, setExtraPassengers] = useState([]);
+  const [isCustomerEditDisabled, setIsCustomerEditDisabled] = useState(false);
+  const [isCustomerSaved, setIsCustomerSaved] = useState(false);
+  const [isEditDisabled, setIsEditDisabled] = useState(false);
 
+  const [priceData, setPriceData] = useState({});
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -128,11 +150,52 @@ function CreateBookingPage() {
     setSelectedPlane(selectedPlane === tailNumber ? null : tailNumber);
   };
 
+  const handleSaveCustomer = () => {
+    setIsCustomerEditDisabled(true);
+    setIsCustomerSaved(true);
+  };
+
+  const handleEditCustomer = () => {
+    setIsCustomerEditDisabled(false);
+    setIsCustomerSaved(false);
+  };
+  const handleAddPassenger = () => {
+    setExtraPassengers([
+      ...extraPassengers,
+      { firstName: "", lastName: "", nationality: "", isNew: true },
+    ]);
+    setIsEditDisabled(false);
+  };
+  const handlePassengerChange = (index, field, value) => {
+    const updatedPassengers = extraPassengers.map((passenger, i) => {
+      if (i === index) {
+        return { ...passenger, [field]: value.trim() };
+      }
+      return passenger;
+    });
+    setExtraPassengers(updatedPassengers);
+  };
+  const handleDeletePassenger = (index) => {
+    const updatedPassengers = extraPassengers.filter((_, i) => i !== index);
+    setExtraPassengers(updatedPassengers);
+  };
+  const handleEditPassengers = () => {
+    setIsEditDisabled(false);
+  };
+  const handleSavePassengers = () => {
+    const updatedPassengers = extraPassengers.map((passenger) => ({
+      ...passenger,
+      isNew: false,
+    }));
+    setExtraPassengers(updatedPassengers);
+    setIsEditDisabled(true);
+  };
+
   return (
     <Container>
       <h1>Create Booking</h1>
-      <Grid container spacing={2}>
-        <Grid item xs={12} sm={4}>
+      <Grid container spacing={2} justifyContent={"center"}>
+        <Grid item xs={12} sm={4} mb={5}>
           <TextField
             select
             label="Trip Type"
@@ -145,8 +208,9 @@ function CreateBookingPage() {
           </TextField>
         </Grid>
       </Grid>
-      <Grid container spacing={2} style={{ marginTop: "16px" }}>
-        <Grid item xs={12} sm={4}>
+
+      <Grid container spacing={2} justifyContent={"center"} mb={5}>
+        <Grid item xs={12} sm={6} md={5}>
           <TextField
             select
             label="Select Departure"
@@ -154,15 +218,15 @@ function CreateBookingPage() {
             onChange={(e) => setDeparture(e.target.value)}
             fullWidth
           >
-            <MenuItem value="">Select Departure</MenuItem>
+            <MenuItem value="">Select Departure Airport</MenuItem>
             {filteredDepartureDestinations.map((dest, index) => (
               <MenuItem key={index} value={dest.airport_code}>
-                {dest.airport_name}
+                {dest.airport_code} - {dest.airport_name}
               </MenuItem>
             ))}
           </TextField>
         </Grid>
-        <Grid item xs={12} sm={4}>
+        <Grid item xs={12} sm={6} md={5}>
           <TextField
             select
             label="Select Arrival"
@@ -170,104 +234,103 @@ function CreateBookingPage() {
             onChange={(e) => setArrival(e.target.value)}
             fullWidth
           >
-            <MenuItem value="">Select Arrival</MenuItem>
+            <MenuItem value="">Select Arrival Airport</MenuItem>
             {filteredArrivalDestinations.map((dest, index) => (
               <MenuItem key={index} value={dest.airport_code}>
-                {dest.airport_name}
+                {dest.airport_code} - {dest.airport_name}
               </MenuItem>
             ))}
           </TextField>
         </Grid>
       </Grid>
-      <Grid container spacing={2} style={{ marginTop: "16px" }}>
-        <Grid item xs={12} sm={6}>
-          <Grid container spacing={0} alignItems="center">
-            <Grid item xs={6}>
-              <LocalizationProvider dateAdapter={AdapterDateFns}>
-                <DatePicker
-                  label="Select Departure Date"
-                  value={selectedDepartureDate}
-                  onChange={(newValue) => setSelectedDepartureDate(newValue)}
-                  renderInput={(params) => <TextField {...params} fullWidth />}
-                  minDate={new Date()}
-                />
-              </LocalizationProvider>
-            </Grid>
-            <Grid item xs={6}>
-              <TextField
-                select
-                label="Select Departure Time"
-                value={selectedDepartureTime}
-                onChange={(e) => setSelectedDepartureTime(e.target.value)}
-                fullWidth
-              >
-                <MenuItem value="">Select Departure Time</MenuItem>
-                {timeOptions.map((time, index) => (
-                  <MenuItem key={index} value={time}>
-                    {time}
-                  </MenuItem>
-                ))}
-              </TextField>
-            </Grid>
-          </Grid>
+      <Grid container spacing={2} justifyContent={"center"}>
+        <Grid item xs={12} sm={6} md={5}>
+          <LocalizationProvider dateAdapter={AdapterDateFns}>
+            <DatePicker
+              label="Select Departure Date"
+              value={selectedDepartureDate}
+              onChange={(newValue) => setSelectedDepartureDate(newValue)}
+              renderInput={(params) => <TextField {...params} fullWidth />}
+              minDate={new Date()}
+            />
+          </LocalizationProvider>
+        </Grid>
+        <Grid item xs={12} sm={6} md={5}>
+          <TextField
+            select
+            label="Select Departure Time"
+            value={selectedDepartureTime}
+            onChange={(e) => setSelectedDepartureTime(e.target.value)}
+            fullWidth
+          >
+            <MenuItem value="">Select Departure Time</MenuItem>
+            {timeOptions.map((time, index) => (
+              <MenuItem key={index} value={time}>
+                {time}
+              </MenuItem>
+            ))}
+          </TextField>
         </Grid>
 
         {tripType === "round_trip" && (
           <>
-            <Grid item xs={12} sm={6}>
-              <Grid container spacing={0} alignItems="center">
-                <Grid item xs={6}>
-                  <LocalizationProvider dateAdapter={AdapterDateFns}>
-                    <DatePicker
-                      label="Select Return Date"
-                      value={selectedArrivalDate}
-                      onChange={(newValue) => setSelectedArrivalDate(newValue)}
-                      renderInput={(params) => (
-                        <TextField {...params} fullWidth />
-                      )}
-                      minDate={selectedDepartureDate || new Date()}
-                    />
-                  </LocalizationProvider>
-                </Grid>
-                <Grid item xs={6}>
-                  <TextField
-                    select
-                    label="Select Return Time"
-                    value={selectedArrivalTime}
-                    onChange={(e) => setSelectedArrivalTime(e.target.value)}
-                    fullWidth
-                  >
-                    <MenuItem value="">Select Return Time</MenuItem>
-                    {timeOptions.map((time, index) => (
-                      <MenuItem key={index} value={time}>
-                        {time}
-                      </MenuItem>
-                    ))}
-                  </TextField>
-                </Grid>
+            <Grid container spacing={2} justifyContent={"center"} mb={5}>
+              <Grid item xs={12} sm={6} md={5}>
+                <LocalizationProvider dateAdapter={AdapterDateFns}>
+                  <DatePicker
+                    label="Select Return Date"
+                    value={selectedArrivalDate}
+                    onChange={(newValue) => setSelectedArrivalDate(newValue)}
+                    renderInput={(params) => (
+                      <TextField {...params} fullWidth />
+                    )}
+                    minDate={selectedDepartureDate || new Date()}
+                  />
+                </LocalizationProvider>
+              </Grid>
+              <Grid item xs={6}>
+                <TextField
+                  select
+                  label="Select Return Time"
+                  value={selectedArrivalTime}
+                  onChange={(e) => setSelectedArrivalTime(e.target.value)}
+                  fullWidth
+                >
+                  <MenuItem value="">Select Return Time</MenuItem>
+                  {timeOptions.map((time, index) => (
+                    <MenuItem key={index} value={time}>
+                      {time}
+                    </MenuItem>
+                  ))}
+                </TextField>
               </Grid>
             </Grid>
           </>
         )}
       </Grid>
 
-      <Grid container justifyContent="left" style={{ marginTop: "50px" }}>
-        <Grid item xs={6} sm={6}>
+      <Grid container spacing={2} justifyContent={"center"} mt={3}>
+        <Grid item xs={12} sm={6} md={5}>
           <Button
             variant="contained"
             color="primary"
-            fullWidth
             onClick={handleSearch}
-            style={{ borderRadius: "8px" }}
             disabled={!isFormValid || loading}
             size="large"
+            fullWidth
           >
             {loading ? <CircularProgress size={24} /> : "Continue"}
           </Button>
         </Grid>
       </Grid>
+
       {Object.keys(priceData).length > 0 && (
-        <Grid container spacing={3} style={{ marginTop: "20px" }}>
+        <Grid
+          container
+          spacing={3}
+          style={{ marginTop: "20px" }}
+          justifyContent="center"
+        >
           {Object.entries(priceData).map(([tailNumber, data]) => (
             <Grid container item key={tailNumber} xs={12} sm={6} md={5}>
               <Card
@@ -286,9 +349,20 @@ function CreateBookingPage() {
                       : "0 0 5px #ccc",
                   opacity:
                     selectedPlane && selectedPlane !== tailNumber ? 0.5 : 1,
+                  display: "flex",
+                  flexDirection: "column",
+                  justifyContent: "space-between",
+                  height: "100%",
                 }}
               >
-                <CardContent>
+                <CardContent
+                  style={{
+                    display: "flex",
+                    flexDirection: "column",
+                    justifyContent: "center",
+                    flexGrow: 1,
+                  }}
+                >
                   <Typography
                     variant="h3"
                     sx={{ opacity: 0.72 }}
@@ -360,7 +434,7 @@ function CreateBookingPage() {
                           style={{ textAlign: "left", paddingLeft: "10px" }}
                         >
                           <Typography>
-                            ${formatCurrency(data.basePrice)}
+                            {formatCurrency(data.basePrice)}
                           </Typography>
                         </Grid>
                         <Grid
@@ -378,7 +452,7 @@ function CreateBookingPage() {
                           style={{ textAlign: "left", paddingLeft: "10px" }}
                         >
                           <Typography>
-                            ${formatCurrency(data.amountAtTimeOfBooking)}
+                            {formatCurrency(data.amountAtTimeOfBooking)}
                           </Typography>
                         </Grid>
                         <Grid
@@ -395,7 +469,7 @@ function CreateBookingPage() {
                           xs={6}
                           style={{ textAlign: "left", paddingLeft: "10px" }}
                         >
-                          <Typography>${formatCurrency(data.tax)}</Typography>
+                          <Typography>{formatCurrency(data.tax)}</Typography>
                         </Grid>
                         <Grid
                           item
@@ -412,7 +486,7 @@ function CreateBookingPage() {
                           style={{ textAlign: "left", paddingLeft: "10px" }}
                         >
                           <Typography>
-                            ${formatCurrency(data.totalDueNow)}
+                            {formatCurrency(data.totalDueNow)}
                           </Typography>
                         </Grid>
                       </Grid>
@@ -499,13 +573,13 @@ function CreateBookingPage() {
                   <Box sx={{ mt: 3 }}>
                     <Button
                       variant="contained"
-                      color="primary"
+                      color={selectedPlane === tailNumber ? "error" : "primary"}
                       fullWidth
                       onClick={() => handlePlaneSelection(tailNumber)}
                       style={{ borderRadius: "8px" }}
                     >
                       {selectedPlane === tailNumber
-                        ? "Reset Selection"
+                        ? "Selected - Reset Selection"
                         : "Select"}
                     </Button>
                   </Box>
@@ -514,6 +588,248 @@ function CreateBookingPage() {
             </Grid>
           ))}
         </Grid>
+      )}
+
+      {selectedPlane && (
+        <>
+          <Typography variant="h4" sx={{ marginTop: 10 }}>
+            Creating Booking on Plane {selectedPlane}{" "}
+          </Typography>
+
+          <Card sx={{ marginTop: 3 }}>
+            <CardHeader
+              title="Customer Details"
+              style={{ backgroundColor: "#f5f5f5" }}
+            />
+            <CardContent>
+              <Grid container spacing={2}>
+                <Grid item xs={12} sm={6}>
+                  <TextField
+                    label="First Name"
+                    value={firstName}
+                    onChange={(e) => setFirstName(e.target.value.trim())}
+                    fullWidth
+                    disabled={isCustomerEditDisabled}
+                    required
+                  />
+                </Grid>
+                <Grid item xs={12} sm={6}>
+                  <TextField
+                    label="Last Name"
+                    value={lastName}
+                    onChange={(e) => setLastName(e.target.value.trim())}
+                    fullWidth
+                    disabled={isCustomerEditDisabled}
+                    required
+                  />
+                </Grid>
+                <Grid item xs={12} sm={6}>
+                  <TextField
+                    label="Email"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value.trim())}
+                    fullWidth
+                    disabled={isCustomerEditDisabled}
+                    required
+                    error={!!email && !validateEmail(email)} // Convert to boolean
+                    helperText={
+                      email && !validateEmail(email)
+                        ? "Enter a valid email address"
+                        : ""
+                    }
+                  />
+                </Grid>
+                <Grid item xs={12} sm={6}>
+                  <TextField
+                    label="Confirm Email"
+                    value={confirmEmail}
+                    onChange={(e) => setConfirmEmail(e.target.value.trim())}
+                    fullWidth
+                    disabled={isCustomerEditDisabled}
+                    required
+                    error={!!confirmEmail && email !== confirmEmail}
+                    helperText={
+                      confirmEmail && email !== confirmEmail
+                        ? "Email addresses do not match"
+                        : ""
+                    }
+                  />
+                </Grid>
+                <Grid item xs={12} sm={6}>
+                  <PhoneInput
+                    country={"us"}
+                    value={phoneNumber}
+                    onChange={(phone, countryData) => {
+                      setPhoneNumber(phone.trim());
+                      setPhoneCountryCode(`+${countryData.dialCode}`);
+                    }}
+                    inputStyle={{
+                      fontSize: "16px",
+                      width: "100%",
+                      height: "56px", // Ensure this matches the height of TextField inputs
+                      borderRadius: "4px",
+                      borderColor:
+                        phoneNumber && !validatePhoneNumber(phoneNumber)
+                          ? "red"
+                          : "",
+                    }}
+                    inputProps={{
+                      required: true,
+                      disabled: isCustomerEditDisabled,
+                    }}
+                    specialLabel="Phone Number *"
+                  />
+
+                  {phoneNumber && !validatePhoneNumber(phoneNumber) && (
+                    <Typography variant="body2" color="error">
+                      Enter a valid phone number with country code (e.g.,
+                      +1234567890)
+                    </Typography>
+                  )}
+                </Grid>
+                <Grid item xs={12} sm={6}>
+                  <TextField
+                    label="Nationality"
+                    value={nationality}
+                    onChange={(e) => setNationality(e.target.value.trim())}
+                    fullWidth
+                    disabled={isCustomerEditDisabled}
+                    required
+                  />
+                </Grid>
+              </Grid>
+              <Box mt={2} display="flex" justifyContent="flex-end">
+                <Button
+                  variant="contained"
+                  color="primary"
+                  onClick={
+                    isCustomerEditDisabled
+                      ? handleEditCustomer
+                      : handleSaveCustomer
+                  }
+                  disabled={
+                    !firstName ||
+                    !lastName ||
+                    !email ||
+                    !confirmEmail ||
+                    !phoneNumber ||
+                    !nationality ||
+                    !validateEmail(email) ||
+                    email !== confirmEmail ||
+                    !validatePhoneNumber(phoneNumber)
+                  }
+                >
+                  {isCustomerEditDisabled ? "Edit Customer" : "Save Customer"}
+                </Button>
+              </Box>
+            </CardContent>
+          </Card>
+          <Card sx={{ marginTop: 3 }}>
+            <CardHeader
+              title="Add any extra Passengers"
+              style={{ backgroundColor: "#f5f5f5", padding: 16 }}
+              action={
+                <Button
+                  onClick={handleAddPassenger}
+                  variant="text"
+                  color="primary"
+                  disabled={!isCustomerEditDisabled}
+                >
+                  Add Passenger
+                </Button>
+              }
+            />
+            <CardContent>
+              {extraPassengers.map((passenger, index) => (
+                <Grid
+                  container
+                  spacing={2}
+                  key={index}
+                  sx={{ marginBottom: 2 }}
+                >
+                  <Grid item xs={12} sm={4}>
+                    <TextField
+                      label="First Name"
+                      value={passenger.firstName}
+                      onChange={(e) =>
+                        handlePassengerChange(
+                          index,
+                          "firstName",
+                          e.target.value
+                        )
+                      }
+                      fullWidth
+                      disabled={isEditDisabled && !passenger.isNew}
+                      required
+                    />
+                  </Grid>
+                  <Grid item xs={12} sm={4}>
+                    <TextField
+                      label="Last Name"
+                      value={passenger.lastName}
+                      onChange={(e) =>
+                        handlePassengerChange(index, "lastName", e.target.value)
+                      }
+                      fullWidth
+                      disabled={isEditDisabled && !passenger.isNew}
+                      required
+                    />
+                  </Grid>
+                  <Grid item xs={12} sm={3}>
+                    <TextField
+                      label="Nationality"
+                      value={passenger.nationality}
+                      onChange={(e) =>
+                        handlePassengerChange(
+                          index,
+                          "nationality",
+                          e.target.value
+                        )
+                      }
+                      fullWidth
+                      disabled={isEditDisabled && !passenger.isNew}
+                      required
+                    />
+                  </Grid>
+                  <Grid item xs={12} sm={1}>
+                    <IconButton
+                      onClick={() => handleDeletePassenger(index)}
+                      disabled={isEditDisabled}
+                    >
+                      <DeleteIcon />
+                    </IconButton>
+                  </Grid>
+                </Grid>
+              ))}
+              {extraPassengers.length > 0 && (
+                <Box mt={2} display="flex" justifyContent="flex-end">
+                  <Button
+                    variant="contained"
+                    color="primary"
+                    onClick={
+                      isEditDisabled
+                        ? handleEditPassengers
+                        : handleSavePassengers
+                    }
+                    disabled={extraPassengers.some(
+                      (passenger) =>
+                        !passenger.firstName ||
+                        !passenger.lastName ||
+                        !passenger.nationality
+                    )}
+                  >
+                    {isEditDisabled ? "Edit Passengers" : "Save Passengers"}
+                  </Button>
+                </Box>
+              )}
+            </CardContent>
+          </Card>
+
+          <PaymentFormComponent
+            // handleSubmit={handleSubmit}
+            isParentFormValid={isFormValid}
+          />
+        </>
       )}
     </Container>
   );

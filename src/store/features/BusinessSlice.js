@@ -15,8 +15,7 @@ const initialState = {
   tax: null,
   emails: [],
   merchant_account_details: [],
-  business_settings_for_customer: [],
-  business_settings_for_employee: [],
+  business_settings: [],
 };
 
 const business = createSlice({
@@ -26,7 +25,7 @@ const business = createSlice({
     setBusinessDetails: (state, action) => {
       state.business_details = action.payload;
     },
-    setTax: (state, action) => { 
+    setTax: (state, action) => {
       state.tax = action.payload;
     },
     setEmails: (state, action) => {
@@ -35,20 +34,16 @@ const business = createSlice({
     setMerchantAccountDetails: (state, action) => {
       state.merchant_account_details = action.payload;
     },
-    setBusinessSettingsForCustomer: (state, action) => {
-      state.business_settings_for_customer = action.payload;
+    setBusinessSettings: (state, action) => {
+      state.business_settings = action.payload;
     },
-    setBusinessSettingsForEmployee: (state, action) => {
-      state.business_settings_for_employee = action.payload;
-    },
+
     resetBusiness: (state) => {
       state.business_details = initialState.business_details;
       state.emails = initialState.emails;
       state.merchant_account_details = initialState.merchant_account_details;
-      state.business_settings_for_customer =
-        initialState.business_settings_for_customer;
-      state.business_settings_for_employee =
-        initialState.business_settings_for_employee;
+      state.business_settings = initialState.business_settings;
+      state.business_settings = initialState.business_settings;
     },
   },
 });
@@ -58,8 +53,8 @@ export const {
   setTax,
   setEmails,
   setMerchantAccountDetails,
-  setBusinessSettingsForCustomer,
-  setBusinessSettingsForEmployee,
+  setBusinessSettings,
+
   resetBusiness,
 } = business.actions;
 export default business.reducer;

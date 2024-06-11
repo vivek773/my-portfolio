@@ -133,17 +133,19 @@ const DetailsSectionComponent = () => {
                 <FormControl>
                   <Typography variant="subtitle1">{element.label}</Typography>
                   <Typography paragraph>
-                    {element.key === "category" ?
-                      (element.value
-                        ? CATEGORY_OPTIONS.find((item) => item.value === element.value).label
-                        : "-")
-                      : (element.value
-                        ? (element.key === "hourly_rate"
-                          ? `$${element.value}`
-                          : (element.key === "cruise_speed_kts"
-                            ? `${element.value} kts`
-                            : element.value))
-                        : "-")}
+                    {element.key === "category"
+                      ? element.value
+                        ? CATEGORY_OPTIONS.find(
+                            (item) => item.value === element.value
+                          ).label
+                        : "-"
+                      : element.value
+                      ? element.key === "hourly_rate"
+                        ? `${element.value}`
+                        : element.key === "cruise_speed_kts"
+                        ? `${element.value} kts`
+                        : element.value
+                      : "-"}
                   </Typography>
                 </FormControl>
               </Grid>

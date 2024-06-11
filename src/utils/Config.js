@@ -45,23 +45,23 @@ export const ADMIN_CONFIG = [
     path: "destinations",
     icon: <FmdGoodIcon />,
   },
+  // {
+  //   title: "Statistics",
+  //   path: "stats",
+  //   icon: <AssessmentIcon />,
+  // },
+  // {
+  //   title: "Flight Logs",
+  //   path: "flight-logs",
+  //   icon: <MenuBookIcon />,
+  // },
+  // {
+  //   title: "Maintenance Logs",
+  //   path: "maintenance-logs",
+  //   icon: <BuildIcon />,
+  // },
   {
-    title: "Statistics",
-    path: "stats",
-    icon: <AssessmentIcon />,
-  },
-  {
-    title: "Flight Logs",
-    path: "flight-logs",
-    icon: <MenuBookIcon />,
-  },
-  {
-    title: "Maintenance Logs",
-    path: "maintenance-logs",
-    icon: <BuildIcon />,
-  },
-  {
-    title: "User",
+    title: "Users",
     path: "users",
     icon: <GroupIcon />,
   },

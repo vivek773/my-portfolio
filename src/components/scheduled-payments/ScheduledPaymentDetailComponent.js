@@ -150,7 +150,7 @@ const ScheduledPaymentDetailComponent = () => {
                 Amount
               </Typography>
               <Typography paragraph align="center">
-                ${formatCurrency(paymentDetails?.amount) || "-"}
+                {formatCurrency(paymentDetails?.amount) || "-"}
               </Typography>
             </Grid>
             <Grid

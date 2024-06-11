@@ -1,40 +1,32 @@
-// Custom input component
-
 // MUI Components
 import TextField from "@mui/material/TextField";
 import InputAdornment from "@mui/material/InputAdornment";
 import IconButton from "@mui/material/IconButton";
-
-// MUI styles
-import { makeStyles } from "@mui/styles";
+import { styled } from "@mui/system";
 
 // Utils
 import { TEXT_FIELD } from "../../utils/Color";
 
-const useStyles = makeStyles(() => ({
-  root: {
-    "& .MuiInputLabel-root": {
-      color: TEXT_FIELD.labelColor,
+const StyledTextField = styled(TextField)(({ theme }) => ({
+  "& .MuiInputLabel-root": {
+    color: TEXT_FIELD.labelColor,
+  },
+  "& .MuiInputLabel-root.Mui-focused": {
+    color: TEXT_FIELD.labelFocusedColor,
+  },
+  "& .MuiOutlinedInput-root": {
+    "& fieldset": {
+      borderColor: TEXT_FIELD.borderColor,
     },
-    "& .MuiInputLabel-root.Mui-focused": {
-      color: TEXT_FIELD.labelFocusedColor,
-    },
-    "& .MuiOutlinedInput-root": {
-      "& fieldset": {
-        borderColor: TEXT_FIELD.borderColor,
-      },
-      "&.Mui-focused fieldset": {
-        borderColor: TEXT_FIELD.borderFocusedColor,
-      },
+    "&.Mui-focused fieldset": {
+      borderColor: TEXT_FIELD.borderFocusedColor,
     },
   },
-  inputNumber: {
-    "& input[type=number]": {
-      "-moz-appearance": "textfield",
-      "&::-webkit-outer-spin-button, &::-webkit-inner-spin-button": {
-        "-webkit-appearance": "none",
-        margin: 0,
-      },
+  "& input[type=number]": {
+    "-moz-appearance": "textfield",
+    "&::-webkit-outer-spin-button, &::-webkit-inner-spin-button": {
+      "-webkit-appearance": "none",
+      margin: 0,
     },
   },
 }));
@@ -50,12 +42,11 @@ const CustomInput = ({
   required = false,
   onIconClick,
   iconPosition = "end",
-  helperText=""
+  helperText = "",
 }) => {
-  const classes = useStyles();
   const error = formik?.errors?.[name] && formik?.touched?.[name];
   return (
-    <TextField
+    <StyledTextField
       fullWidth
       name={name}
       label={label}
@@ -74,7 +65,6 @@ const CustomInput = ({
           </InputAdornment>
         ) : null,
       }}
-      className={`${classes.root} ${type === 'number' ? classes.inputNumber : ''}`}
     />
   );
 };

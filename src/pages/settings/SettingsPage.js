@@ -1,6 +1,3 @@
-// Setting page
-
-// Default
 import { useEffect, useState } from "react";
 
 // MUI components
@@ -15,24 +12,22 @@ import {
   setTax,
   setEmails,
   setMerchantAccountDetails,
-  setBusinessSettingsForCustomer,
-  setBusinessSettingsForEmployee,
+  setBusinessSettings,
 } from "../../store/features/BusinessSlice";
 
 // Custom
 import HelmetComponent from "../../components/helmet/HelmetComponent";
 import BusinessDetailsComponent from "../../components/business/BusinessDetailsComponent";
 import BusinessEmailsComponent from "../../components/business/BusinessEmailsComponent";
-import BusinessTaxComponent from "../../components/business/BusinessTaxComponent";
 import BusinessMerchantAccountDetailsComponent from "../../components/business/BusinessMerchantAccountComponent";
-import BusinessSettingsForCustomerComponent from "../../components/business/BusinessSettingsForCustomerComponent";
-import BusinessSettingsForEmployeeComponent from "../../components/business/BusinessSettingsForEmployeeComponent";
 import SpinnerComponent from "../../components/spinner/SpinnerComponent";
 
 // Utils
 import { EDISPATCHED_HELMET } from "../../utils/Constants";
 import { fetchGETRequest } from "../../utils/Services";
 import EmbedCustomerAppCard from "../../components/business/EmbedCustomer";
+import BusinessTicketPaymentSettingsCardComponent from "../../components/business/BusinessTicketPaymentSettingsCardComponent";
+import BusinessTaxSettingsCardComponents from "../../components/business/BusinessTaxSettingsComponentCard";
 
 function SettingsPage() {
   const dispatch = useDispatch();
@@ -60,8 +55,7 @@ function SettingsPage() {
           emails,
           tax,
           merchant_account_details,
-          business_settings_for_customer,
-          business_settings_for_employee,
+          business_settings,
         } = response.data;
         dispatch(
           setBusinessDetails({
@@ -78,12 +72,7 @@ function SettingsPage() {
         dispatch(setTax(tax));
         dispatch(setEmails(emails));
         dispatch(setMerchantAccountDetails(merchant_account_details));
-        dispatch(
-          setBusinessSettingsForCustomer(business_settings_for_customer)
-        );
-        dispatch(
-          setBusinessSettingsForEmployee(business_settings_for_employee)
-        );
+        dispatch(setBusinessSettings(business_settings));
         setIsLoading(false);
       } else {
         setIsLoading(false);
@@ -116,19 +105,10 @@ function SettingsPage() {
           {!isLoading && (
             <>
               <BusinessDetailsComponent details={business.business_details} />
-              <BusinessEmailsComponent emails={business.emails} />
-              <BusinessMerchantAccountDetailsComponent
-                merchantAccountDetails={business?.merchant_account_details}
-              />
 
-              <BusinessSettingsForCustomerComponent
-                settings={business?.business_settings_for_customer}
-                tax={business?.tax}
-              />
-              {/* <BusinessTaxComponent tax={business?.tax} /> */}
-              <BusinessSettingsForEmployeeComponent
-                settings={business?.business_settings_for_employee}
-              />
+              <BusinessTaxSettingsCardComponents />
+              <BusinessTicketPaymentSettingsCardComponent />
+              <BusinessEmailsComponent emails={business.emails} />
               <EmbedCustomerAppCard />
             </>
           )}

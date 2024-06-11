@@ -127,7 +127,7 @@ const DestinationDetailComponent = () => {
                 Destination Specific Cost
               </Typography>
               <Typography paragraph align="center">
-                ${formatCurrency(destinationDetails?.destination_specific_cost)}
+                {formatCurrency(destinationDetails?.destination_specific_cost)}
               </Typography>
             </Grid>
             <Grid

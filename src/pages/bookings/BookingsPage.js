@@ -44,6 +44,8 @@ const BookingsPage = () => {
   const [limit, setLimit] = useState(10);
   const { isLoading, startLoading, stopLoading } = useLoader();
   const state = useSelector((state) => state.bookings);
+  const [searchText, setSearchText] = useState("");
+  const [filteredBookings, setFilteredBookings] = useState([]);
 
   const TABLE_HEAD = [
     { id: "index", label: "#" },
@@ -96,7 +98,21 @@ const BookingsPage = () => {
   const handleView = (data) => {
     navigate(`/bookings/${data?.booking_id}`, { state: data });
   };
+  useEffect(() => {
+    const filterBookingData = () => {
+      if (!searchText) {
+        return state?.bookings || [];
+      }
+      return state?.bookings?.filter((item) => {
+        const booking = `${item.booking_reference}`.toLowerCase();
 
+        return booking.includes(searchText.toLowerCase());
+      });
+    };
+
+    const result = filterBookingData();
+    setFilteredBookings(result);
+  }, [searchText, state?.bookings]);
   return (
     <>
       <HelmetComponent title={`${EDISPATCHED_HELMET} Bookings`} />
@@ -111,11 +127,13 @@ const BookingsPage = () => {
           <Typography variant="h4" gutterBottom mb={0}>
             Bookings
           </Typography>
-       
         </Stack>
 
         <Card>
-        <BookingsToolbar />
+          <BookingsToolbar
+            searchValue={searchText}
+            onChange={(e) => setSearchText(e.target.value)}
+          />
           <TableContainer sx={{ minWidth: 800 }}>
             <Table>
               <TableHead>
@@ -128,9 +146,9 @@ const BookingsPage = () => {
                 </TableRow>
               </TableHead>
               <TableBody>
-                {Array.isArray(state?.bookings) &&
-                state?.bookings.length > 0 ? (
-                  state?.bookings?.map((booking, index) => (
+                {Array.isArray(filteredBookings) &&
+                filteredBookings.length > 0 ? (
+                  filteredBookings.map((booking, index) => (
                     <TableRow hover key={booking.booking_id || index}>
                       <TableCell align="center">{index + 1}</TableCell>
                       <TableCell align="center">
@@ -152,10 +170,10 @@ const BookingsPage = () => {
                         {booking?.booking_reference}
                       </TableCell>
                       <TableCell align="center">
-                        ${formatCurrency(booking?.total_price)}
+                        {formatCurrency(booking?.total_price)}
                       </TableCell>
                       <TableCell align="center">
-                        ${formatCurrency(booking?.amount_paid)}
+                        {formatCurrency(booking?.amount_paid)}
                       </TableCell>
                       <TableCell align="center">
                         {booking?.number_of_passengers}
@@ -178,7 +196,7 @@ const BookingsPage = () => {
                 ) : (
                   <TableRow>
                     <TableCell colSpan={TABLE_HEAD.length} align="center">
-                      No data available.
+                      No bookings available.
                     </TableCell>
                   </TableRow>
                 )}
