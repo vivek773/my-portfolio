@@ -96,13 +96,13 @@ const AddDestinationComponent = () => {
 
   const handleSetFormValues = (airport = null) => {
     setFormValues({
-      airport_code: airport ? airport.icao : "",
-      airport_name: airport ? airport.name : "",
-      city: airport ? airport.city : "",
-      state: airport ? airport.state.name : "",
-      country: airport ? airport.country.name : "",
-      airport_latitude: airport ? airport.latitude.decimal : "",
-      airport_longitude: airport ? airport.longitude.decimal : "",
+      airport_code: airport?.icao || "",
+      airport_name: airport?.name || "",
+      city: airport?.city || "",
+      state: airport?.state?.name || "",
+      country: airport?.country?.name || "",
+      airport_latitude: airport?.latitude?.decimal || "",
+      airport_longitude: airport?.longitude?.decimal || "",
       destination_specific_cost: 0,
       show_in_departure_list: false,
       show_in_arrival_list: false,
@@ -143,6 +143,9 @@ const AddDestinationComponent = () => {
       formValues.airport_timezone !== null
     ) {
       valuesToSend.airport_timezone = formValues.airport_timezone.value;
+    }
+    if (valuesToSend.destination_specific_cost === "") {
+      valuesToSend.destination_specific_cost = 0;
     }
 
     const response = await fetchPOSTRequest(
@@ -253,7 +256,7 @@ const AddDestinationComponent = () => {
                   <TableCell>{airport.icao}</TableCell>
                   <TableCell>{airport.name}</TableCell>
                   <TableCell>{airport.city}</TableCell>
-                  <TableCell>{airport.state.name}</TableCell>
+                  <TableCell>{airport.state?.name || ""}</TableCell>
                   <TableCell>{airport.country.name}</TableCell>
                   <TableCell>
                     <Button
@@ -305,7 +308,6 @@ const AddDestinationComponent = () => {
                       label="State"
                       value={formValues.state}
                       onChange={handleChange}
-                      required
                       fullWidth
                     />
                     <TextField
