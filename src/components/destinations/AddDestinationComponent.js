@@ -29,7 +29,7 @@ import {
   Typography,
 } from "@mui/material";
 
-const AddDestinationComponent = () => {
+const AddDestinationComponent = ({ onAddDestination, destinationType }) => {
   const { setToast } = useToast();
   const navigate = useNavigate();
   const { isLoading, startLoading, stopLoading } = useLoader();
@@ -160,7 +160,12 @@ const AddDestinationComponent = () => {
         severity: "success",
       });
       stopLoading();
-      navigate(-1);
+
+      if (onAddDestination) {
+        onAddDestination(response.data);
+      } else {
+        navigate(-1);
+      }
     } else {
       setToast({
         open: true,

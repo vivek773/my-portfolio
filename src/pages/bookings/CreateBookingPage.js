@@ -14,6 +14,9 @@ import {
   Box,
   CardHeader,
   IconButton,
+  DialogContent,
+  DialogTitle,
+  Dialog,
 } from "@mui/material";
 import { LocalizationProvider, DatePicker } from "@mui/x-date-pickers";
 import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
@@ -26,6 +29,7 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import PhoneInput from "react-phone-input-2";
 import "react-phone-input-2/lib/style.css";
 import PaymentFormComponent from "./PaymentFormComponent";
+import AddDestinationComponent from "../../components/destinations/AddDestinationComponent";
 
 function CreateBookingPage() {
   const [destinations, setDestinations] = useState([]);
@@ -38,6 +42,9 @@ function CreateBookingPage() {
   const [selectedArrivalTime, setSelectedArrivalTime] = useState("");
   const [loading, setLoading] = useState(false);
   const [selectedPlane, setSelectedPlane] = useState(null);
+  const [openAddDestination, setOpenAddDestination] = useState(false);
+  const [destinationType, setDestinationType] = useState("");
+  const [newDestination, setNewDestination] = useState(null);
 
   // customer details
   const [firstName, setFirstName] = useState("");
@@ -124,14 +131,6 @@ function CreateBookingPage() {
     }
   };
 
-  const filteredDepartureDestinations = destinations.filter(
-    (dest) => dest.show_in_departure_list && dest.airport_code !== arrival
-  );
-
-  const filteredArrivalDestinations = destinations.filter(
-    (dest) => dest.show_in_arrival_list && dest.airport_code !== departure
-  );
-
   const isFormValid =
     departure &&
     arrival &&
@@ -191,6 +190,43 @@ function CreateBookingPage() {
     setIsEditDisabled(true);
   };
 
+  const handleOpenAddDestinationModal = (type) => {
+    setDestinationType(type);
+    setOpenAddDestination(true);
+  };
+
+  const handleCloseAddDestinationModal = async () => {
+    setOpenAddDestination(false);
+
+    // Refetch destinations after adding a new one
+    const response = await fetchGETRequest(
+      `/destination/owner/get-destinations`
+    );
+
+    if (response?.statusCode === 200 && response.destinations) {
+      setDestinations(response.destinations);
+    }
+
+    setDestinationType("");
+  };
+
+  const handleAddDestination = (newDestination) => {
+    // Update destinations state with the new destination
+    setDestinations((prevDestinations) => [
+      ...prevDestinations,
+      newDestination,
+    ]);
+
+    // Automatically select the newly added destination
+    if (destinationType === "departure") {
+      setDeparture(newDestination.airport_code);
+    } else if (destinationType === "arrival") {
+      setArrival(newDestination.airport_code);
+    }
+
+    setOpenAddDestination(false); // Close the modal
+  };
+
   return (
     <Container>
       <h1>Create Booking</h1>
@@ -219,13 +255,23 @@ function CreateBookingPage() {
             fullWidth
           >
             <MenuItem value="">Select Departure Airport</MenuItem>
-            {filteredDepartureDestinations.map((dest, index) => (
-              <MenuItem key={index} value={dest.airport_code}>
-                {dest.airport_code} - {dest.airport_name}
-              </MenuItem>
-            ))}
+            {destinations
+              .sort((a, b) => a.airport_name.localeCompare(b.airport_name)) // Sort based on airport_name
+              .map((dest, index) => (
+                <MenuItem key={index} value={dest.airport_code}>
+                  {dest.airport_code} - {dest.airport_name}
+                </MenuItem>
+              ))}
+
+            <MenuItem
+              value="+add"
+              onClick={() => handleOpenAddDestinationModal("departure")}
+            >
+              + Add a Destination
+            </MenuItem>
           </TextField>
         </Grid>
+
         <Grid item xs={12} sm={6} md={5}>
           <TextField
             select
@@ -235,11 +281,19 @@ function CreateBookingPage() {
             fullWidth
           >
             <MenuItem value="">Select Arrival Airport</MenuItem>
-            {filteredArrivalDestinations.map((dest, index) => (
-              <MenuItem key={index} value={dest.airport_code}>
-                {dest.airport_code} - {dest.airport_name}
-              </MenuItem>
-            ))}
+            {destinations
+              .sort((a, b) => a.airport_name.localeCompare(b.airport_name)) // Sort based on airport_name
+              .map((dest, index) => (
+                <MenuItem key={index} value={dest.airport_code}>
+                  {dest.airport_code} - {dest.airport_name}
+                </MenuItem>
+              ))}
+            <MenuItem
+              value="+add"
+              onClick={() => handleOpenAddDestinationModal("arrival")}
+            >
+              + Add a Destination
+            </MenuItem>
           </TextField>
         </Grid>
       </Grid>
@@ -831,6 +885,18 @@ function CreateBookingPage() {
           />
         </>
       )}
+
+      <Dialog
+        open={openAddDestination}
+        onClose={handleCloseAddDestinationModal}
+        fullWidth
+        maxWidth="md"
+      >
+        <DialogTitle>Add a Destination</DialogTitle>
+        <DialogContent>
+          <AddDestinationComponent onAddDestination={handleAddDestination} />
+        </DialogContent>
+      </Dialog>
     </Container>
   );
 }
