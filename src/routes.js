@@ -26,6 +26,7 @@ import UserViewComponent from "./components/user/UserViewComponent";
 import ProfilePage from "./pages/profile/ProfilePage";
 import DestinationViewComponent from "./components/destinations/DestinationViewComponent";
 import ScheduledPaymentViewComponent from "./components/scheduled-payments/ScheduledPaymentViewComponent";
+import ForgetPassword from "./pages/forgetPassword/ForgetPassword";
 
 // Protected Routes
 import ProtectedRoute from "./protectedroute/ProtectedRoute";
@@ -42,6 +43,7 @@ const MainRouter = () => {
     <Routes>
       <Route path={"register"} element={<SignupPage />} />
       <Route path={"login"} element={<LoginPage />} />
+      <Route path={"forgot-password"} element={<ForgetPassword />} />
       <Route path={"/"} element={wrapWithProtectedRoute(<DashboardLayout />)}>
         <Route path={"fleet"} element={wrapWithProtectedRoute(<FleetPage />)} />
         <Route

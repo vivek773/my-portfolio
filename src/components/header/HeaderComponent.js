@@ -40,12 +40,12 @@ const StyledToolbar = styled(Toolbar)(({ theme }) => ({
   },
 }));
 
-const HeaderComponent = ({ onOpenNav }) => {
+const HeaderComponent = ({ onOpenNav, heightRef }) => {
 
   const auth = useSelector((state) => state.auth)
 
   return (
-    <StyledRoot>
+    <StyledRoot ref={heightRef}>
       <StyledToolbar>
         <IconButton
           onClick={onOpenNav}
