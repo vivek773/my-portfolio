@@ -11,7 +11,7 @@ import { styled } from '@mui/material/styles';
 import SidebarComponent from '../components/sidebar/SidebarComponent';
 import HeaderComponent from '../components/header/HeaderComponent';
 
-const APP_BAR_MOBILE = 10;
+const APP_BAR_MOBILE = 20;
 const APP_BAR_DESKTOP = 92;
 
 const StyledRoot = styled('div')({

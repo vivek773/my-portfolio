@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import {
   ScheduleComponent,
   TimelineViews,
@@ -22,10 +22,13 @@ import { COLOR_OBJECT } from "../../utils/Color";
 const CalendarPage = () => {
   const [data, setData] = useState([]);
   const [PilotData, setPilotData] = useState([]);
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
   const [selectedDate, setSelectedDate] = useState(new Date());
+  const [view, setView] = useState("TimelineDay");
+  const scheduleRef = useRef(null);
 
   const getBookingsData = async (startDate, endDate) => {
+    console.log({ startDate, endDate }, "Asasa");
     setIsLoading(true);
     try {
       const response = await fetchGETRequest(
@@ -77,40 +80,52 @@ const CalendarPage = () => {
     }
   };
 
-  useEffect(() => {
-    const startDate = new Date(selectedDate);
-    startDate.setDate(startDate.getDate() - 1);
-    const endDate = new Date(startDate);
-    endDate.setMonth(endDate.getMonth() + 1);
-    endDate.setDate(endDate.getDate() + 1);
-
-    getBookingsData(startDate, endDate);
-  }, []);
-
-  const handleDateChange = (args) => {
-    setSelectedDate(args.value);
-  };
-
-  const handleActionComplete = (args) => {
-    if (
-      args.requestType === "viewNavigate" ||
-      args.requestType === "dateNavigate"
-    ) {
-      const newDate = args.currentDate;
-      const startDate = new Date(newDate);
-      startDate.setDate(startDate.getDate() - 1);
-      const endDate = new Date(startDate);
-      endDate.setMonth(endDate.getMonth() + 1);
-      endDate.setDate(endDate.getDate() + 1);
-
-      getBookingsData(startDate, endDate);
-    }
-  };
-
   const fleetData = [
     { text: "PLANES", id: "plane", color: "#cb6bb2" },
     { text: "PILOTS", id: "pilot", color: "#56ca85" },
   ];
+  useEffect(() => {
+    let startDate = new Date(selectedDate);
+    let endDate = new Date(selectedDate);
+    switch (view) {
+      case "TimelineDay":
+        startDate.setHours(0, 0, 0, 0);
+        endDate.setHours(23, 59, 59, 999);
+        break;
+      case "TimelineWeek":
+        startDate.setDate(startDate.getDate() - startDate.getDay());
+        startDate.setHours(0, 0, 0, 0);
+        endDate.setDate(startDate.getDate() + 6);
+        endDate.setHours(23, 59, 59, 999);
+        break;
+      case "TimelineMonth":
+        startDate.setDate(1);
+        startDate.setHours(0, 0, 0, 0);
+        endDate = new Date(
+          startDate.getFullYear(),
+          startDate.getMonth() + 1,
+          0
+        );
+        endDate.setHours(23, 59, 59, 999);
+        break;
+      case "Agenda":
+        startDate.setHours(0, 0, 0, 0);
+        endDate.setDate(startDate.getDate() + 30);
+        endDate.setHours(23, 59, 59, 999);
+        break;
+      default:
+        break;
+    }
+    getBookingsData(startDate, endDate);
+  }, [view, selectedDate]);
+  const handleNavigating = (args) => {
+    if (args?.action == "date") {
+      setSelectedDate(args?.currentDate);
+    }
+    if (args?.action == "view") {
+      setView(args?.currentView);
+    }
+  };
 
   return (
     <>
@@ -124,7 +139,7 @@ const CalendarPage = () => {
             display: "flex",
             justifyContent: "center",
             alignItems: "center",
-            height: "100vh",
+            height: "50vh",
           }}
         >
           <CircularProgress />
@@ -134,13 +149,14 @@ const CalendarPage = () => {
           <div className="col-lg-12 control-section">
             <div className="control-wrapper">
               <ScheduleComponent
+                ref={scheduleRef}
                 cssClass="timeline-resource-grouping"
                 width="100%"
                 height="auto"
                 rowAutoHeight={true}
                 showQuickInfo={false}
-                selectedDate={selectedDate}
-                currentView="TimelineWeek"
+                //  selectedDate={selectedDate}
+                currentView={view}
                 eventSettings={{
                   dataSource: data,
                   ignoreWhitespace: true,
@@ -148,8 +164,7 @@ const CalendarPage = () => {
                   allowAdding: false,
                 }}
                 group={{ resources: ["Planes", "Pilots"] }}
-                dateChange={handleDateChange}
-                actionComplete={handleActionComplete}
+                navigating={handleNavigating}
               >
                 <ResourcesDirective>
                   <ResourceDirective
