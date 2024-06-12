@@ -349,14 +349,14 @@ const AddDestinationComponent = ({ onAddDestination, destinationType }) => {
                     />
                     <SwitchComponent
                       value={formValues.show_in_departure_list}
-                      label={"Show In Departure List"}
+                      label={"Show in Departure List (Customer App)"}
                       onChange={() =>
                         handleSwitchChange("show_in_departure_list")
                       }
                     />
                     <SwitchComponent
                       value={formValues.show_in_arrival_list}
-                      label={"Show In Arrival List"}
+                      label={"Show in Arrival List (Customer App)"}
                       onChange={() =>
                         handleSwitchChange("show_in_arrival_list")
                       }

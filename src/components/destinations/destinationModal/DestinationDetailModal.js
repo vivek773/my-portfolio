@@ -177,7 +177,7 @@ const DestinationDetailsModal = ({ destinationDetails, destinationData }) => {
 
           <SwitchComponent
             value={formik.values.show_in_arrival_list}
-            label={"Show In Arrival List"}
+            label={"Show in Arrival List (Customer App)"}
             onChange={() =>
               formik.setFieldValue(
                 "show_in_arrival_list",
@@ -187,7 +187,7 @@ const DestinationDetailsModal = ({ destinationDetails, destinationData }) => {
           />
           <SwitchComponent
             value={formik.values.show_in_departure_list}
-            label={"Show In Departure List"}
+            label={"Show in Departure List (Customer App)"}
             onChange={() =>
               formik.setFieldValue(
                 "show_in_departure_list",
