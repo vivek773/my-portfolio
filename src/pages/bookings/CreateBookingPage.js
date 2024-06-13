@@ -123,7 +123,7 @@ function CreateBookingPage() {
       setLoading(false);
 
       if (response && response.data) {
-        setPriceData(response.data);
+        setPriceData(response.data.priceDetails);
       }
     } catch (error) {
       setLoading(false);
@@ -645,9 +645,9 @@ function CreateBookingPage() {
       )}
 
       {selectedPlane && (
-        <>
+        <Container maxWidth={"md"}>
           <Typography variant="h4" sx={{ marginTop: 10 }}>
-            Creating Booking on Plane {selectedPlane}{" "}
+            Creating Booking on Plane {selectedPlane}
           </Typography>
 
           <Card sx={{ marginTop: 3 }}>
@@ -883,7 +883,7 @@ function CreateBookingPage() {
             // handleSubmit={handleSubmit}
             isParentFormValid={isFormValid}
           />
-        </>
+        </Container>
       )}
 
       <Dialog
