@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect } from "react";
 import {
   ScheduleComponent,
   TimelineViews,
@@ -14,7 +14,7 @@ import {
 } from "@syncfusion/ej2-react-schedule";
 import { Typography, CircularProgress } from "@mui/material";
 import HelmetComponent from "../../components/helmet/HelmetComponent";
-import { EDISPATCHED_HELMET } from "../../utils/Constants";
+import { EDISPATCHED } from "../../utils/Constants";
 import "./timeline-resource-grouping.css";
 import { fetchGETRequest } from "../../utils/Services";
 import { COLOR_OBJECT } from "../../utils/Color";
@@ -22,13 +22,14 @@ import { COLOR_OBJECT } from "../../utils/Color";
 const CalendarPage = () => {
   const [data, setData] = useState([]);
   const [PilotData, setPilotData] = useState([]);
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
   const [selectedDate, setSelectedDate] = useState(new Date());
-  const [view, setView] = useState("TimelineDay");
-  const scheduleRef = useRef(null);
+  const [viewedStartDateArray, setViewedStartDateArray] = useState([]);
 
   const getBookingsData = async (startDate, endDate) => {
-    console.log({ startDate, endDate }, "Asasa");
+    setViewedStartDateArray((prevDates) => [...prevDates, startDate]);
+    console.log("Start date array in getBookingData: " + viewedStartDateArray);
+
     setIsLoading(true);
     try {
       const response = await fetchGETRequest(
@@ -80,56 +81,69 @@ const CalendarPage = () => {
     }
   };
 
+  const isDateViewed = (date) => {
+    for (let d of viewedStartDateArray) {
+      const startDate = new Date(d);
+      const endDate = new Date(startDate);
+      endDate.setDate(endDate.getDate() + 30);
+      if (date >= startDate && date <= endDate) {
+        return true;
+      }
+    }
+    return false;
+  };
+
+  useEffect(() => {
+    console.log("Updated start date array: ", viewedStartDateArray);
+  }, [viewedStartDateArray]);
+
+  const handleNavigation = async (args) => {
+    const newDate = new Date(args.currentDate);
+    console.log("Navigated to: " + newDate.toISOString());
+
+    const viewed = isDateViewed(newDate);
+    console.log("Date viewed: " + viewed);
+
+    if (!viewed) {
+      const startDate = new Date(newDate);
+      const endDate = new Date(startDate);
+      endDate.setDate(endDate.getDate() + 30);
+      console.log(
+        "Fetching new data for: " +
+          startDate.toISOString() +
+          " to " +
+          endDate.toISOString()
+      );
+
+      await getBookingsData(startDate, endDate);
+
+      setViewedStartDateArray((prevDates) => [...prevDates, startDate]);
+      setSelectedDate(newDate);
+    } else {
+      setSelectedDate(newDate);
+    }
+  };
+
+  useEffect(() => {
+    const today = new Date();
+    if (!isDateViewed(today)) {
+      const startDate = new Date(selectedDate);
+      startDate.setDate(startDate.getDate() - 1);
+      const endDate = new Date(startDate);
+      endDate.setMonth(endDate.getMonth() + 1);
+      endDate.setDate(endDate.getDate() + 1);
+      getBookingsData(startDate, endDate);
+    }
+  }, []);
+
   const fleetData = [
     { text: "PLANES", id: "plane", color: "#cb6bb2" },
     { text: "PILOTS", id: "pilot", color: "#56ca85" },
   ];
-  useEffect(() => {
-    let startDate = new Date(selectedDate);
-    let endDate = new Date(selectedDate);
-    switch (view) {
-      case "TimelineDay":
-        startDate.setHours(0, 0, 0, 0);
-        endDate.setHours(23, 59, 59, 999);
-        break;
-      case "TimelineWeek":
-        startDate.setDate(startDate.getDate() - startDate.getDay());
-        startDate.setHours(0, 0, 0, 0);
-        endDate.setDate(startDate.getDate() + 6);
-        endDate.setHours(23, 59, 59, 999);
-        break;
-      case "TimelineMonth":
-        startDate.setDate(1);
-        startDate.setHours(0, 0, 0, 0);
-        endDate = new Date(
-          startDate.getFullYear(),
-          startDate.getMonth() + 1,
-          0
-        );
-        endDate.setHours(23, 59, 59, 999);
-        break;
-      case "Agenda":
-        startDate.setHours(0, 0, 0, 0);
-        endDate.setDate(startDate.getDate() + 30);
-        endDate.setHours(23, 59, 59, 999);
-        break;
-      default:
-        break;
-    }
-    getBookingsData(startDate, endDate);
-  }, [view, selectedDate]);
-  const handleNavigating = (args) => {
-    if (args?.action == "date") {
-      setSelectedDate(args?.currentDate);
-    }
-    if (args?.action == "view") {
-      setView(args?.currentView);
-    }
-  };
 
   return (
     <>
-      <HelmetComponent title={`${EDISPATCHED_HELMET} Calendar`} />
+      <HelmetComponent title={`${EDISPATCHED} | Calendar`} />
       <Typography variant="h4" gutterBottom>
         Calendar
       </Typography>
@@ -139,7 +153,7 @@ const CalendarPage = () => {
             display: "flex",
             justifyContent: "center",
             alignItems: "center",
-            height: "50vh",
+            height: "100vh",
           }}
         >
           <CircularProgress />
@@ -149,14 +163,14 @@ const CalendarPage = () => {
           <div className="col-lg-12 control-section">
             <div className="control-wrapper">
               <ScheduleComponent
-                ref={scheduleRef}
                 cssClass="timeline-resource-grouping"
                 width="100%"
                 height="auto"
                 rowAutoHeight={true}
                 showQuickInfo={false}
-                //  selectedDate={selectedDate}
-                currentView={view}
+                selectedDate={selectedDate}
+                currentView="TimelineWeek"
+                navigating={handleNavigation}
                 eventSettings={{
                   dataSource: data,
                   ignoreWhitespace: true,
@@ -164,7 +178,6 @@ const CalendarPage = () => {
                   allowAdding: false,
                 }}
                 group={{ resources: ["Planes", "Pilots"] }}
-                navigating={handleNavigating}
               >
                 <ResourcesDirective>
                   <ResourceDirective
