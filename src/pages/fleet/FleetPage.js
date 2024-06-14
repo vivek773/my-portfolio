@@ -70,7 +70,7 @@ const FleetPage = () => {
           <Grid container spacing={3}>
             {fleetData?.map((fleet) => {
               return (
-                <Grid item xs={12} sm={6} md={3} key={fleet?.tenant_id}>
+                <Grid item xs={12} sm={6} md={3} key={fleet?.tail_number}>
                   <FleetCardComponent
                     tail_number={fleet.tail_number}
                     year={fleet.year}
