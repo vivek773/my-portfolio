@@ -16,6 +16,7 @@ import {
   setOfferPriceResponse,
   setLoading,
 } from "../../store/features/CreateBookingSlice";
+import { setTax } from "../../store/features/BusinessSlice";
 
 const SearchBookingComponent = () => {
   const dispatch = useDispatch();
@@ -100,6 +101,7 @@ const SearchBookingComponent = () => {
       );
       if (response && response.data) {
         dispatch(setOfferPriceResponse(response.data.priceDetails));
+        dispatch(setTax(response.data.taxSettings.tax_rate));
       }
     } catch (error) {
       console.error("Error fetching booking price:", error);
@@ -122,23 +124,26 @@ const SearchBookingComponent = () => {
   });
 
   return (
-    <Grid container spacing={2} justifyContent={"center"}>
-      <Grid item xs={12} sm={4} mb={5}>
-        <TextField
-          select
-          label="Trip Type"
-          value={tripType}
-          onChange={(e) =>
-            dispatch(setSearchTripDetails({ tripType: e.target.value }))
-          }
-          fullWidth
-        >
-          <MenuItem value="one_way">One Way</MenuItem>
-          <MenuItem value="round_trip">Round Trip</MenuItem>
-        </TextField>
+    <>
+      <Grid container spacing={2} justifyContent={"center"}>
+        <Grid item xs={12} sm={4} mb={5}>
+          <TextField
+            select
+            label="Trip Type"
+            value={tripType}
+            onChange={(e) =>
+              dispatch(setSearchTripDetails({ tripType: e.target.value }))
+            }
+            fullWidth
+          >
+            <MenuItem value="one_way">One Way</MenuItem>
+            <MenuItem value="round_trip">Round Trip</MenuItem>
+          </TextField>
+        </Grid>
       </Grid>
-      <Grid container spacing={2} justifyContent={"center"} mb={5}>
-        <Grid item xs={12} sm={6} md={5}>
+
+      <Grid container spacing={2} justifyContent={"center"}>
+        <Grid item xs={12} sm={6} md={5} mb={5}>
           <TextField
             select
             label="Select Departure"
@@ -159,7 +164,7 @@ const SearchBookingComponent = () => {
               ))}
           </TextField>
         </Grid>
-        <Grid item xs={12} sm={6} md={5}>
+        <Grid item xs={12} sm={6} md={5} mb={5}>
           <TextField
             select
             label="Select Arrival"
@@ -179,8 +184,9 @@ const SearchBookingComponent = () => {
           </TextField>
         </Grid>
       </Grid>
+
       <Grid container spacing={2} justifyContent={"center"}>
-        <Grid item xs={12} sm={6} md={5}>
+        <Grid item xs={12} sm={6} md={5} mb={5}>
           <LocalizationProvider dateAdapter={AdapterDateFns}>
             <DatePicker
               label="Select Departure Date"
@@ -193,7 +199,7 @@ const SearchBookingComponent = () => {
             />
           </LocalizationProvider>
         </Grid>
-        <Grid item xs={12} sm={6} md={5}>
+        <Grid item xs={12} sm={6} md={5} mb={5}>
           <TextField
             select
             label="Select Departure Time"
@@ -211,50 +217,46 @@ const SearchBookingComponent = () => {
             ))}
           </TextField>
         </Grid>
-        {tripType === "round_trip" && (
-          <>
-            <Grid container spacing={2} justifyContent={"center"} mb={5}>
-              <Grid item xs={12} sm={6} md={5}>
-                <LocalizationProvider dateAdapter={AdapterDateFns}>
-                  <DatePicker
-                    label="Select Return Date"
-                    value={returnDate}
-                    onChange={(newValue) =>
-                      dispatch(setSearchTripDetails({ returnDate: newValue }))
-                    }
-                    renderInput={(params) => (
-                      <TextField {...params} fullWidth />
-                    )}
-                    minDate={departureDate || new Date()}
-                  />
-                </LocalizationProvider>
-              </Grid>
-              <Grid item xs={6}>
-                <TextField
-                  select
-                  label="Select Return Time"
-                  value={returnTime}
-                  onChange={(e) =>
-                    dispatch(
-                      setSearchTripDetails({ returnTime: e.target.value })
-                    )
-                  }
-                  fullWidth
-                >
-                  <MenuItem value="">Select Return Time</MenuItem>
-                  {timeOptions.map((time, index) => (
-                    <MenuItem key={index} value={time}>
-                      {time}
-                    </MenuItem>
-                  ))}
-                </TextField>
-              </Grid>
-            </Grid>
-          </>
-        )}
       </Grid>
-      <Grid container spacing={2} justifyContent={"center"} mt={3}>
-        <Grid item xs={12} sm={6} md={5}>
+
+      {tripType === "round_trip" && (
+        <Grid container spacing={2} justifyContent={"center"}>
+          <Grid item xs={12} sm={6} md={5} mb={5}>
+            <LocalizationProvider dateAdapter={AdapterDateFns}>
+              <DatePicker
+                label="Select Return Date"
+                value={returnDate}
+                onChange={(newValue) =>
+                  dispatch(setSearchTripDetails({ returnDate: newValue }))
+                }
+                renderInput={(params) => <TextField {...params} fullWidth />}
+                minDate={departureDate || new Date()}
+              />
+            </LocalizationProvider>
+          </Grid>
+          <Grid item xs={12} sm={6} md={5} mb={5}>
+            <TextField
+              select
+              label="Select Return Time"
+              value={returnTime}
+              onChange={(e) =>
+                dispatch(setSearchTripDetails({ returnTime: e.target.value }))
+              }
+              fullWidth
+            >
+              <MenuItem value="">Select Return Time</MenuItem>
+              {timeOptions.map((time, index) => (
+                <MenuItem key={index} value={time}>
+                  {time}
+                </MenuItem>
+              ))}
+            </TextField>
+          </Grid>
+        </Grid>
+      )}
+
+      <Grid container spacing={2} justifyContent={"center"}>
+        <Grid item xs={12} sm={6} md={5} mb={5}>
           <Button
             variant="contained"
             color="primary"
@@ -267,7 +269,7 @@ const SearchBookingComponent = () => {
           </Button>
         </Grid>
       </Grid>
-    </Grid>
+    </>
   );
 };
 

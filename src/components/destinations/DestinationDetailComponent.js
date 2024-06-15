@@ -28,7 +28,7 @@ const DestinationDetailComponent = () => {
   return (
     <>
       <DestinationCardComponent
-        title={`${destinationDetails?.city} ${destinationDetails?.state}`}
+        title={`${destinationDetails?.city}, ${destinationDetails?.state}`}
         action={
           <CustomButton
             label={"Edit"}

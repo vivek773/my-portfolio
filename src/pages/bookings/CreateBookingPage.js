@@ -32,6 +32,8 @@ import PaymentFormComponent from "./PaymentFormComponent";
 import AddDestinationComponent from "../../components/destinations/AddDestinationComponent";
 import SearchBookingComponent from "../../components/create-booking/SearchBookingComoponent";
 import PlaneSelectionComponent from "../../components/create-booking/PlaneSelectionComponent";
+import CreateBookingFlightSegmentsComponent from "../../components/create-booking/CreateBookingFlightSegmentsComponent";
+import BookingPriceCardComponent from "../../components/create-booking/BookingPriceCardComponent";
 
 function CreateBookingPage() {
   const [destinations, setDestinations] = useState([]);
@@ -235,6 +237,10 @@ function CreateBookingPage() {
       <SearchBookingComponent />
 
       <PlaneSelectionComponent />
+
+      <CreateBookingFlightSegmentsComponent />
+
+      <BookingPriceCardComponent />
 
       {selectedPlane && (
         <Container maxWidth={"md"}>

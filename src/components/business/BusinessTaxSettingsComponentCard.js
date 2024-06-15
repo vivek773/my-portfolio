@@ -44,7 +44,7 @@ const BusinessTaxSettingsCardComponent = () => {
   const businessSettings = useSelector(
     (state) => state.business.business_settings
   );
-  const taxSettings = useSelector((state) => state.business.tax);
+  const taxSettings = useSelector((state) => state.business.tax_rate);
 
   const dispatch = useDispatch();
   const { setToast } = useToast();

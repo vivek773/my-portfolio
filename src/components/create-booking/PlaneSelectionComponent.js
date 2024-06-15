@@ -11,12 +11,7 @@ import {
 import { formatCurrency } from "../../utils/Helper";
 import {
   setSelectedPlaneTailNumber,
-  setBasePrice,
-  setTax,
-  setTotalBookingPrice,
-  setTotalDueNow,
-  setDueLaterAmount,
-  setDueLaterDate,
+  setSelectedPlaneDetails,
 } from "../../store/features/CreateBookingSlice";
 
 function PlaneSelectionComponent() {
@@ -24,15 +19,18 @@ function PlaneSelectionComponent() {
   const offerPriceResponse = useSelector(
     (state) => state.createBooking.offerPriceResponse
   );
+  const selectedPlaneTailNumber = useSelector(
+    (state) => state.createBooking.selectedPlaneDetails.selectedPlaneTailNumber
+  );
 
-  const handlePlaneSelection = (tailNumber, data) => {
-    dispatch(setSelectedPlaneTailNumber(tailNumber));
-    dispatch(setBasePrice(data.basePrice));
-    dispatch(setTax(data.tax));
-    dispatch(setTotalBookingPrice(data.basePrice + data.tax));
-    dispatch(setTotalDueNow(data.totalDueNow));
-    dispatch(setDueLaterAmount(data.amountDueLater));
-    dispatch(setDueLaterDate(data.amountDueLaterDate));
+  const handlePlaneSelection = (tailNumber) => {
+    if (selectedPlaneTailNumber === tailNumber) {
+      dispatch(setSelectedPlaneTailNumber(""));
+      dispatch(setSelectedPlaneDetails({}));
+    } else {
+      dispatch(setSelectedPlaneTailNumber(tailNumber));
+      dispatch(setSelectedPlaneDetails(offerPriceResponse[tailNumber]));
+    }
   };
 
   return (
@@ -46,12 +44,23 @@ function PlaneSelectionComponent() {
         <Grid container item key={tailNumber} xs={12} sm={6} md={5}>
           <Card
             style={{
-              border: "1px solid #ccc",
+              border:
+                selectedPlaneTailNumber === tailNumber
+                  ? "2px solid #479DE1"
+                  : "1px solid #ccc",
               borderRadius: "8px",
               margin: "auto",
               minWidth: "300px",
               maxWidth: "450px",
-              boxShadow: "0 0 5px #ccc",
+              boxShadow:
+                selectedPlaneTailNumber === tailNumber
+                  ? "0 0 10px #479DE1"
+                  : "0 0 5px #ccc",
+              opacity:
+                selectedPlaneTailNumber &&
+                selectedPlaneTailNumber !== tailNumber
+                  ? 0.5
+                  : 1,
               display: "flex",
               flexDirection: "column",
               justifyContent: "space-between",
@@ -115,74 +124,6 @@ function PlaneSelectionComponent() {
                     >
                       <Typography>
                         {data.passengerTotalFlightDuration} hrs
-                      </Typography>
-                    </Grid>
-                    <Grid
-                      item
-                      xs={6}
-                      style={{ textAlign: "right", paddingRight: "10px" }}
-                    >
-                      <Typography>
-                        <b>Base Price:</b>
-                      </Typography>
-                    </Grid>
-                    <Grid
-                      item
-                      xs={6}
-                      style={{ textAlign: "left", paddingLeft: "10px" }}
-                    >
-                      <Typography>{formatCurrency(data.basePrice)}</Typography>
-                    </Grid>
-                    <Grid
-                      item
-                      xs={6}
-                      style={{ textAlign: "right", paddingRight: "10px" }}
-                    >
-                      <Typography>
-                        <b>Amount at Booking:</b>
-                      </Typography>
-                    </Grid>
-                    <Grid
-                      item
-                      xs={6}
-                      style={{ textAlign: "left", paddingLeft: "10px" }}
-                    >
-                      <Typography>
-                        {formatCurrency(data.amountAtTimeOfBooking)}
-                      </Typography>
-                    </Grid>
-                    <Grid
-                      item
-                      xs={6}
-                      style={{ textAlign: "right", paddingRight: "10px" }}
-                    >
-                      <Typography>
-                        <b>Tax:</b>
-                      </Typography>
-                    </Grid>
-                    <Grid
-                      item
-                      xs={6}
-                      style={{ textAlign: "left", paddingLeft: "10px" }}
-                    >
-                      <Typography>{formatCurrency(data.tax)}</Typography>
-                    </Grid>
-                    <Grid
-                      item
-                      xs={6}
-                      style={{ textAlign: "right", paddingRight: "10px" }}
-                    >
-                      <Typography>
-                        <b>Total Due Now:</b>
-                      </Typography>
-                    </Grid>
-                    <Grid
-                      item
-                      xs={6}
-                      style={{ textAlign: "left", paddingLeft: "10px" }}
-                    >
-                      <Typography>
-                        {formatCurrency(data.totalDueNow)}
                       </Typography>
                     </Grid>
                   </Grid>
@@ -265,11 +206,16 @@ function PlaneSelectionComponent() {
               <Box sx={{ mt: 3 }}>
                 <Button
                   variant="contained"
+                  color={
+                    selectedPlaneTailNumber === tailNumber ? "error" : "primary"
+                  }
                   fullWidth
+                  onClick={() => handlePlaneSelection(tailNumber)}
                   style={{ borderRadius: "8px" }}
-                  onClick={() => handlePlaneSelection(tailNumber, data)}
                 >
-                  Select
+                  {selectedPlaneTailNumber === tailNumber
+                    ? "Selected - Reset Selection"
+                    : "Select"}
                 </Button>
               </Box>
             </CardContent>

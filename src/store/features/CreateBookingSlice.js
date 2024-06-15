@@ -13,12 +13,29 @@ const initialState = {
   offerPriceResponse: {},
   selectedPlaneDetails: {
     selectedPlaneTailNumber: "",
+    available: false,
+    passengerTotalFlightDistance: 0,
+    passengerTotalFlightDuration: 0,
+    crewTotalFlightDistance: 0,
+    crewTotalFlightDuration: 0,
+    amountDueLater: 0,
+    amountDueLaterDate: null,
     basePrice: 0,
+    amountAtTimeOfBooking: 0,
     tax: 0,
-    totalBookingPrice: 0,
+    taxDueLater: 0,
     totalDueNow: 0,
-    dueLaterAmount: 0,
-    dueLaterDate: "",
+    flight_segments: [],
+  },
+  quotedPrice: {
+    amountDueLater: 0,
+    amountDueLaterDate: null,
+    basePrice: 0,
+    amountAtTimeOfBooking: 0,
+    tax: 0,
+    taxDueLater: 0,
+    totalDueNow: 0,
+    flight_segments: [],
   },
   customerDetails: {
     firstName: "",
@@ -52,23 +69,15 @@ const createBookingSlice = createSlice({
     setSelectedPlaneTailNumber: (state, action) => {
       state.selectedPlaneDetails.selectedPlaneTailNumber = action.payload;
     },
-    setBasePrice: (state, action) => {
-      state.selectedPlaneDetails.basePrice = action.payload;
+    setSelectedPlaneDetails: (state, action) => {
+      state.selectedPlaneDetails = {
+        selectedPlaneTailNumber:
+          state.selectedPlaneDetails.selectedPlaneTailNumber,
+        ...action.payload,
+      };
     },
-    setTax: (state, action) => {
-      state.selectedPlaneDetails.tax = action.payload;
-    },
-    setTotalBookingPrice: (state, action) => {
-      state.selectedPlaneDetails.totalBookingPrice = action.payload;
-    },
-    setTotalDueNow: (state, action) => {
-      state.selectedPlaneDetails.totalDueNow = action.payload;
-    },
-    setDueLaterAmount: (state, action) => {
-      state.selectedPlaneDetails.dueLaterAmount = action.payload;
-    },
-    setDueLaterDate: (state, action) => {
-      state.selectedPlaneDetails.dueLaterDate = action.payload;
+    setQuotedPrice: (state, action) => {
+      state.quotedPrice = action.payload;
     },
     setCustomerDetails: (state, action) => {
       state.customerDetails = { ...state.customerDetails, ...action.payload };
@@ -101,12 +110,8 @@ export const {
   setSearchTripDetails,
   setOfferPriceResponse,
   setSelectedPlaneTailNumber,
-  setBasePrice,
-  setTax,
-  setTotalBookingPrice,
-  setTotalDueNow,
-  setDueLaterAmount,
-  setDueLaterDate,
+  setSelectedPlaneDetails,
+  setQuotedPrice,
   setCustomerDetails,
   setTotalNumberOfPassengers,
   addPassengerDetails,
