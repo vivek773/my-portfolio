@@ -6,7 +6,7 @@ import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import { styled } from "@mui/system";
 import Box from "@mui/material/Box";
-import { formatCurrency } from "../../utils/Helper";
+import { formatCurrency, formatDateLong } from "../../utils/Helper";
 
 const StyledCard = styled(Card)(({ theme }) => ({
   border: "1px solid #ddd",
@@ -93,7 +93,7 @@ const BookingPriceCardComponent = () => {
                 Due Later Date:
               </Typography>
               <Typography paragraph>
-                {quotedPrice.amountDueLaterDate}
+                {formatDateLong(quotedPrice.amountDueLaterDate)}
               </Typography>
             </>
           )}
