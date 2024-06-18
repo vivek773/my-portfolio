@@ -54,8 +54,8 @@ const CreateBookingFlightSegmentsComponent = () => {
     { id: "arrival_time", label: "Estimated Arrival" },
     { id: "flight_duration", label: "Duration" },
     { id: "segment_base_cost", label: "Segment Base Cost" },
-    { id: "departure_destination_cost", label: "Departure Destination Cost" },
-    { id: "arrival_destination_cost", label: "Arrival Destination Cost" },
+    { id: "destination_cost", label: "Destinations Cost" },
+    { id: "segment_tax", label: "Segment Tax" },
     { id: "segment_total_cost", label: "Segment Total Cost" },
     { id: "action", label: "Action" },
   ];
@@ -63,24 +63,37 @@ const CreateBookingFlightSegmentsComponent = () => {
   const handleConfirm = () => {
     const flightSegments = selectedPlaneDetails.flight_segments;
 
-    let basePrice = 0;
+    let totalBaseCost = 0;
+    let totalTax = 0;
+    let totalDueNow = 0;
+    let totalDueLater = 0;
+
     flightSegments.forEach((segment) => {
-      basePrice += segment.segment_total_cost;
+      totalBaseCost += Number(segment.segment_base_cost || 0);
+      totalBaseCost += Number(segment.departure_destination_cost || 0); // Add departure destination cost to base cost
+      totalBaseCost += Number(segment.arrival_destination_cost || 0); // Add arrival destination cost to base cost
+      totalTax += Number(segment.segment_tax || 0);
+      totalDueNow += Number(segment.amount_due_now || 0);
+      totalDueLater += Number(segment.amount_due_later || 0);
     });
 
-    console.log(taxRate);
-
-    const tax = (basePrice * taxRate) / 100;
-    const totalDueNow = basePrice + tax;
+    // Ensure totals are correct
+    const tripTotal = totalBaseCost + totalTax;
 
     const quotedPrice = {
-      basePrice,
-      amountAtTimeOfBooking: basePrice,
-      tax,
-      totalDueNow,
-      amountDueLater: 0,
-      amountDueLaterDate: null,
-      taxDueLater: 0,
+      amountDueLater: totalDueLater,
+      amountDueLaterDate: flightSegments[0]?.due_later_date || null,
+      basePrice: totalBaseCost,
+      amountAtTimeOfBooking: totalDueNow,
+      tax: totalTax,
+      taxDueLater: totalTax / 2, // Assuming 50% tax due later, adjust based on your logic
+      totalDueNow: totalDueNow,
+      tripTotal: tripTotal,
+      flight_segments: flightSegments.map((segment) => ({
+        ...segment,
+        segment_total_cost: Number(segment.segment_total_cost || 0),
+        tax: Number(segment.segment_tax || 0),
+      })),
     };
 
     dispatch(setQuotedPrice(quotedPrice));
@@ -139,13 +152,16 @@ const CreateBookingFlightSegmentsComponent = () => {
                           {formatCurrency(segment?.segment_base_cost)}
                         </TableCell>
                         <TableCell align="center">
-                          {formatCurrency(segment?.departure_destination_cost)}
+                          {formatCurrency(
+                            segment?.departure_destination_cost +
+                              segment?.arrival_destination_cost
+                          )}
                         </TableCell>
                         <TableCell align="center">
-                          {formatCurrency(segment?.arrival_destination_cost)}
+                          {formatCurrency(segment?.segment_tax)}
                         </TableCell>
                         <TableCell align="center">
-                          {formatCurrency(segment?.segment_total_cost)}
+                          {formatCurrency(segment?.segment_total)}
                         </TableCell>
                         <TableCell align="center">
                           <Box>

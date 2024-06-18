@@ -54,6 +54,13 @@ const BookingPriceCardComponent = () => {
           <Typography paragraph>{formatCurrency(quotedPrice.tax)}</Typography>
 
           <Typography variant="body1" sx={{ fontWeight: "bold" }}>
+            Trip Total:
+          </Typography>
+          <Typography paragraph>
+            {formatCurrency(quotedPrice.tripTotal)}
+          </Typography>
+
+          <Typography variant="body1" sx={{ fontWeight: "bold" }}>
             Total Due Now:
           </Typography>
           <Typography paragraph>
