@@ -15,7 +15,11 @@ import TableRow from "@mui/material/TableRow";
 import moment from "moment";
 import { formatCurrency } from "../../utils/Helper";
 import CustomButton from "../../forms/button/CustomButton";
-import { setQuotedPrice } from "../../store/features/CreateBookingSlice";
+import {
+  setQuotedPrice,
+  setIsSegmentConfirmed,
+} from "../../store/features/CreateBookingSlice";
+import { Grid } from "@mui/material";
 
 const StyledCard = styled(Card)(({ theme }) => ({
   border: "1px solid #ddd",
@@ -41,10 +45,6 @@ const CreateBookingFlightSegmentsComponent = () => {
   const selectedPlaneDetails = useSelector(
     (state) => state.createBooking.selectedPlaneDetails
   );
-  const offerPriceResponse = useSelector(
-    (state) => state.createBooking.offerPriceResponse
-  );
-  const taxRate = useSelector((state) => state.business.tax_rate);
 
   const TABLE_HEAD = [
     { id: "trip_leg_number", label: "Leg" },
@@ -72,8 +72,8 @@ const CreateBookingFlightSegmentsComponent = () => {
 
     flightSegments.forEach((segment) => {
       totalBaseCost += Number(segment.segment_base_cost || 0);
-      totalBaseCost += Number(segment.departure_destination_cost || 0); // Add departure destination cost to base cost
-      totalBaseCost += Number(segment.arrival_destination_cost || 0); // Add arrival destination cost to base cost
+      totalBaseCost += Number(segment.departure_destination_cost || 0);
+      totalBaseCost += Number(segment.arrival_destination_cost || 0);
       totalTax += Number(segment.segment_tax || 0);
       totalDueNow += Number(segment.amount_due_now || 0);
       totalDueLater += Number(segment.amount_due_later || 0);
@@ -81,7 +81,6 @@ const CreateBookingFlightSegmentsComponent = () => {
       taxDueNow += Number(segment.tax_due_now || 0);
     });
 
-    // Ensure totals are correct
     const tripTotal = totalBaseCost + totalTax;
 
     const quotedPrice = {
@@ -102,6 +101,7 @@ const CreateBookingFlightSegmentsComponent = () => {
     };
 
     dispatch(setQuotedPrice(quotedPrice));
+    dispatch(setIsSegmentConfirmed(true));
   };
 
   return (
@@ -184,8 +184,15 @@ const CreateBookingFlightSegmentsComponent = () => {
           </CardContent>
         </StyledCard>
       )}
-
-      <CustomButton label={"Confirm"} onClick={handleConfirm} />
+      <Grid container spacing={2} justifyContent={"center"}>
+        <Grid item xs={12} sm={6} md={5} mb={5}>
+          <CustomButton
+            label={"Confirm"}
+            size="large"
+            onClick={handleConfirm}
+          />
+        </Grid>
+      </Grid>
     </>
   );
 };

@@ -1,5 +1,5 @@
 import { Container } from "@mui/material";
-import React, { useEffect, useState } from "react";
+import React from "react";
 import "react-phone-input-2/lib/style.css";
 import { useNavigate } from "react-router-dom";
 import AddBookingCustomerComponent from "../../components/create-booking/AddBookingCustomerComponent";
@@ -11,25 +11,52 @@ import SearchBookingComponent from "../../components/create-booking/SearchBookin
 import { fetchGETRequest } from "../../utils/Services";
 import PaymentFormComponent from "../../components/create-booking/PaymentFormComponent";
 
+import { useSelector, useDispatch } from "react-redux";
+import {
+  setLoading,
+  setSearchCompleted,
+} from "../../store/features/CreateBookingSlice";
+
 function CreateBookingPage() {
-  // customer details
+  const isSearchCompleted = useSelector(
+    (state) => state.createBooking.isSearchCompleted
+  );
+
+  const selectedPlane = useSelector(
+    (state) => state.createBooking.selectedPlaneDetails.selectedPlaneTailNumber
+  );
+
+  const quotedPrice = useSelector((state) => state.createBooking.quotedPrice);
+
+  const isQuotedPriceValid =
+    quotedPrice &&
+    Object.keys(quotedPrice).length > 0 &&
+    quotedPrice.basePrice > 0;
 
   return (
     <Container>
       <h1>Create Booking</h1>
-      <SearchBookingComponent />
-
-      <PlaneSelectionComponent />
-
-      <CreateBookingFlightSegmentsComponent />
-
-      <BookingPriceCardComponent />
-
-      <AddBookingCustomerComponent />
-
-      <AddBookingPassengerComponent />
-
-      <PaymentFormComponent />
+      {!isSearchCompleted ? (
+        <SearchBookingComponent />
+      ) : (
+        <>
+          <SearchBookingComponent />
+          <PlaneSelectionComponent />
+          {selectedPlane && (
+            <>
+              <CreateBookingFlightSegmentsComponent />
+              {isQuotedPriceValid && (
+                <>
+                  <BookingPriceCardComponent />
+                  <AddBookingCustomerComponent />
+                  <AddBookingPassengerComponent />
+                  <PaymentFormComponent />
+                </>
+              )}
+            </>
+          )}
+        </>
+      )}
     </Container>
   );
 }

@@ -51,6 +51,8 @@ const initialState = {
   totalNumberOfPassengers: 1,
   passengerDetails: [],
   loading: false,
+  isSearchCompleted: false,
+  isSegmentConfirmed: false,
 };
 
 const createBookingSlice = createSlice({
@@ -103,6 +105,12 @@ const createBookingSlice = createSlice({
     setLoading: (state, action) => {
       state.loading = action.payload;
     },
+    setSearchCompleted: (state, action) => {
+      state.isSearchCompleted = action.payload;
+    },
+    setIsSegmentConfirmed: (state, action) => {
+      state.isSegmentConfirmed = action.payload;
+    },
   },
 });
 
@@ -118,6 +126,8 @@ export const {
   updatePassengerDetails,
   deletePassengerDetails,
   setLoading,
+  setSearchCompleted,
+  setIsSegmentConfirmed,
 } = createBookingSlice.actions;
 
 export default createBookingSlice.reducer;

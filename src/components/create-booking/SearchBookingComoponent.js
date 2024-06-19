@@ -18,6 +18,7 @@ import {
   setSearchTripDetails,
   setOfferPriceResponse,
   setLoading,
+  setSearchCompleted,
 } from "../../store/features/CreateBookingSlice";
 import { setTax } from "../../store/features/BusinessSlice";
 import AddDestinationComponent from "../destinations/AddDestinationComponent";
@@ -113,6 +114,7 @@ const SearchBookingComponent = () => {
       if (response && response.data) {
         dispatch(setOfferPriceResponse(response.data.priceDetails));
         dispatch(setTax(response.data.taxSettings.tax_rate));
+        dispatch(setSearchCompleted(true));
       }
     } catch (error) {
       console.error("Error fetching booking price:", error);

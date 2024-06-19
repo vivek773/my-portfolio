@@ -12,6 +12,7 @@ import {
 import {
   setSelectedPlaneTailNumber,
   setSelectedPlaneDetails,
+  setQuotedPrice,
 } from "../../store/features/CreateBookingSlice";
 
 function PlaneSelectionComponent() {
@@ -22,14 +23,65 @@ function PlaneSelectionComponent() {
   const selectedPlaneTailNumber = useSelector(
     (state) => state.createBooking.selectedPlaneDetails.selectedPlaneTailNumber
   );
+  const isSegmentConfirmed = useSelector(
+    (state) => state.createBooking.isSegmentConfirmed
+  );
 
   const handlePlaneSelection = (tailNumber) => {
     if (selectedPlaneTailNumber === tailNumber) {
       dispatch(setSelectedPlaneTailNumber(""));
       dispatch(setSelectedPlaneDetails({}));
+      if (isSegmentConfirmed) {
+        dispatch(setQuotedPrice({}));
+      }
     } else {
+      const selectedPlaneDetails = offerPriceResponse[tailNumber];
       dispatch(setSelectedPlaneTailNumber(tailNumber));
-      dispatch(setSelectedPlaneDetails(offerPriceResponse[tailNumber]));
+      dispatch(setSelectedPlaneDetails(selectedPlaneDetails));
+
+      // Update the quoted price if confirm has been clicked at least once
+      if (isSegmentConfirmed) {
+        const flightSegments = selectedPlaneDetails.flight_segments;
+
+        let totalBaseCost = 0;
+        let totalTax = 0;
+        let totalDueNow = 0;
+        let totalDueLater = 0;
+        let taxDueLater = 0;
+        let taxDueNow = 0;
+
+        flightSegments.forEach((segment) => {
+          totalBaseCost += Number(segment.segment_base_cost || 0);
+          totalBaseCost += Number(segment.departure_destination_cost || 0);
+          totalBaseCost += Number(segment.arrival_destination_cost || 0);
+          totalTax += Number(segment.segment_tax || 0);
+          totalDueNow += Number(segment.amount_due_now || 0);
+          totalDueLater += Number(segment.amount_due_later || 0);
+          taxDueLater += Number(segment.tax_due_later || 0);
+          taxDueNow += Number(segment.tax_due_now || 0);
+        });
+
+        const tripTotal = totalBaseCost + totalTax;
+
+        const quotedPrice = {
+          amountDueLater: totalDueLater,
+          amountDueLaterDate: flightSegments[0]?.due_later_date || null,
+          basePrice: totalBaseCost,
+          amountAtTimeOfBooking: totalDueNow,
+          tax: totalTax,
+          tax_due_now: taxDueNow,
+          taxDueLater: taxDueLater,
+          totalDueNow: totalDueNow,
+          tripTotal: tripTotal,
+          flight_segments: flightSegments.map((segment) => ({
+            ...segment,
+            segment_total_cost: Number(segment.segment_total_cost || 0),
+            tax: Number(segment.segment_tax || 0),
+          })),
+        };
+
+        dispatch(setQuotedPrice(quotedPrice));
+      }
     }
   };
 
@@ -82,7 +134,7 @@ function PlaneSelectionComponent() {
                 gutterBottom
                 mb={2}
               >
-                <b> {tailNumber} </b>
+                <b>{tailNumber}</b>
               </Typography>
               {data.available ? (
                 <>
