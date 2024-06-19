@@ -6,6 +6,9 @@ import {
   Grid,
   Button,
   CircularProgress,
+  Dialog,
+  DialogTitle,
+  DialogContent,
 } from "@mui/material";
 import { LocalizationProvider, DatePicker } from "@mui/x-date-pickers";
 import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
@@ -17,8 +20,16 @@ import {
   setLoading,
 } from "../../store/features/CreateBookingSlice";
 import { setTax } from "../../store/features/BusinessSlice";
+import AddDestinationComponent from "../destinations/AddDestinationComponent";
 
 const SearchBookingComponent = () => {
+  const [departure, setDeparture] = useState("");
+  const [arrival, setArrival] = useState("");
+  const [openAddDestination, setOpenAddDestination] = useState(false);
+  const [destinationType, setDestinationType] = useState("");
+
+  // customer details
+
   const dispatch = useDispatch();
   const [destinations, setDestinations] = useState([]);
   const {
@@ -110,6 +121,43 @@ const SearchBookingComponent = () => {
     }
   };
 
+  const handleOpenAddDestinationModal = (type) => {
+    setDestinationType(type);
+    setOpenAddDestination(true);
+  };
+
+  const handleCloseAddDestinationModal = async () => {
+    setOpenAddDestination(false);
+
+    // Refetch destinations after adding a new one
+    const response = await fetchGETRequest(
+      `/destination/owner/get-destinations`
+    );
+
+    if (response?.statusCode === 200 && response.destinations) {
+      setDestinations(response.destinations);
+    }
+
+    setDestinationType("");
+  };
+
+  const handleAddDestination = (newDestination) => {
+    // Update destinations state with the new destination
+    setDestinations((prevDestinations) => [
+      ...prevDestinations,
+      newDestination,
+    ]);
+
+    // Automatically select the newly added destination
+    if (destinationType === "departure") {
+      setDeparture(newDestination.airport_code);
+    } else if (destinationType === "arrival") {
+      setArrival(newDestination.airport_code);
+    }
+
+    setOpenAddDestination(false); // Close the modal
+  };
+
   const isFormValid =
     departureAirport &&
     arrivalAirport &&
@@ -162,6 +210,12 @@ const SearchBookingComponent = () => {
                   {dest.airport_code} - {dest.airport_name}
                 </MenuItem>
               ))}
+            <MenuItem
+              value="+add"
+              onClick={() => handleOpenAddDestinationModal("arrival")}
+            >
+              + Add a Destination
+            </MenuItem>
           </TextField>
         </Grid>
         <Grid item xs={12} sm={6} md={5} mb={5}>
@@ -181,6 +235,12 @@ const SearchBookingComponent = () => {
                   {dest.airport_code} - {dest.airport_name}
                 </MenuItem>
               ))}
+            <MenuItem
+              value="+add"
+              onClick={() => handleOpenAddDestinationModal("arrival")}
+            >
+              + Add a Destination
+            </MenuItem>
           </TextField>
         </Grid>
       </Grid>
@@ -269,6 +329,18 @@ const SearchBookingComponent = () => {
           </Button>
         </Grid>
       </Grid>
+
+      <Dialog
+        open={openAddDestination}
+        onClose={handleCloseAddDestinationModal}
+        fullWidth
+        maxWidth="md"
+      >
+        <DialogTitle>Add a Destination</DialogTitle>
+        <DialogContent>
+          <AddDestinationComponent onAddDestination={handleAddDestination} />
+        </DialogContent>
+      </Dialog>
     </>
   );
 };

@@ -67,6 +67,8 @@ const CreateBookingFlightSegmentsComponent = () => {
     let totalTax = 0;
     let totalDueNow = 0;
     let totalDueLater = 0;
+    let taxDueLater = 0;
+    let taxDueNow = 0;
 
     flightSegments.forEach((segment) => {
       totalBaseCost += Number(segment.segment_base_cost || 0);
@@ -75,6 +77,8 @@ const CreateBookingFlightSegmentsComponent = () => {
       totalTax += Number(segment.segment_tax || 0);
       totalDueNow += Number(segment.amount_due_now || 0);
       totalDueLater += Number(segment.amount_due_later || 0);
+      taxDueLater += Number(segment.tax_due_later || 0);
+      taxDueNow += Number(segment.tax_due_now || 0);
     });
 
     // Ensure totals are correct
@@ -86,7 +90,8 @@ const CreateBookingFlightSegmentsComponent = () => {
       basePrice: totalBaseCost,
       amountAtTimeOfBooking: totalDueNow,
       tax: totalTax,
-      taxDueLater: totalTax / 2, // Assuming 50% tax due later, adjust based on your logic
+      tax_due_now: taxDueNow,
+      taxDueLater: taxDueLater,
       totalDueNow: totalDueNow,
       tripTotal: tripTotal,
       flight_segments: flightSegments.map((segment) => ({
@@ -161,7 +166,7 @@ const CreateBookingFlightSegmentsComponent = () => {
                           {formatCurrency(segment?.segment_tax)}
                         </TableCell>
                         <TableCell align="center">
-                          {formatCurrency(segment?.segment_total)}
+                          {formatCurrency(segment?.segment_grand_total)}
                         </TableCell>
                         <TableCell align="center">
                           <Box>

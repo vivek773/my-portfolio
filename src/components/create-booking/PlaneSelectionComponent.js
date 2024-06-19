@@ -8,7 +8,7 @@ import {
   Box,
   Button,
 } from "@mui/material";
-import { formatCurrency } from "../../utils/Helper";
+
 import {
   setSelectedPlaneTailNumber,
   setSelectedPlaneDetails,
