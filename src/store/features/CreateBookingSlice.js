@@ -38,6 +38,7 @@ const initialState = {
     flight_segments: [],
   },
   customerDetails: {
+    customerId: "",
     firstName: "",
     lastName: "",
     email: "",
