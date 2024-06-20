@@ -65,15 +65,52 @@ function PaymentFormComponent({ isParentFormValid = true }) {
     setIsPaymentFormValid(isFormValid);
   }, [ccNumber, ccExpiry, ccCvv, ccName]);
 
+  const postData = () => {
+    return new Promise((resolve, reject) => {
+      const scriptElement = document.getElementById("ftd");
+      const hostname = new URL(scriptElement.getAttribute("src")).hostname;
+      const url = `https://${hostname}/api/v1/paymentCardToken`;
+      const securityKey = scriptElement.getAttribute("security_key");
+
+      const payload = {
+        ccNumber: ccNumber.replace(/\s+/g, ""),
+        ccExpiry: ccExpiry.replace(/\//g, ""),
+        ccCvv: ccCvv,
+      };
+
+      fetch(url, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "ftd-origin": window.location.origin,
+          token: securityKey,
+        },
+        body: JSON.stringify(payload),
+      })
+        .then((response) => {
+          if (!response.ok) throw new Error("Network response was not ok.");
+          return response.json();
+        })
+        .then((data) => {
+          resolve({
+            ...data,
+            cc_last_four: ccNumber.slice(-4),
+          });
+        })
+        .catch((error) => {
+          console.error("Fetch error:", error);
+          reject(error);
+        });
+    });
+  };
+
   const handlePaymentSubmit = async (event) => {
     event.preventDefault();
     setIsLoading(true);
 
     try {
-      const paymentTokenData = {
-        payment_token: "hardcoded_token",
-        cc_last_four: ccNumber.slice(-4),
-      };
+      const paymentTokenData = await postData();
+
       const bookingPayload = {
         customer_id: customer.customerId,
         passenger_ids: [], // Add logic to get passenger ids
