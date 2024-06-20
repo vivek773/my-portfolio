@@ -16,7 +16,6 @@ import {
 } from "../../utils/Constants";
 import { fetchPOSTRequest } from "../../utils/Services";
 import { useSelector } from "react-redux";
-import { ta } from "date-fns/locale";
 
 function PaymentFormComponent({ isParentFormValid = true }) {
   const [isScriptLoaded, setIsScriptLoaded] = useState(false);
@@ -57,6 +56,15 @@ function PaymentFormComponent({ isParentFormValid = true }) {
     }
   }, []);
 
+  useEffect(() => {
+    const isFormValid =
+      ccNumber.length === 19 && // 16 digits + 3 spaces
+      ccExpiry.length === 5 && // MM/YY
+      ccCvv.length === 3 &&
+      ccName.trim() !== "";
+    setIsPaymentFormValid(isFormValid);
+  }, [ccNumber, ccExpiry, ccCvv, ccName]);
+
   const handlePaymentSubmit = async (event) => {
     event.preventDefault();
     setIsLoading(true);
@@ -64,11 +72,11 @@ function PaymentFormComponent({ isParentFormValid = true }) {
     try {
       const paymentTokenData = {
         payment_token: "hardcoded_token",
-        cc_last_four: "1234",
+        cc_last_four: ccNumber.slice(-4),
       };
       const bookingPayload = {
-        customer_id: null,
-        passenger_ids: [],
+        customer_id: customer.customerId,
+        passenger_ids: [], // Add logic to get passenger ids
         first_name: customer.firstName,
         last_name: customer.lastName,
         email: customer.email,
@@ -132,6 +140,7 @@ function PaymentFormComponent({ isParentFormValid = true }) {
       setCcExpiry(formattedValue);
     }
   };
+
   return (
     <>
       <form onSubmit={handlePaymentSubmit}>
@@ -197,8 +206,8 @@ function PaymentFormComponent({ isParentFormValid = true }) {
               disabled={
                 !isScriptLoaded ||
                 !isPaymentFormValid ||
-                isLoading ||
-                !isParentFormValid
+                !isParentFormValid ||
+                isLoading
               }
               loading={isLoading}
             >
