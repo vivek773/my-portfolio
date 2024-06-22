@@ -151,7 +151,7 @@ const CreateBookingFlightSegmentsComponent = () => {
                           )}
                         </TableCell>
                         <TableCell align="center">
-                          {segment?.flight_duration} hrs
+                          {segment?.passenger_duration} hrs
                         </TableCell>
                         <TableCell align="center">
                           {formatCurrency(segment?.segment_base_cost)}

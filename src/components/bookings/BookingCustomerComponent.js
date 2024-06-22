@@ -3,10 +3,9 @@ import { useLocation } from "react-router-dom";
 import Typography from "@mui/material/Typography";
 import Grid from "@mui/material/Grid";
 import BookingCardComponent from "./BookingCardComponent";
-import { formatDate, formatDateTime } from "../../utils/Helper";
+import { formatDate } from "../../utils/Helper";
 
 import Box from "@mui/material/Box";
-import Stack from "@mui/material/Stack";
 import IconButton from "@mui/material/IconButton";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import DownloadIcon from "@mui/icons-material/Download";
@@ -17,7 +16,6 @@ import SpinnerComponent from "../spinner/SpinnerComponent";
 
 const BookingCustomerComponent = () => {
   const params = useLocation();
-  const [bookingCustomer, setBookingCustomer] = useState(null);
   const [imageUrl, setImageUrl] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
 
@@ -58,87 +56,6 @@ const BookingCustomerComponent = () => {
     }
   };
 
-  const getAddress = (payload) => {
-    const addressParts = [
-      payload?.street,
-      payload?.unit,
-      payload?.city,
-      payload?.state,
-      payload?.zip_code,
-      payload?.country,
-    ];
-
-    if (addressParts) {
-      return addressParts?.filter((item) => item).join(", ");
-    }
-  };
-
-  useEffect(() => {
-    const items = [
-      {
-        key: "first_name",
-        label: "First Name",
-        value: params?.state?.customer?.first_name,
-      },
-      {
-        key: "last_name",
-        label: "Last Name",
-        value: params?.state?.customer?.last_name,
-      },
-      { key: "email", label: "Email", value: params?.state?.customer?.email },
-      {
-        key: "phone_number",
-        label: "Phone Number",
-        value: params?.state?.customer?.phone_number,
-      },
-      {
-        key: "nationality",
-        label: "Nationality",
-        value: params?.state?.customer?.nationality,
-      },
-      {
-        key: "date_of_birth",
-        label: "Date Of Birth",
-        value: formatDate(params?.state?.customer?.date_of_birth),
-      },
-      {
-        key: "address",
-        label: "Address",
-        value: getAddress(params?.state?.customer),
-      },
-      {
-        key: "weight",
-        label: "Weight",
-        value: params?.state?.customer?.weight,
-      },
-      {
-        key: "number",
-        label: "Passport Number",
-        value: params?.state?.customer?.documents?.passport?.number,
-      },
-      {
-        key: "expiration",
-        label: "Passport Expiration",
-        value: `${formatDate(
-          params?.state?.customer?.documents?.passport?.expiration
-        )}`,
-      },
-      {
-        key: "date_of_issue",
-        label: "Passport Date Of Issue",
-        value: `${formatDate(
-          params?.state?.customer?.documents?.passport?.date_of_issue
-        )}`,
-      },
-      {
-        key: "",
-        label: "Passport View",
-        value: "",
-      },
-    ];
-    setBookingCustomer([...items]);
-  }, [params]);
-
   return (
     <>
       <BookingCardComponent
@@ -166,22 +83,196 @@ const BookingCustomerComponent = () => {
                 <SpinnerComponent show={isLoading} size={30} />
               </Box>
 
-              {bookingCustomer?.map((element, i) => (
-                <Grid
-                  item
-                  key={i}
-                  xs={3}
-                  display="flex"
-                  flexDirection="column"
-                  alignItems="center"
-                  justifyContent="center"
-                  sx={{ opacity: isLoading ? 0.5 : 1 }}
-                >
-                  <Typography variant="subtitle1" align="center">
-                    {element.label}
-                  </Typography>
-                  {element.label === "Passport View" ? (
-                    <Box>
+              <Grid
+                item
+                xs={3}
+                display="flex"
+                flexDirection="column"
+                alignItems="center"
+                justifyContent="center"
+                sx={{ opacity: isLoading ? 0.5 : 1 }}
+              >
+                <Typography variant="subtitle1" align="center">
+                  First Name
+                </Typography>
+                <Typography paragraph align="center">
+                  {params?.state?.customer?.first_name || "-"}
+                </Typography>
+              </Grid>
+
+              <Grid
+                item
+                xs={3}
+                display="flex"
+                flexDirection="column"
+                alignItems="center"
+                justifyContent="center"
+                sx={{ opacity: isLoading ? 0.5 : 1 }}
+              >
+                <Typography variant="subtitle1" align="center">
+                  Last Name
+                </Typography>
+                <Typography paragraph align="center">
+                  {params?.state?.customer?.last_name || "-"}
+                </Typography>
+              </Grid>
+
+              <Grid
+                item
+                xs={3}
+                display="flex"
+                flexDirection="column"
+                alignItems="center"
+                justifyContent="center"
+                sx={{ opacity: isLoading ? 0.5 : 1 }}
+              >
+                <Typography variant="subtitle1" align="center">
+                  Email
+                </Typography>
+                <Typography paragraph align="center">
+                  {params?.state?.customer?.email || "-"}
+                </Typography>
+              </Grid>
+
+              <Grid
+                item
+                xs={3}
+                display="flex"
+                flexDirection="column"
+                alignItems="center"
+                justifyContent="center"
+                sx={{ opacity: isLoading ? 0.5 : 1 }}
+              >
+                <Typography variant="subtitle1" align="center">
+                  Phone Number
+                </Typography>
+                <Typography paragraph align="center">
+                  {params?.state?.customer?.phone_number || "-"}
+                </Typography>
+              </Grid>
+
+              <Grid
+                item
+                xs={3}
+                display="flex"
+                flexDirection="column"
+                alignItems="center"
+                justifyContent="center"
+                sx={{ opacity: isLoading ? 0.5 : 1 }}
+              >
+                <Typography variant="subtitle1" align="center">
+                  Nationality
+                </Typography>
+                <Typography paragraph align="center">
+                  {params?.state?.customer?.nationality || "-"}
+                </Typography>
+              </Grid>
+
+              <Grid
+                item
+                xs={3}
+                display="flex"
+                flexDirection="column"
+                alignItems="center"
+                justifyContent="center"
+                sx={{ opacity: isLoading ? 0.5 : 1 }}
+              >
+                <Typography variant="subtitle1" align="center">
+                  Date Of Birth
+                </Typography>
+                <Typography paragraph align="center">
+                  {formatDate(params?.state?.customer?.date_of_birth) || "-"}
+                </Typography>
+              </Grid>
+
+              <Grid
+                item
+                xs={3}
+                display="flex"
+                flexDirection="column"
+                alignItems="center"
+                justifyContent="center"
+                sx={{ opacity: isLoading ? 0.5 : 1 }}
+              >
+                <Typography variant="subtitle1" align="center">
+                  Weight
+                </Typography>
+                <Typography paragraph align="center">
+                  {params?.state?.customer?.weight || "-"} Ibs
+                </Typography>
+              </Grid>
+
+              <Grid
+                item
+                xs={3}
+                display="flex"
+                flexDirection="column"
+                alignItems="center"
+                justifyContent="center"
+                sx={{ opacity: isLoading ? 0.5 : 1 }}
+              >
+                <Typography variant="subtitle1" align="center">
+                  Passport Number
+                </Typography>
+                <Typography paragraph align="center">
+                  {params?.state?.customer?.documents?.passport?.number ||
+                    "Not uploaded"}
+                </Typography>
+              </Grid>
+
+              <Grid
+                item
+                xs={3}
+                display="flex"
+                flexDirection="column"
+                alignItems="center"
+                justifyContent="center"
+                sx={{ opacity: isLoading ? 0.5 : 1 }}
+              >
+                <Typography variant="subtitle1" align="center">
+                  Passport Expiration
+                </Typography>
+                <Typography paragraph align="center">
+                  {formatDate(
+                    params?.state?.customer?.documents?.passport?.expiration
+                  ) || "Not uploaded"}
+                </Typography>
+              </Grid>
+
+              <Grid
+                item
+                xs={3}
+                display="flex"
+                flexDirection="column"
+                alignItems="center"
+                justifyContent="center"
+                sx={{ opacity: isLoading ? 0.5 : 1 }}
+              >
+                <Typography variant="subtitle1" align="center">
+                  Passport Date Of Issue
+                </Typography>
+                <Typography paragraph align="center">
+                  {formatDate(
+                    params?.state?.customer?.documents?.passport?.date_of_issue
+                  ) || "Not uploaded"}
+                </Typography>
+              </Grid>
+
+              <Grid
+                item
+                xs={3}
+                display="flex"
+                flexDirection="column"
+                alignItems="center"
+                justifyContent="center"
+                sx={{ opacity: isLoading ? 0.5 : 1 }}
+              >
+                <Typography variant="subtitle1" align="center">
+                  View Passport
+                </Typography>
+                <Box>
+                  {params?.state?.customer?.documents?.passport ? (
+                    <>
                       <IconButton
                         color="primary"
                         onClick={viewImage}
@@ -193,14 +284,131 @@ const BookingCustomerComponent = () => {
                       <IconButton color="primary" onClick={downloadImage}>
                         <DownloadIcon />
                       </IconButton>
-                    </Box>
+                    </>
                   ) : (
                     <Typography paragraph align="center">
-                      {element?.value ? element.value : "-"}
+                      Not uploaded
                     </Typography>
                   )}
-                </Grid>
-              ))}
+                </Box>
+              </Grid>
+
+              <Grid
+                item
+                xs={12}
+                display="flex"
+                flexDirection="column"
+                alignItems="center"
+                justifyContent="center"
+                sx={{ opacity: isLoading ? 0.5 : 1, mt: 3 }}
+              >
+                <Typography variant="h6" align="center">
+                  Residential Address
+                </Typography>
+              </Grid>
+
+              <Grid
+                item
+                xs={3}
+                display="flex"
+                flexDirection="column"
+                alignItems="center"
+                justifyContent="center"
+                sx={{ opacity: isLoading ? 0.5 : 1 }}
+              >
+                <Typography variant="subtitle1" align="center">
+                  Street
+                </Typography>
+                <Typography paragraph align="center">
+                  {params?.state?.customer?.residential_address?.street || "-"}
+                </Typography>
+              </Grid>
+
+              <Grid
+                item
+                xs={3}
+                display="flex"
+                flexDirection="column"
+                alignItems="center"
+                justifyContent="center"
+                sx={{ opacity: isLoading ? 0.5 : 1 }}
+              >
+                <Typography variant="subtitle1" align="center">
+                  Unit
+                </Typography>
+                <Typography paragraph align="center">
+                  {params?.state?.customer?.residential_address?.unit || "-"}
+                </Typography>
+              </Grid>
+
+              <Grid
+                item
+                xs={3}
+                display="flex"
+                flexDirection="column"
+                alignItems="center"
+                justifyContent="center"
+                sx={{ opacity: isLoading ? 0.5 : 1 }}
+              >
+                <Typography variant="subtitle1" align="center">
+                  City
+                </Typography>
+                <Typography paragraph align="center">
+                  {params?.state?.customer?.residential_address?.city || "-"}
+                </Typography>
+              </Grid>
+
+              <Grid
+                item
+                xs={3}
+                display="flex"
+                flexDirection="column"
+                alignItems="center"
+                justifyContent="center"
+                sx={{ opacity: isLoading ? 0.5 : 1 }}
+              >
+                <Typography variant="subtitle1" align="center">
+                  State
+                </Typography>
+                <Typography paragraph align="center">
+                  {params?.state?.customer?.residential_address?.state || "-"}
+                </Typography>
+              </Grid>
+
+              <Grid
+                item
+                xs={3}
+                display="flex"
+                flexDirection="column"
+                alignItems="center"
+                justifyContent="center"
+                sx={{ opacity: isLoading ? 0.5 : 1 }}
+              >
+                <Typography variant="subtitle1" align="center">
+                  Zip Code
+                </Typography>
+                <Typography paragraph align="center">
+                  {params?.state?.customer?.residential_address?.zip_code ||
+                    "-"}
+                </Typography>
+              </Grid>
+
+              <Grid
+                item
+                xs={3}
+                display="flex"
+                flexDirection="column"
+                alignItems="center"
+                justifyContent="center"
+                sx={{ opacity: isLoading ? 0.5 : 1, mb: 3 }}
+              >
+                <Typography variant="subtitle1" align="center">
+                  Country
+                </Typography>
+                <Typography paragraph align="center">
+                  {params?.state?.customer?.residential_address?.country || "-"}
+                </Typography>
+              </Grid>
             </Grid>
           </>
         }
