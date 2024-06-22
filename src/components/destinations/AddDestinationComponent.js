@@ -29,7 +29,7 @@ import {
   Typography,
 } from "@mui/material";
 
-const AddDestinationComponent = () => {
+const AddDestinationComponent = ({ onAddDestination, destinationType }) => {
   const { setToast } = useToast();
   const navigate = useNavigate();
   const { isLoading, startLoading, stopLoading } = useLoader();
@@ -160,7 +160,12 @@ const AddDestinationComponent = () => {
         severity: "success",
       });
       stopLoading();
-      navigate(-1);
+
+      if (onAddDestination) {
+        onAddDestination(response.data);
+      } else {
+        navigate(-1);
+      }
     } else {
       setToast({
         open: true,
@@ -344,14 +349,14 @@ const AddDestinationComponent = () => {
                     />
                     <SwitchComponent
                       value={formValues.show_in_departure_list}
-                      label={"Show In Departure List"}
+                      label={"Show in Departure List (Customer App)"}
                       onChange={() =>
                         handleSwitchChange("show_in_departure_list")
                       }
                     />
                     <SwitchComponent
                       value={formValues.show_in_arrival_list}
-                      label={"Show In Arrival List"}
+                      label={"Show in Arrival List (Customer App)"}
                       onChange={() =>
                         handleSwitchChange("show_in_arrival_list")
                       }

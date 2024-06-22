@@ -1,6 +1,3 @@
-// Destination page
-
-// Default
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
@@ -68,7 +65,11 @@ export default function DestinationsPage() {
       );
 
       if (response?.statusCode === 200 && response) {
-        dispatch(setDestinations(response?.destinations));
+        // Ensure immutability by creating a new array and sorting it
+        const sortedDestinations = [...response?.destinations].sort((a, b) =>
+          a.airport_name.localeCompare(b.airport_name)
+        );
+        dispatch(setDestinations(sortedDestinations));
         stopLoading();
       } else {
         stopLoading();
@@ -82,6 +83,12 @@ export default function DestinationsPage() {
   const handleView = (data) => {
     navigate(`/destinations/${data?.destination_id}`, { state: data });
   };
+
+  // Pagination
+  const paginatedDestinations = destinations.slice(
+    page * limit,
+    page * limit + limit
+  );
 
   return (
     <>
@@ -143,9 +150,11 @@ export default function DestinationsPage() {
                   </TableHead>
                   <TableBody>
                     {Array.isArray(destinations) &&
-                      destinations?.map((destination, index) => (
+                      paginatedDestinations.map((destination, index) => (
                         <TableRow hover key={destination.destination_id}>
-                          <TableCell align="center">{index + 1}</TableCell>
+                          <TableCell align="center">
+                            {page * limit + index + 1}
+                          </TableCell>
                           <TableCell align="center">
                             {destination.airport_code}
                           </TableCell>

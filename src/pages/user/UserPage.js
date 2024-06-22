@@ -52,7 +52,7 @@ const UserPage = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  const { User } = useSelector((state) => state.User);
+  const { user } = useSelector((state) => state.user);
 
   useEffect(() => {
     const getUserData = async () => {
@@ -107,7 +107,7 @@ const UserPage = () => {
         )}
 
         {!isLoading &&
-          (User?.length === 0 ? (
+          (user?.length === 0 ? (
             <Box>
               <Typography
                 variant="h6"
@@ -134,8 +134,8 @@ const UserPage = () => {
                     </TableRow>
                   </TableHead>
                   <TableBody>
-                    {Array.isArray(User) &&
-                      User?.map((user, index) => (
+                    {Array.isArray(user) &&
+                      user?.map((user, index) => (
                         <TableRow hover key={index}>
                           <TableCell align="center">
                             {user?.first_name + " " + user?.last_name}
@@ -171,7 +171,7 @@ const UserPage = () => {
               <TablePagination
                 rowsPerPageOptions={[10]}
                 component="div"
-                count={User?.length}
+                count={user?.length}
                 rowsPerPage={limit}
                 page={page}
                 onPageChange={(event, newPage) => setPage(newPage)}

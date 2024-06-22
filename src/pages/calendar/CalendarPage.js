@@ -14,7 +14,7 @@ import {
 } from "@syncfusion/ej2-react-schedule";
 import { Typography, CircularProgress } from "@mui/material";
 import HelmetComponent from "../../components/helmet/HelmetComponent";
-import { EDISPATCHED_HELMET } from "../../utils/Constants";
+import { EDISPATCHED } from "../../utils/Constants";
 import "./timeline-resource-grouping.css";
 import { fetchGETRequest } from "../../utils/Services";
 import { COLOR_OBJECT } from "../../utils/Color";
@@ -24,8 +24,12 @@ const CalendarPage = () => {
   const [PilotData, setPilotData] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [selectedDate, setSelectedDate] = useState(new Date());
+  const [viewedStartDateArray, setViewedStartDateArray] = useState([]);
 
   const getBookingsData = async (startDate, endDate) => {
+    setViewedStartDateArray((prevDates) => [...prevDates, startDate]);
+    console.log("Start date array in getBookingData: " + viewedStartDateArray);
+
     setIsLoading(true);
     try {
       const response = await fetchGETRequest(
@@ -77,35 +81,60 @@ const CalendarPage = () => {
     }
   };
 
-  useEffect(() => {
-    const startDate = new Date(selectedDate);
-    startDate.setDate(startDate.getDate() - 1);
-    const endDate = new Date(startDate);
-    endDate.setMonth(endDate.getMonth() + 1);
-    endDate.setDate(endDate.getDate() + 1);
-
-    getBookingsData(startDate, endDate);
-  }, []);
-
-  const handleDateChange = (args) => {
-    setSelectedDate(args.value);
+  const isDateViewed = (date) => {
+    for (let d of viewedStartDateArray) {
+      const startDate = new Date(d);
+      const endDate = new Date(startDate);
+      endDate.setDate(endDate.getDate() + 30);
+      if (date >= startDate && date <= endDate) {
+        return true;
+      }
+    }
+    return false;
   };
 
-  const handleActionComplete = (args) => {
-    if (
-      args.requestType === "viewNavigate" ||
-      args.requestType === "dateNavigate"
-    ) {
-      const newDate = args.currentDate;
+  useEffect(() => {
+    console.log("Updated start date array: ", viewedStartDateArray);
+  }, [viewedStartDateArray]);
+
+  const handleNavigation = async (args) => {
+    const newDate = new Date(args.currentDate);
+    console.log("Navigated to: " + newDate.toISOString());
+
+    const viewed = isDateViewed(newDate);
+    console.log("Date viewed: " + viewed);
+
+    if (!viewed) {
       const startDate = new Date(newDate);
+      const endDate = new Date(startDate);
+      endDate.setDate(endDate.getDate() + 30);
+      console.log(
+        "Fetching new data for: " +
+          startDate.toISOString() +
+          " to " +
+          endDate.toISOString()
+      );
+
+      await getBookingsData(startDate, endDate);
+
+      setViewedStartDateArray((prevDates) => [...prevDates, startDate]);
+      setSelectedDate(newDate);
+    } else {
+      setSelectedDate(newDate);
+    }
+  };
+
+  useEffect(() => {
+    const today = new Date();
+    if (!isDateViewed(today)) {
+      const startDate = new Date(selectedDate);
       startDate.setDate(startDate.getDate() - 1);
       const endDate = new Date(startDate);
       endDate.setMonth(endDate.getMonth() + 1);
       endDate.setDate(endDate.getDate() + 1);
-
       getBookingsData(startDate, endDate);
     }
-  };
+  }, []);
 
   const fleetData = [
     { text: "PLANES", id: "plane", color: "#cb6bb2" },
@@ -114,7 +143,7 @@ const CalendarPage = () => {
 
   return (
     <>
-      <HelmetComponent title={`${EDISPATCHED_HELMET} Calendar`} />
+      <HelmetComponent title={`${EDISPATCHED} | Calendar`} />
       <Typography variant="h4" gutterBottom>
         Calendar
       </Typography>
@@ -141,6 +170,7 @@ const CalendarPage = () => {
                 showQuickInfo={false}
                 selectedDate={selectedDate}
                 currentView="TimelineWeek"
+                navigating={handleNavigation}
                 eventSettings={{
                   dataSource: data,
                   ignoreWhitespace: true,
@@ -148,8 +178,6 @@ const CalendarPage = () => {
                   allowAdding: false,
                 }}
                 group={{ resources: ["Planes", "Pilots"] }}
-                dateChange={handleDateChange}
-                actionComplete={handleActionComplete}
               >
                 <ResourcesDirective>
                   <ResourceDirective

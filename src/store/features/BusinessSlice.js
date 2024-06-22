@@ -12,7 +12,7 @@ const initialState = {
     phone_number: null,
     primary_airport_code: "",
   },
-  tax: null,
+  tax_rate: null,
   emails: [],
   merchant_account_details: [],
   business_settings: [],
@@ -26,7 +26,7 @@ const business = createSlice({
       state.business_details = action.payload;
     },
     setTax: (state, action) => {
-      state.tax = action.payload;
+      state.tax_rate = action.payload;
     },
     setEmails: (state, action) => {
       state.emails = action.payload;

@@ -28,7 +28,7 @@ const DestinationDetailComponent = () => {
   return (
     <>
       <DestinationCardComponent
-        title={`${destinationDetails?.city} ${destinationDetails?.state}`}
+        title={`${destinationDetails?.city}, ${destinationDetails?.state}`}
         action={
           <CustomButton
             label={"Edit"}
@@ -154,7 +154,7 @@ const DestinationDetailComponent = () => {
               justifyContent="center"
             >
               <Typography variant="subtitle1" align="center">
-                Show In Arrival List
+                Show in Arrival List (Customer App)
               </Typography>
               <Typography paragraph align="center">
                 {destinationDetails?.show_in_arrival_list ? "Yes" : "No"}
@@ -169,7 +169,7 @@ const DestinationDetailComponent = () => {
               justifyContent="center"
             >
               <Typography variant="subtitle1" align="center">
-                Show In Departure List
+                Show in Departure List (Customer App)
               </Typography>
               <Typography paragraph align="center">
                 {destinationDetails?.show_in_departure_list ? "Yes" : "No"}
