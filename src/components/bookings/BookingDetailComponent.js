@@ -39,12 +39,12 @@ const BookingDetailComponent = () => {
       { key: "trip_type", label: "Trip Type", value: params?.state?.trip_type },
       {
         key: "trip_departure_airport_code",
-        label: "Trip Departure Airport Code",
+        label: "Departure Airport",
         value: params?.state?.trip_departure_airport_code,
       },
       {
         key: "trip_arrival_airport_code",
-        label: "Trip Arrival Airport Code",
+        label: "Arrival Airport",
         value: params?.state?.trip_arrival_airport_code,
       },
       {
@@ -52,7 +52,7 @@ const BookingDetailComponent = () => {
         label: "Base Price",
         value: `${formatCurrency(params?.state?.base_price)}`,
       },
-      { key: "tax", label: "Tax", value: params?.state?.tax },
+
       { key: "discount", label: "Discount", value: params?.state?.discount },
       {
         key: "total_price",
